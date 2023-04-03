@@ -1,0 +1,30 @@
+# Validationメッセージ定義
+# 【プレースホルダの指定の仕方】
+# ・フィールド名: {field}
+# ・入力値: {value}
+# ・それ以外のアノテーションで指定する属性: {属性名}
+
+# jakartaのメッセージ定義
+jakarta:
+  validation:
+    constraints:
+      NotNull:
+        message: '{field}を入力してください。'
+      NotEmpty:
+        message: '{field}を入力してください。'
+      Size:
+        message: '{field}は{min}文字~{max}文字で入力してください。'
+        min:
+          message: '{field}は{min}文字以上で入力してください。'
+        max:
+          message: '{field}は{max}文字以下で入力してください。'
+
+# 独自定義のバリデーション・アノテーションに対するメッセージ定義
+jp:
+  co:
+    molygray:
+      constraints:
+        FormatDate:
+          message: '{field}は「{format}」フォーマットで入力してください。'
+        LongField:
+          message: '{field}は整数で入力してください。'

@@ -1,0 +1,34 @@
+databaseChangeLog:
+  - changeSet:
+      id: payslip_1
+      author: mori_akira
+      changes:
+        - createTable:
+            tableName: payslip
+            columns:
+              - column:
+                  name: id
+                  type: bigserial
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: employee_number
+                  type: varchar(10)
+                  constraints:
+                    uniquKey: true
+                    nullable: false
+              - column:
+                  name: target_date
+                  type: date
+                  constraints:
+                    nullable: false
+              - column:
+                  name: content
+                  type: json
+        - addUniqueConstraint:
+            tableName: payslip
+            constraints: uk_payslip_employee_number_target_date
+            columnNames: employee_number, target_date
+      rollback:
+        - dropTable:
+            tableName: payslip

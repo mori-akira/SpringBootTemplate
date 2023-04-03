@@ -1,0 +1,33 @@
+# フィールド定義
+
+# 共通
+deleteFlg: 削除フラグ
+exclusiveFlg: 排他フラグ
+insertDatetime: 登録日時
+insertUser: 登録者
+insertFunction: 登録機能
+updateDatetime: 編集日時
+updateUser: 編集者
+updateFunction: 編集機能
+deleteDatetime: 削除日時
+deleteUser: 削除者
+deleteFunction: 削除機能
+
+# 部署
+department: 部署
+departmentId: 部署ID
+parentDepartmentId: 親部署ID
+parentDepartmentIdList: 親部署IDリスト
+departmentName: 部署名
+departmentFullName: 部署正式名
+
+# 社員
+employee: 社員
+employeeNumber: 社員番号
+sei: 姓
+mei: 名
+seiKana: 姓カナ
+meiKana: 名カナ
+gender: 性別
+birthDate: 生年月日
+hireDate: 入社日

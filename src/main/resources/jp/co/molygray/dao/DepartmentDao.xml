@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="jp.co.molygray.dao.DepartmentDao">
+    <select id="selectList"
+        resultType="jp.co.molygray.dto.DepartmentDto">
+        SELECT *
+        FROM department
+        WHERE 0 = 0
+        <if test="parentDepartmentIdList != null">
+            AND parent_department_id IN
+            <foreach item="parentDepartmentId"
+                collection="parentDepartmentIdList" open=" (" separator="," close=")">
+                #{parentDepartmentId}
+            </foreach>
+        </if>
+        <if test="departmentName != null">
+            AND department_name LIKE concat('%', #{departmentName}, '%')
+        </if>
+        <if test="departmentFullName != null">
+            AND department_full_name LIKE concat('%', #{departmentFullName}, '%')
+        </if>
+    </select>
+</mapper>

@@ -1,0 +1,390 @@
+databaseChangeLog:
+  - changeSet:
+      id: data_department_1
+      author: mori_akira
+      changes:
+        - insert:
+            tableName: department
+            columns:
+              - column:
+                  name: parent_department_id
+                  value: null
+              - column:
+                  name: department_name
+                  value: IT事業部
+              - column:
+                  name: department_full_name
+                  value: IT事業部
+              - column:
+                  name: delete_flg
+                  value: false
+              - column:
+                  name: exclusive_flg
+                  value: xxx
+              - column:
+                  name: insert_datetime
+                  value: '2023-03-01 12:00:00'
+              - column:
+                  name: insert_user
+                  value: 0
+              - column:
+                  name: insert_function
+                  value: manual
+              - column:
+                  name: update_datetime
+                  value: '2023-03-01 12:00:00'
+              - column:
+                  name: update_user
+                  value: 0
+              - column:
+                  name: update_function
+                  value: manual
+              - column:
+                  name: delete_datetime
+                  value: null
+              - column:
+                  name: delete_user
+                  value: null
+              - column:
+                  name: delete_function
+                  value: null
+        - insert:
+            tableName: department
+            columns:
+              - column:
+                  name: parent_department_id
+                  value: 1
+              - column:
+                  name: department_name
+                  value: システム開発部
+              - column:
+                  name: department_full_name
+                  value: IT事業部　システム開発部
+              - column:
+                  name: delete_flg
+                  value: false
+              - column:
+                  name: exclusive_flg
+                  value: xxx
+              - column:
+                  name: insert_datetime
+                  value: '2023-03-01 12:00:00'
+              - column:
+                  name: insert_user
+                  value: 0
+              - column:
+                  name: insert_function
+                  value: manual
+              - column:
+                  name: update_datetime
+                  value: '2023-03-01 12:00:00'
+              - column:
+                  name: update_user
+                  value: 0
+              - column:
+                  name: update_function
+                  value: manual
+              - column:
+                  name: delete_datetime
+                  value: null
+              - column:
+                  name: delete_user
+                  value: null
+              - column:
+                  name: delete_function
+                  value: null
+        - insert:
+            tableName: department
+            columns:
+              - column:
+                  name: parent_department_id
+                  value: 2
+              - column:
+                  name: department_name
+                  value: 東京開発課
+              - column:
+                  name: department_full_name
+                  value: IT事業部　システム開発部　東京開発課
+              - column:
+                  name: delete_flg
+                  value: false
+              - column:
+                  name: exclusive_flg
+                  value: xxx
+              - column:
+                  name: insert_datetime
+                  value: '2023-03-01 12:00:00'
+              - column:
+                  name: insert_user
+                  value: 0
+              - column:
+                  name: insert_function
+                  value: manual
+              - column:
+                  name: update_datetime
+                  value: '2023-03-01 12:00:00'
+              - column:
+                  name: update_user
+                  value: 0
+              - column:
+                  name: update_function
+                  value: manual
+              - column:
+                  name: delete_datetime
+                  value: null
+              - column:
+                  name: delete_user
+                  value: null
+              - column:
+                  name: delete_function
+                  value: null
+        - insert:
+            tableName: department
+            columns:
+              - column:
+                  name: parent_department_id
+                  value: 2
+              - column:
+                  name: department_name
+                  value: 大阪開発課
+              - column:
+                  name: department_full_name
+                  value: IT事業部　システム開発部　大阪開発課
+              - column:
+                  name: delete_flg
+                  value: false
+              - column:
+                  name: exclusive_flg
+                  value: xxx
+              - column:
+                  name: insert_datetime
+                  value: '2023-03-01 12:00:00'
+              - column:
+                  name: insert_user
+                  value: 0
+              - column:
+                  name: insert_function
+                  value: manual
+              - column:
+                  name: update_datetime
+                  value: '2023-03-01 12:00:00'
+              - column:
+                  name: update_user
+                  value: 0
+              - column:
+                  name: update_function
+                  value: manual
+              - column:
+                  name: delete_datetime
+                  value: null
+              - column:
+                  name: delete_user
+                  value: null
+              - column:
+                  name: delete_function
+                  value: null
+        - insert:
+            tableName: department
+            columns:
+              - column:
+                  name: parent_department_id
+                  value: null
+              - column:
+                  name: department_name
+                  value: 管理本部
+              - column:
+                  name: department_full_name
+                  value: 管理本部
+              - column:
+                  name: delete_flg
+                  value: false
+              - column:
+                  name: exclusive_flg
+                  value: xxx
+              - column:
+                  name: insert_datetime
+                  value: '2023-03-01 12:00:00'
+              - column:
+                  name: insert_user
+                  value: 0
+              - column:
+                  name: insert_function
+                  value: manual
+              - column:
+                  name: update_datetime
+                  value: '2023-03-01 12:00:00'
+              - column:
+                  name: update_user
+                  value: 0
+              - column:
+                  name: update_function
+                  value: manual
+              - column:
+                  name: delete_datetime
+                  value: null
+              - column:
+                  name: delete_user
+                  value: null
+              - column:
+                  name: delete_function
+                  value: null
+        - insert:
+            tableName: department
+            columns:
+              - column:
+                  name: parent_department_id
+                  value: 5
+              - column:
+                  name: department_name
+                  value: 経理課
+              - column:
+                  name: department_full_name
+                  value: 管理本部　経理課
+              - column:
+                  name: delete_flg
+                  value: false
+              - column:
+                  name: exclusive_flg
+                  value: xxx
+              - column:
+                  name: insert_datetime
+                  value: '2023-03-01 12:00:00'
+              - column:
+                  name: insert_user
+                  value: 0
+              - column:
+                  name: insert_function
+                  value: manual
+              - column:
+                  name: update_datetime
+                  value: '2023-03-01 12:00:00'
+              - column:
+                  name: update_user
+                  value: 0
+              - column:
+                  name: update_function
+                  value: manual
+              - column:
+                  name: delete_datetime
+                  value: null
+              - column:
+                  name: delete_user
+                  value: null
+              - column:
+                  name: delete_function
+                  value: null
+        - insert:
+            tableName: department
+            columns:
+              - column:
+                  name: parent_department_id
+                  value: 5
+              - column:
+                  name: department_name
+                  value: 総務課
+              - column:
+                  name: department_full_name
+                  value: 管理本部　総務課
+              - column:
+                  name: delete_flg
+                  value: false
+              - column:
+                  name: exclusive_flg
+                  value: xxx
+              - column:
+                  name: insert_datetime
+                  value: '2023-03-01 12:00:00'
+              - column:
+                  name: insert_user
+                  value: 0
+              - column:
+                  name: insert_function
+                  value: manual
+              - column:
+                  name: update_datetime
+                  value: '2023-03-01 12:00:00'
+              - column:
+                  name: update_user
+                  value: 0
+              - column:
+                  name: update_function
+                  value: manual
+              - column:
+                  name: delete_datetime
+                  value: null
+              - column:
+                  name: delete_user
+                  value: null
+              - column:
+                  name: delete_function
+                  value: null
+        - insert:
+            tableName: department
+            columns:
+              - column:
+                  name: parent_department_id
+                  value: 5
+              - column:
+                  name: department_name
+                  value: 教育課
+              - column:
+                  name: department_full_name
+                  value: 管理本部　教育課
+              - column:
+                  name: delete_flg
+                  value: false
+              - column:
+                  name: exclusive_flg
+                  value: xxx
+              - column:
+                  name: insert_datetime
+                  value: '2023-03-01 12:00:00'
+              - column:
+                  name: insert_user
+                  value: 0
+              - column:
+                  name: insert_function
+                  value: manual
+              - column:
+                  name: update_datetime
+                  value: '2023-03-01 12:00:00'
+              - column:
+                  name: update_user
+                  value: 0
+              - column:
+                  name: update_function
+                  value: manual
+              - column:
+                  name: delete_datetime
+                  value: null
+              - column:
+                  name: delete_user
+                  value: null
+              - column:
+                  name: delete_function
+                  value: null
+      rollback:
+        - delete:
+            tableName: department
+            where: department_id = 1
+        - delete:
+            tableName: department
+            where: department_id = 2
+        - delete:
+            tableName: department
+            where: department_id = 3
+        - delete:
+            tableName: department
+            where: department_id = 4
+        - delete:
+            tableName: department
+            where: department_id = 5
+        - delete:
+            tableName: department
+            where: department_id = 6
+        - delete:
+            tableName: department
+            where: department_id = 7
+        - delete:
+            tableName: department
+            where: department_id = 8
