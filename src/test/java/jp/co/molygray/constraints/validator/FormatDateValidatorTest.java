@@ -50,25 +50,22 @@ public class FormatDateValidatorTest {
    */
   public static Stream<FormatDatePatternSource> patternSrouce() {
     return Stream.of(
-    // @formatter:off
-                new FormatDatePatternSource("uuuu/MM/dd", "2023/04/01", true),
-                new FormatDatePatternSource("uuuu/MM/dd", "2023/4/1", false),
-                new FormatDatePatternSource("uuuu/MM/dd", "/4/1", false),
-                new FormatDatePatternSource("uuuu/MM/dd", "2/4/1", false),
-                new FormatDatePatternSource("uuuu/MM/dd", "20/4/1", false),
-                new FormatDatePatternSource("uuuu/MM/dd", "202/4/1", false),
-                new FormatDatePatternSource("uuuu/MM/dd", "20230/4/1", false),
-                new FormatDatePatternSource("uuuu/MM/dd", "2023//1", false),
-                new FormatDatePatternSource("uuuu/MM/dd", "2023/004/1", false),
-                new FormatDatePatternSource("uuuu/MM/dd", "2023/4/", false),
-                new FormatDatePatternSource("uuuu/MM/dd", "2023/4/001", false),
-                new FormatDatePatternSource("uuuu-MM-dd", "2023-04-01", true),
-                new FormatDatePatternSource("uuuu-MM-dd", "2023/04/01", false),
-                new FormatDatePatternSource("uuuu-MM-dd", "2023-13-01", false),
-                new FormatDatePatternSource("uuuu-MM-dd", "2023-12-32", false),
-                new FormatDatePatternSource("uuuu-MM-dd", "2023-02-29", false)
-        // @formatter:on
-    );
+        new FormatDatePatternSource("uuuu/MM/dd", "2023/04/01", true),
+        new FormatDatePatternSource("uuuu/MM/dd", "2023/4/1", false),
+        new FormatDatePatternSource("uuuu/MM/dd", "/4/1", false),
+        new FormatDatePatternSource("uuuu/MM/dd", "2/4/1", false),
+        new FormatDatePatternSource("uuuu/MM/dd", "20/4/1", false),
+        new FormatDatePatternSource("uuuu/MM/dd", "202/4/1", false),
+        new FormatDatePatternSource("uuuu/MM/dd", "20230/4/1", false),
+        new FormatDatePatternSource("uuuu/MM/dd", "2023//1", false),
+        new FormatDatePatternSource("uuuu/MM/dd", "2023/004/1", false),
+        new FormatDatePatternSource("uuuu/MM/dd", "2023/4/", false),
+        new FormatDatePatternSource("uuuu/MM/dd", "2023/4/001", false),
+        new FormatDatePatternSource("uuuu-MM-dd", "2023-04-01", true),
+        new FormatDatePatternSource("uuuu-MM-dd", "2023/04/01", false),
+        new FormatDatePatternSource("uuuu-MM-dd", "2023-13-01", false),
+        new FormatDatePatternSource("uuuu-MM-dd", "2023-12-32", false),
+        new FormatDatePatternSource("uuuu-MM-dd", "2023-02-29", false));
   }
 
   /**
