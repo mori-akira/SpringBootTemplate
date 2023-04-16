@@ -21,40 +21,40 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class RegisterParameter {
 
-    /**
-     * putのマーカー・インターフェイス
-     *
-     * @author Moriaki Kogure
-     * @version 0.0.1
-     */
-    public interface Put {
-    };
+  /**
+   * putのマーカー・インターフェイス
+   *
+   * @author Moriaki Kogure
+   * @version 0.0.1
+   */
+  public interface Put {
+  };
 
-    /**
-     * postのマーカー・インターフェイス
-     *
-     * @author Moriaki Kogure
-     * @version 0.0.1
-     */
-    public interface Post {
-    };
+  /**
+   * postのマーカー・インターフェイス
+   *
+   * @author Moriaki Kogure
+   * @version 0.0.1
+   */
+  public interface Post {
+  };
 
-    /** 部署ID */
-    @LongField(groups = { Put.class })
-    private Long departmentId;
-    /** 親部署ID */
-    @LongField(groups = { Put.class, Post.class })
-    private Long parentDepartmentId;
-    /** 部署名 */
-    @NotNull(groups = { Put.class, Post.class })
-    @NotEmpty(groups = { Put.class, Post.class })
-    @Size(message = "{jakarta.validation.constraints.Size.max.message}", max = 64, groups = {
-            Put.class, Post.class })
-    private String departmentName;
-    /** 部署正式名 */
-    @NotNull(groups = { Put.class, Post.class })
-    @NotEmpty(groups = { Put.class, Post.class })
-    @Size(message = "{jakarta.validation.constraints.Size.max.message}", max = 128, groups = {
-            Put.class, Post.class })
-    private String departmentFullName;
+  /** 部署ID */
+  @LongField(groups = {Put.class})
+  private Long departmentId;
+  /** 親部署ID */
+  @LongField(groups = {Put.class, Post.class})
+  private Long parentDepartmentId;
+  /** 部署名 */
+  @NotNull(groups = {Put.class, Post.class})
+  @NotEmpty(groups = {Put.class, Post.class})
+  @Size(message = "{jakarta.validation.constraints.Size.max.message}", max = 64, groups = {
+      Put.class, Post.class})
+  private String departmentName;
+  /** 部署正式名 */
+  @NotNull(groups = {Put.class, Post.class})
+  @NotEmpty(groups = {Put.class, Post.class})
+  @Size(message = "{jakarta.validation.constraints.Size.max.message}", max = 128, groups = {
+      Put.class, Post.class})
+  private String departmentFullName;
 }

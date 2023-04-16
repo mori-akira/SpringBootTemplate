@@ -14,12 +14,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @MapperScan(basePackages = "jp.co.molygray.dao")
 public class App {
 
-    /**
-     * メイン関数
-     *
-     * @param args コマンド引数
-     */
-    public static void main(String[] args) {
-        SpringApplication.run(App.class, args);
-    }
+  /**
+   * メイン関数
+   *
+   * @param args コマンド引数
+   */
+  public static void main(String[] args) {
+    SpringApplication.run(App.class, args);
+  }
 }

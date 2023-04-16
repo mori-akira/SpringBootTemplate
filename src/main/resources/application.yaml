@@ -23,4 +23,13 @@ mybatis:
 logging:
   level:
     root: INFO
-    org.springframework.web: INFO
+    '[org.springframework.web]': INFO
+
+# システム定数定義
+system:
+  constants:
+    default:
+      locale: ja
+      date-format: uuuu-MM-dd
+      time-format: hh:mm:ss
+      date-time-format: uuuu-MM-ddThh:mm:ssSSS

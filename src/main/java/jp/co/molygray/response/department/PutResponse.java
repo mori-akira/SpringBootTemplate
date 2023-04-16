@@ -22,6 +22,6 @@ import lombok.ToString;
 @AllArgsConstructor
 public class PutResponse extends ResponseBase {
 
-    /** 部署ID */
-    private Long id;
+  /** 部署ID */
+  private Long id;
 }

@@ -1,7 +1,0 @@
-system:
-  default:
-    locale: ja
-    dateTimeFormat:
-      date: uuuu-MM-dd
-      time: hh:mm:ss
-      dateTime: uuuu-MM-ddThh:mm:ssSSS

@@ -18,6 +18,6 @@ public enum ErrorSummaryEnum {
     /** システムエラー */
     SYSTEM_ERROR("System Error");
 
-    /** エラー概要 */
-    private String summary;
+  /** エラー概要 */
+  private String summary;
 }

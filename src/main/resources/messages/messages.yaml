@@ -1,8 +1,16 @@
-# 機能ごとのエラーメッセージ
-error:
-  sample:
-    E001: '有効期間を指定する場合、{0}と{1}を入力してください。'
-    E002: '{0}は{1}より前の日付を入力してください'
-  department:
-    register:
-      E001: '{0}は{1}で終わる必要があります。'
+# システムエラーメッセージ
+jp:
+  co:
+    molygray:
+      advice:
+        ApiControllerAdvice:
+          systemError:
+            message: 'システムエラーが発生しました。'
+
+# 相関チェックに対するエラーメッセージ定義
+      parameter:
+        department:
+          validator:
+            RegisterValidator:
+              departmentFullNameNotEndsWithDepartmentName:
+                message: '{0}は{1}で終わる必要があります。'

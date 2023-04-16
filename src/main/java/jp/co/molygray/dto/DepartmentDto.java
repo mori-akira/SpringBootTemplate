@@ -17,12 +17,12 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 public class DepartmentDto extends DtoBase {
 
-    /** 部署ID */
-    private long departmentId;
-    /** 親部署ID */
-    private Long parentDepartmentId;
-    /** 部署名 */
-    private String departmentName;
-    /** 部署正式名 */
-    private String departmentFullName;
+  /** 部署ID */
+  private long departmentId;
+  /** 親部署ID */
+  private Long parentDepartmentId;
+  /** 部署名 */
+  private String departmentName;
+  /** 部署正式名 */
+  private String departmentFullName;
 }

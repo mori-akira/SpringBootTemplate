@@ -21,32 +21,33 @@ import jp.co.molygray.constraints.FormatDate;
 @Component
 public class FormatDateValidator implements ConstraintValidator<FormatDate, String> {
 
-    /** 日付フォーマット */
-    private String format;
+  /** 日付フォーマット */
+  private String format;
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public void initialize(FormatDate formatDate) {
-        this.format = formatDate.format();
-    }
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void initialize(FormatDate formatDate) {
+    this.format = formatDate.format();
+  }
 
-    /**
-     * {@inheritDoc}
-     */
-    @Override
-    public boolean isValid(String value, ConstraintValidatorContext context) {
-        if (StringUtils.isEmpty(value)) {
-            return true;
-        }
-        try {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format)
-                    .withResolverStyle(ResolverStyle.STRICT);
-            LocalDate.parse(value, formatter);
-            return true;
-        } catch (DateTimeParseException ex) {
-            return false;
-        }
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public boolean isValid(String value,
+      ConstraintValidatorContext context) {
+    if (StringUtils.isEmpty(value)) {
+      return true;
     }
+    try {
+      DateTimeFormatter formatter = DateTimeFormatter.ofPattern(format)
+          .withResolverStyle(ResolverStyle.STRICT);
+      LocalDate.parse(value, formatter);
+      return true;
+    } catch (DateTimeParseException ex) {
+      return false;
+    }
+  }
 }

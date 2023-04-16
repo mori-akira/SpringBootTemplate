@@ -17,10 +17,10 @@ import lombok.ToString;
 @EqualsAndHashCode(callSuper = true)
 public class EmployeeDto extends DtoBase {
 
-    /** ID */
-    private long id;
-    /** 社員番号 */
-    private String employeeNumber;
-    /** 名前 */
-    private String name;
+  /** ID */
+  private long id;
+  /** 社員番号 */
+  private String employeeNumber;
+  /** 名前 */
+  private String name;
 }
