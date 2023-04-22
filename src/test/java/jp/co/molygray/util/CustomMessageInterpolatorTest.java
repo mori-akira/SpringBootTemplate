@@ -1,8 +1,9 @@
 package jp.co.molygray.util;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.when;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
@@ -51,7 +52,7 @@ public class CustomMessageInterpolatorTest {
   };
 
   /**
-   * 初期化メソッド
+   * 前処理メソッド
    */
   @BeforeEach
   public void init() {

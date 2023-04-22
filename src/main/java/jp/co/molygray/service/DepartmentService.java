@@ -32,7 +32,7 @@ public class DepartmentService {
   public List<DepartmentModel> searchList(List<Long> parentparentDepartmentIdList,
       String departmentName,
       String departmentFullName) {
-    List<DepartmentDto> dtoList = departmentDao.selectList(parentparentDepartmentIdList,
+    List<DepartmentDto> dtoList = departmentDao.searchList(parentparentDepartmentIdList,
         departmentName, departmentFullName);
     return dtoList.stream()
         .map(e -> {

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <variable name="logLayout"
+        value="%date{yy-MM-dd HH:mm:ss.SSSZ} [%thread] %-5level %-64logger{63} %msg%n" />
+    <variable name="appLogFilePath" value="log/app.log" />
+    <variable name="rolledAppLogFilePath"
+        value="log/app-%d{yyyy-MM-dd_hh:mm:ss}.log.zip" />
+    <variable name="errorLogFilePath" value="log/error.log" />
+    <variable name="rolledErrorLogFilePath"
+        value="log/error-%d{yyyy-MM-dd_hh:mm:ss}.log.zip" />
+
+    <appender name="STDOUT"
+        class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${logLayout}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="APP"
+        class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${appLogFilePath}</file>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>${logLayout}</pattern>
+        </encoder>
+        <rollingPolicy
+            class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${rolledAppLogFilePath}</fileNamePattern>
+            <maxHistory>3</maxHistory>
+        </rollingPolicy>
+        <triggeringPolicy
+            class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>20MB</maxFileSize>
+        </triggeringPolicy>
+    </appender>
+
+    <appender name="ERROR"
+        class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${errorLogFilePath}</file>
+        <encoder>
+            <charset>UTF-8</charset>
+            <pattern>${logLayout}</pattern>
+        </encoder>
+        <rollingPolicy
+            class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${rolledErrorLogFilePath}</fileNamePattern>
+            <maxHistory>3</maxHistory>
+        </rollingPolicy>
+        <triggeringPolicy
+            class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <maxFileSize>20MB</maxFileSize>
+        </triggeringPolicy>
+        <filter
+            class="ch.qos.logback.core.filter.EvaluatorFilter">
+            <evaluator
+                class="ch.qos.logback.classic.boolex.OnErrorEvaluator">
+            </evaluator>
+            <OnMismatch>DENY</OnMismatch>
+            <OnMatch>ACCEPT</OnMatch>
+        </filter>
+    </appender>
+
+    <logger name="jp.co.molygray" level="debug"></logger>
+
+    <root level="debug">
+        <appender-ref ref="STDOUT" />
+        <appender-ref ref="APP" />
+        <appender-ref ref="ERROR" />
+    </root>
+</configuration>

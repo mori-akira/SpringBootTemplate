@@ -1,8 +1,11 @@
 package jp.co.molygray.advice;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -35,11 +38,11 @@ public class ValidatorInterruptAdviceTest {
   /** {@link RegisterValidator}のモック・インスタンス */
   @Mock
   private RegisterValidator registerValidator;
-  /** Mockitoのテストクラス・インスタンス */
+  /** MockitoのMock管理インスタンス */
   private AutoCloseable closeable;
 
   /**
-   * 初期化メソッド
+   * 前処理メソッド
    */
   @BeforeEach
   public void init() {

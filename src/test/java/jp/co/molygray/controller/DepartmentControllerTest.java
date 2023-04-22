@@ -1,9 +1,13 @@
 package jp.co.molygray.controller;
 
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -17,6 +21,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
@@ -34,7 +39,7 @@ import jp.co.molygray.service.DepartmentService;
  * @author Moriaki Kogure
  * @version 0.0.1
  */
-@SpringBootTest
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
 public class DepartmentControllerTest {
 
@@ -47,14 +52,14 @@ public class DepartmentControllerTest {
   /** MockMVCインスタンス */
   @Autowired
   private MockMvc mockMvc;
-  /** Mockitoのテストクラス・インスタンス */
+  /** MockitoのMock管理インスタンス */
   private AutoCloseable closeable;
   /** オブジェクト・マッパー */
   @Autowired
   private ObjectMapper objectMapper;
 
   /**
-   * 初期化メソッド
+   * 前処理メソッド
    */
   @BeforeEach
   public void init() {

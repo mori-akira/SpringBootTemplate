@@ -1,5 +1,0 @@
-databaseChangeLog:
-  - includeAll:
-      path: db/liquibase/ddl/
-  - includeAll:
-      path: db/liquibase/dml/

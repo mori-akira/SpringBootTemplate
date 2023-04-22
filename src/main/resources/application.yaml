@@ -19,6 +19,8 @@ spring:
     change-log: classpath:db/liquibase/changelog-master.yaml
 mybatis:
   configuration:
+    auto-mapping-behavior: FULL
+    default-statement-timeout: 60
     map-underscore-to-camel-case: true
 logging:
   level:
@@ -30,6 +32,7 @@ system:
   constants:
     default:
       locale: ja
+      timezone: Asia/Tokyo
       date-format: uuuu-MM-dd
       time-format: hh:mm:ss
       date-time-format: uuuu-MM-ddThh:mm:ssSSS

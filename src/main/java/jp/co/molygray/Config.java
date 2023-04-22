@@ -2,6 +2,7 @@ package jp.co.molygray;
 
 import java.nio.charset.StandardCharsets;
 import java.util.Locale;
+import java.util.TimeZone;
 import org.apache.commons.lang3.LocaleUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -41,6 +42,8 @@ public class Config {
     // デフォルトロケールを設定
     Locale.setDefault(LocaleUtils
         .toLocale(systemConstants.getConstantsWithDefault("default.locale", "ja")));
+    TimeZone.setDefault(TimeZone
+        .getTimeZone(systemConstants.getConstantsWithDefault("default.timezone", "Asia/Tokyo")));
   }
 
   /**

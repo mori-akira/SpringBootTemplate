@@ -1,10 +1,9 @@
 package jp.co.molygray.dto;
 
 import java.time.ZonedDateTime;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 /**
  * Dto共通部
@@ -12,10 +11,9 @@ import lombok.ToString;
  * @author Moriaki Kogure
  * @version 0.0.1
  */
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode
+@Data
+@SuperBuilder
+@NoArgsConstructor
 public class DtoBase {
 
   /** 削除フラグ */
@@ -33,7 +31,7 @@ public class DtoBase {
   /** 編集者 */
   private long updateUser;
   /** 編集機能 */
-  private String updateFunctionp;
+  private String updateFunction;
   /** 削除日時 */
   private ZonedDateTime deleteDatetime;
   /** 削除者 */
