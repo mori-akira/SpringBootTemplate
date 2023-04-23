@@ -60,7 +60,14 @@
         </filter>
     </appender>
 
+    <logger name="org.springframework" level="info"></logger>
+    <logger name="_org.springframework.web" level="warn"></logger>
+    <logger name="org.hibernate" level="warn"></logger>
+    <logger name="org.mybatis" level="info"></logger>
+    <logger name="liquibase" level="warn"></logger>
+    <logger name="com.zaxxer.hikari" level="warn"></logger>
     <logger name="jp.co.molygray" level="debug"></logger>
+    <logger name="mybatis-logger" level="debug"></logger>
 
     <root level="debug">
         <appender-ref ref="STDOUT" />

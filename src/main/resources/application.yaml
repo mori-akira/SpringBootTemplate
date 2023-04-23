@@ -17,15 +17,17 @@ spring:
   liquibase:
     enabled: true
     change-log: classpath:db/liquibase/changelog-master.yaml
+management:
+  endpoints:
+    web:
+      exposure:
+        include: beans,health,metrics
 mybatis:
   configuration:
     auto-mapping-behavior: FULL
     default-statement-timeout: 60
     map-underscore-to-camel-case: true
-logging:
-  level:
-    root: INFO
-    '[org.springframework.web]': INFO
+    log-prefix: mybatis-logger.
 
 # システム定数定義
 system:
