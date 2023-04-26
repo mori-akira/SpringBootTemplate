@@ -7,6 +7,7 @@ import static org.mockito.Mockito.when;
 import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.TimeZone;
 import org.junit.jupiter.api.AfterEach;
@@ -15,7 +16,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import jp.co.molygray.dao.DepartmentDao;
+import jp.co.molygray.dao.entity.DepartmentDao;
 import jp.co.molygray.dto.DepartmentDto;
 import jp.co.molygray.model.DepartmentModel;
 
@@ -122,8 +123,8 @@ public class DepartmentServiceTest {
    */
   @Test
   public void searchListTest2() {
-    when(departmentDao.searchList(any(), any(), any())).thenReturn(List.of());
-    List<DepartmentModel> expected = List.of();
+    when(departmentDao.searchList(any(), any(), any())).thenReturn(Collections.emptyList());
+    List<DepartmentModel> expected = Collections.emptyList();
     List<DepartmentModel> actual = departmentService.searchList(null, null, null);
     assertEquals(expected, actual);
     verify(departmentDao).searchList(null, null, null);

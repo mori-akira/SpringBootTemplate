@@ -1,6 +1,7 @@
-package jp.co.molygray.dao;
+package jp.co.molygray.dao.entity;
 
 import java.util.List;
+import java.util.Optional;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
@@ -22,7 +23,7 @@ public interface DepartmentDao {
    * @return 部署
    */
   @Select("SELECT * FROM department WHERE department_id = #{departmentId}")
-  public DepartmentDto select(@Param("departmentId") long departmentId);
+  public Optional<DepartmentDto> select(@Param("departmentId") long departmentId);
 
   /**
    * 一覧選択メソッド

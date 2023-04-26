@@ -7,6 +7,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import jp.co.molygray.dao.entity.DepartmentDao;
 import jp.co.molygray.dto.DepartmentDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;

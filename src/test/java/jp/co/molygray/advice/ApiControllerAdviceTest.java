@@ -25,6 +25,7 @@ import org.springframework.validation.DataBinder;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jp.co.molygray.controller.DepartmentController;
 import jp.co.molygray.enums.ErrorSummaryEnum;
+import jp.co.molygray.parameter.department.ListParameter;
 import jp.co.molygray.response.common.ErrorResponse;
 
 /**
@@ -70,8 +71,8 @@ public class ApiControllerAdviceTest {
   @Test
   public void handleBindExceptionTest1()
       throws Exception {
-    BindingResult result = new DataBinder(new Object()).getBindingResult();
-    result.reject("hoge", "fuga");
+    BindingResult result = new DataBinder(new ListParameter()).getBindingResult();
+    result.rejectValue("departmentName", "hoge", "fuga");
     when(departmentController.list(any())).thenThrow(new BindException(result));
     // API呼び出し
     var response = mockMvc.perform(get("/api/department/list"))
@@ -86,6 +87,7 @@ public class ApiControllerAdviceTest {
         .errorDetailList(Arrays.asList(ErrorResponse.ErrorDetail.builder()
             .errorCode("hoge")
             .errorMessage("fuga")
+            .errorItem("departmentName")
             .build()))
         .build();
     assertEquals(expected, actual);
@@ -102,9 +104,9 @@ public class ApiControllerAdviceTest {
   @Test
   public void handleBindExceptionTest2()
       throws Exception {
-    BindingResult result = new DataBinder(new Object()).getBindingResult();
-    result.reject("hoge1", "fuga1");
-    result.reject("hoge2", "fuga2");
+    BindingResult result = new DataBinder(new ListParameter()).getBindingResult();
+    result.rejectValue("departmentName", "hoge1", "fuga1");
+    result.rejectValue("departmentName", "hoge2", "fuga2");
     when(departmentController.list(any())).thenThrow(new BindException(result));
     // API呼び出し
     var response = mockMvc.perform(get("/api/department/list"))
@@ -116,13 +118,16 @@ public class ApiControllerAdviceTest {
     var actual = objectMapper.readValue(response, ErrorResponse.class);
     var expected = ErrorResponse.builder()
         .errorSummary(ErrorSummaryEnum.INPUT_ERROR.getSummary())
-        .errorDetailList(Arrays.asList(ErrorResponse.ErrorDetail.builder()
-            .errorCode("hoge1")
-            .errorMessage("fuga1")
-            .build(),
+        .errorDetailList(Arrays.asList(
+            ErrorResponse.ErrorDetail.builder()
+                .errorCode("hoge1")
+                .errorMessage("fuga1")
+                .errorItem("departmentName")
+                .build(),
             ErrorResponse.ErrorDetail.builder()
                 .errorCode("hoge2")
                 .errorMessage("fuga2")
+                .errorItem("departmentName")
                 .build()))
         .build();
     assertEquals(expected, actual);

@@ -1,4 +1,4 @@
-package jp.co.molygray.dao;
+package jp.co.molygray.dao.entity;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;

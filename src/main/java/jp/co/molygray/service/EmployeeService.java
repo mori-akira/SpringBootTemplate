@@ -2,7 +2,7 @@ package jp.co.molygray.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import jp.co.molygray.dao.EmployeeDao;
+import jp.co.molygray.dao.entity.EmployeeDao;
 import jp.co.molygray.dto.EmployeeDto;
 
 /**

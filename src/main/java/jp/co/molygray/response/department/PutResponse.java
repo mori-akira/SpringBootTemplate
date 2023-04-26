@@ -2,11 +2,11 @@ package jp.co.molygray.response.department;
 
 import jp.co.molygray.response.ResponseBase;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
 /**
  * 部署Put APIレスポンスクラス
@@ -15,11 +15,11 @@ import lombok.ToString;
  * @version 0.0.1
  */
 @Data
-@ToString(callSuper = true)
-@EqualsAndHashCode(callSuper = false)
-@Builder
+@SuperBuilder
 @NoArgsConstructor
 @AllArgsConstructor
+@ToString(callSuper = true)
+@EqualsAndHashCode(callSuper = true)
 public class PutResponse extends ResponseBase {
 
   /** 部署ID */

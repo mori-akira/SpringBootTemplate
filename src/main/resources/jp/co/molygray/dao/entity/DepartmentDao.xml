@@ -3,7 +3,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="jp.co.molygray.dao.DepartmentDao">
+<mapper namespace="jp.co.molygray.dao.entity.DepartmentDao">
     <select id="searchList"
         resultType="jp.co.molygray.dto.DepartmentDto">
         SELECT *

@@ -2,6 +2,7 @@ package jp.co.molygray.parameter.department;
 
 import java.util.List;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 import jp.co.molygray.constraints.LongField;
 import lombok.AllArgsConstructor;
@@ -23,7 +24,7 @@ public class ListParameter {
 
   /** 親部署ID */
   @Valid
-  private List<@LongField String> parentDepartmentIdList;
+  private List<@NotEmpty @LongField String> parentDepartmentIdList;
   /** 部署名 */
   @Size(message = "{jakarta.validation.constraints.Size.max.message}", max = 64)
   private String departmentName;

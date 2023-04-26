@@ -9,9 +9,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import jp.co.molygray.model.DepartmentModel;
+import jp.co.molygray.parameter.department.GetParameter;
 import jp.co.molygray.parameter.department.ListParameter;
 import jp.co.molygray.parameter.department.RegisterParameter;
 import jp.co.molygray.parameter.department.RegisterParameter.Put;
+import jp.co.molygray.response.department.GetResponse;
 import jp.co.molygray.response.department.ListResponse;
 import jp.co.molygray.response.department.PutResponse;
 import jp.co.molygray.service.DepartmentService;
@@ -29,6 +31,21 @@ public class DepartmentController {
   /** 部署サービス */
   @Autowired
   private DepartmentService departmentService;
+
+  /**
+   * 部署Get APIエントリポイント
+   *
+   * @param parameter Getパラメータ
+   * @return Getレスポンス
+   * @throws Exception 例外発生時
+   */
+  @GetMapping("/get")
+  public GetResponse get(@Validated GetParameter parameter)
+      throws Exception {
+    Long id = Long.valueOf(parameter.getDepartmentId());
+    DepartmentModel model = departmentService.get(id);
+    return new GetResponse(model);
+  }
 
   /**
    * 部署List APIエントリポイント

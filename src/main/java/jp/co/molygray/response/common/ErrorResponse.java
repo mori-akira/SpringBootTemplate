@@ -34,6 +34,8 @@ public class ErrorResponse {
     private String errorCode;
     /** エラーメッセージ */
     private String errorMessage;
+    /** エラー項目 */
+    private String errorItem;
   }
 
   /** エラー概要 */

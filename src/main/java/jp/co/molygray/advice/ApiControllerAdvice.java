@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
+import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -76,8 +77,11 @@ public class ApiControllerAdvice extends ResponseEntityExceptionHandler {
     return ErrorResponse.builder()
         .errorSummary(errorSummary.getSummary())
         .errorDetailList(errors.stream()
-            .map(e -> new ErrorResponse.ErrorDetail(e.getCode(),
-                e.getDefaultMessage()))
+            .map(e -> {
+              String field =
+                  FieldError.class.isInstance(e) ? FieldError.class.cast(e).getField() : null;
+              return new ErrorResponse.ErrorDetail(e.getCode(), e.getDefaultMessage(), field);
+            })
             .toList())
         .build();
   }
@@ -92,7 +96,7 @@ public class ApiControllerAdvice extends ResponseEntityExceptionHandler {
         .errorSummary(ErrorSummaryEnum.SYSTEM_ERROR.getSummary())
         .errorDetailList(List
             .of(new ErrorResponse.ErrorDetail(MESSAGE_KEY_SYSTEM_ERROR,
-                messageSource.getMessage(this.getClass(), MESSAGE_KEY_SYSTEM_ERROR))))
+                messageSource.getMessage(this.getClass(), MESSAGE_KEY_SYSTEM_ERROR), null)))
         .build();
   }
 }
