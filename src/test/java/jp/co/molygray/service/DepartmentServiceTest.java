@@ -2,6 +2,8 @@ package jp.co.molygray.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import java.time.Instant;
@@ -9,6 +11,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.TimeZone;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
@@ -57,6 +60,58 @@ public class DepartmentServiceTest {
   }
 
   /**
+   * {@link DepartmentService#get()}のテストメソッド
+   * <p>
+   * 検索ヒットありの場合
+   * </p>
+   */
+  @Test
+  public void getTest1() {
+    when(departmentDao.select(anyLong())).thenReturn(
+        Optional.of(DepartmentDto.builder()
+            .departmentId(1l)
+            .parentDepartmentId(null)
+            .departmentName("hoge")
+            .departmentFullName("hogehoge")
+            .deleteFlg(false)
+            .exclusiveFlg("xxx")
+            .insertDatetime(ZonedDateTime.ofInstant(Instant.ofEpochMilli(99999),
+                ZoneId.systemDefault()).toOffsetDateTime())
+            .insertUser(0l)
+            .insertFunction("test")
+            .updateDatetime(ZonedDateTime.ofInstant(Instant.ofEpochMilli(99999),
+                ZoneId.systemDefault()).toOffsetDateTime())
+            .updateUser(0l)
+            .updateFunction("test")
+            .build()));
+    DepartmentModel expected = DepartmentModel.builder()
+        .departmentId(1l)
+        .parentDepartmentId(null)
+        .departmentName("hoge")
+        .departmentFullName("hogehoge")
+        .build();
+    DepartmentModel actual = departmentService.get(1l);
+    assertEquals(expected, actual);
+    verify(departmentDao).select(eq(1l));
+  }
+
+  /**
+   * {@link DepartmentService#get()}のテストメソッド
+   * <p>
+   * 検索ヒットなしの場合
+   * </p>
+   */
+  @Test
+  public void getTest2() {
+    when(departmentDao.select(anyLong())).thenReturn(
+        Optional.empty());
+    DepartmentModel expected = null;
+    DepartmentModel actual = departmentService.get(1l);
+    assertEquals(expected, actual);
+    verify(departmentDao).select(eq(1l));
+  }
+
+  /**
    * {@link DepartmentService#searchList()}のテストメソッド
    * <p>
    * 検索条件あり、検索ヒットありの場合
@@ -73,12 +128,12 @@ public class DepartmentServiceTest {
             .deleteFlg(false)
             .exclusiveFlg("xxx")
             .insertDatetime(ZonedDateTime.ofInstant(Instant.ofEpochMilli(99999),
-                ZoneId.systemDefault()))
-            .insertUser(0)
+                ZoneId.systemDefault()).toOffsetDateTime())
+            .insertUser(0l)
             .insertFunction("test")
             .updateDatetime(ZonedDateTime.ofInstant(Instant.ofEpochMilli(99999),
-                ZoneId.systemDefault()))
-            .updateUser(0)
+                ZoneId.systemDefault()).toOffsetDateTime())
+            .updateUser(0l)
             .updateFunction("test")
             .build(),
         DepartmentDto.builder()
@@ -89,12 +144,12 @@ public class DepartmentServiceTest {
             .deleteFlg(false)
             .exclusiveFlg("xxx")
             .insertDatetime(ZonedDateTime.ofInstant(Instant.ofEpochMilli(99999),
-                TimeZone.getDefault().toZoneId()))
-            .insertUser(0)
+                TimeZone.getDefault().toZoneId()).toOffsetDateTime())
+            .insertUser(0l)
             .insertFunction("test")
             .updateDatetime(ZonedDateTime.ofInstant(Instant.ofEpochMilli(99999),
-                TimeZone.getDefault().toZoneId()))
-            .updateUser(0)
+                TimeZone.getDefault().toZoneId()).toOffsetDateTime())
+            .updateUser(0l)
             .updateFunction("test")
             .build()));
     List<DepartmentModel> expected = List.of(

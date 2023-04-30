@@ -31,6 +31,7 @@ import jp.co.molygray.enums.ErrorSummaryEnum;
 import jp.co.molygray.model.DepartmentModel;
 import jp.co.molygray.parameter.department.GetParameter;
 import jp.co.molygray.parameter.department.ListParameter;
+import jp.co.molygray.parameter.department.validator.RegisterValidator;
 import jp.co.molygray.response.common.ErrorResponse;
 import jp.co.molygray.response.department.GetResponse;
 import jp.co.molygray.response.department.ListResponse;
@@ -49,6 +50,9 @@ public class DepartmentControllerTest {
   /** {@link DepartmentService}のモック・インスタンス */
   @MockBean
   private DepartmentService departmentService;
+  /** {@link RegisterValidator}のモックインスタンス */
+  @MockBean
+  private RegisterValidator registerValidator;
   /** {@link DepartmentController}のモック・インスタンス */
   @SpyBean
   private DepartmentController departmentController;
@@ -81,31 +85,6 @@ public class DepartmentControllerTest {
   }
 
   /**
-   * {@link DepartmentController#get()}の正常系のテストメソッド2
-   * <p>
-   * 取得できない場合
-   * </p>
-   *
-   * @throws Exception 例外発生時
-   */
-  @Test
-  public void getTestOk2()
-      throws Exception {
-    // サービスのMock設定
-    when(departmentService.get(anyLong())).thenReturn(null);
-    // APIを呼び出して検証
-    mockMvc.perform(
-        get("/api/department/get")
-            .queryParam("departmentId", "1"))
-        .andExpect(status().isOk())
-        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-        .andExpect(content().json(objectMapper.writeValueAsString(new GetResponse(null))));
-    // メソッド呼び出し検証
-    verify(departmentController).get(eq(new GetParameter("1")));
-    verify(departmentService).get(eq(1l));
-  }
-
-  /**
    * {@link DepartmentController#get()}の正常系のテストメソッド1
    * <p>
    * 取得できる場合
@@ -126,11 +105,34 @@ public class DepartmentControllerTest {
     when(departmentService.get(anyLong())).thenReturn(model);
     // APIを呼び出して検証
     mockMvc.perform(
-        get("/api/department/get")
-            .queryParam("departmentId", "1"))
+        get("/api/department/get/1"))
         .andExpect(status().isOk())
         .andExpect(content().contentType(MediaType.APPLICATION_JSON))
         .andExpect(content().json(objectMapper.writeValueAsString(new GetResponse(model))));
+    // メソッド呼び出し検証
+    verify(departmentController).get(eq(new GetParameter("1")));
+    verify(departmentService).get(eq(1l));
+  }
+
+  /**
+   * {@link DepartmentController#get()}の正常系のテストメソッド2
+   * <p>
+   * 取得できない場合
+   * </p>
+   *
+   * @throws Exception 例外発生時
+   */
+  @Test
+  public void getTestOk2()
+      throws Exception {
+    // サービスのMock設定
+    when(departmentService.get(anyLong())).thenReturn(null);
+    // APIを呼び出して検証
+    mockMvc.perform(
+        get("/api/department/get/1"))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+        .andExpect(content().json(objectMapper.writeValueAsString(new GetResponse(null))));
     // メソッド呼び出し検証
     verify(departmentController).get(eq(new GetParameter("1")));
     verify(departmentService).get(eq(1l));
@@ -158,7 +160,7 @@ public class DepartmentControllerTest {
         .build();
     // APIを呼び出して検証
     mockMvc.perform(
-        get("/api/department/get")
+        get("/api/department/get/1")
             .queryParam("departmentId", ""))
         .andExpect(status().isBadRequest())
         .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -190,8 +192,7 @@ public class DepartmentControllerTest {
         .build();
     // APIを呼び出して検証
     mockMvc.perform(
-        get("/api/department/get")
-            .queryParam("departmentId", "a"))
+        get("/api/department/get/a"))
         .andExpect(status().isBadRequest())
         .andExpect(content().contentType(MediaType.APPLICATION_JSON))
         .andExpect(content().json(objectMapper.writeValueAsString(expected)));

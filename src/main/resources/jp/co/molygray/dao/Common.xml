@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="jp.co.molygray.dao.Common">
+    <sql id="common_column_block_insert">
+        , delete_flg
+        , exclusive_flg
+        , insert_datetime
+        , insert_user
+        , insert_function
+        , update_datetime
+        , update_user
+        , update_function
+        , delete_datetime
+        , delete_user
+        , delete_function
+    </sql>
+    <sql id="common_values_block_insert">
+        , #{deleteFlg}
+        , #{newExclusiveFlg}
+        , #{insertDatetime}
+        , #{insertUser}
+        , #{insertFunction}
+        , #{updateDatetime}
+        , #{updateUser}
+        , #{updateFunction}
+        , #{deleteDatetime}
+        , #{deleteUser}
+        , #{deleteFunction}
+    </sql>
+    <sql id="common_set_block_update">
+        , delete_flg = #{deleteFlg}
+        , exclusive_flg = #{newExclusiveFlg}
+        , insert_datetime = #{insertDatetime}
+        , insert_user = #{insertUser}
+        , insert_function = #{insertFunction}
+        , update_datetime = #{updateDatetime}
+        , update_user = #{updateUser}
+        , update_function = #{updateFunction}
+        , delete_datetime = #{deleteDatetime}
+        , delete_user = #{deleteUser}
+        , delete_function = #{deleteFunction}
+    </sql>
+</mapper>

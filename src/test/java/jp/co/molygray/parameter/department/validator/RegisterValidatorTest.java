@@ -17,7 +17,7 @@ import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.ObjectError;
 import jp.co.molygray.parameter.department.RegisterParameter;
-import jp.co.molygray.util.MultiMessageSource;
+import jp.co.molygray.util.message.MultiMessageSource;
 
 /**
  * {@link RegisterValidator}のテストクラス

@@ -30,28 +30,32 @@ public class RegisterParameter {
   };
 
   /**
-   * postのマーカー・インターフェイス
+   * patchのマーカー・インターフェイス
    *
    * @author Moriaki Kogure
    * @version 0.0.1
    */
-  public interface Post {
+  public interface Patch {
   };
 
   /** 部署ID */
-  @LongField(groups = {Put.class})
-  private Long departmentId;
+  @NotEmpty(groups = {Patch.class})
+  @LongField(groups = {Patch.class})
+  private String departmentId;
+  /** 排他フラグ */
+  @NotEmpty(groups = {Patch.class})
+  private String exclusiveFlg;
   /** 親部署ID */
-  @LongField(groups = {Put.class, Post.class})
-  private Long parentDepartmentId;
+  @LongField(groups = {Put.class, Patch.class})
+  private String parentDepartmentId;
   /** 部署名 */
-  @NotEmpty(groups = {Put.class, Post.class})
+  @NotEmpty(groups = {Put.class, Patch.class})
   @Size(message = "{jakarta.validation.constraints.Size.max.message}", max = 64, groups = {
-      Put.class, Post.class})
+      Put.class, Patch.class})
   private String departmentName;
   /** 部署正式名 */
-  @NotEmpty(groups = {Put.class, Post.class})
+  @NotEmpty(groups = {Put.class, Patch.class})
   @Size(message = "{jakarta.validation.constraints.Size.max.message}", max = 128, groups = {
-      Put.class, Post.class})
+      Put.class, Patch.class})
   private String departmentFullName;
 }

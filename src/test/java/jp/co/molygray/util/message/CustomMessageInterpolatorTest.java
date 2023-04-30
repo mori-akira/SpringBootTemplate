@@ -1,4 +1,4 @@
-package jp.co.molygray.util;
+package jp.co.molygray.util.message;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;

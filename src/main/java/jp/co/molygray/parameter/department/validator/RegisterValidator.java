@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 import jp.co.molygray.parameter.department.RegisterParameter;
-import jp.co.molygray.util.MultiMessageSource;
+import jp.co.molygray.util.message.MultiMessageSource;
 
 /**
  * {@link RegisterParameter}のバリデータ

@@ -22,7 +22,7 @@ import lombok.experimental.SuperBuilder;
 public class EmployeeDto extends DtoBase {
 
   /** ID */
-  private long id;
+  private Long employeeId;
   /** 社員番号 */
   private String employeeNumber;
   /** 名前 */

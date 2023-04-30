@@ -1,8 +1,11 @@
 package jp.co.molygray.dao;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.stream.Stream;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -85,6 +88,202 @@ public class DepartmentDaoTest {
     List<DepartmentDto> expected = getTestData(input.getExpected());
     List<DepartmentDto> actual = departmentDao.searchList(input.getParentDepartmentIdList(),
         input.getDepartmentName(), input.getDepartmentFullName());
+    assertEquals(expected, actual);
+  }
+
+  /**
+   * {@link DepartmentDao#insert()}のテスト・メソッド
+   */
+  @Test
+  public void insertTest() {
+    // Nullable項目設定
+    DepartmentDto expected = DepartmentDto.builder()
+        .departmentId(9l)
+        .parentDepartmentId(1l)
+        .departmentName("hoge")
+        .departmentFullName("hogehoge")
+        .deleteFlg(false)
+        .newExclusiveFlg("abc")
+        .insertDatetime(
+            ZonedDateTime.of(2023, 1, 1, 0, 0, 0, 0, ZoneId.systemDefault()).toOffsetDateTime())
+        .insertUser(0l)
+        .insertFunction("xxx")
+        .updateDatetime(
+            ZonedDateTime.of(2023, 2, 2, 0, 0, 0, 0, ZoneId.systemDefault()).toOffsetDateTime())
+        .updateUser(1l)
+        .updateFunction("yyy")
+        .deleteDatetime(
+            ZonedDateTime.of(2023, 3, 3, 0, 0, 0, 0, ZoneId.systemDefault()).toOffsetDateTime())
+        .deleteUser(2l)
+        .deleteFunction("zzz")
+        .build();
+    DepartmentDto actual = DepartmentDto.builder()
+        .parentDepartmentId(1l)
+        .departmentName("hoge")
+        .departmentFullName("hogehoge")
+        .deleteFlg(false)
+        .newExclusiveFlg("abc")
+        .insertDatetime(
+            ZonedDateTime.of(2023, 1, 1, 0, 0, 0, 0, ZoneId.systemDefault()).toOffsetDateTime())
+        .insertUser(0l)
+        .insertFunction("xxx")
+        .updateDatetime(
+            ZonedDateTime.of(2023, 2, 2, 0, 0, 0, 0, ZoneId.systemDefault()).toOffsetDateTime())
+        .updateUser(1l)
+        .updateFunction("yyy")
+        .deleteDatetime(
+            ZonedDateTime.of(2023, 3, 3, 0, 0, 0, 0, ZoneId.systemDefault()).toOffsetDateTime())
+        .deleteUser(2l)
+        .deleteFunction("zzz")
+        .build();
+    departmentDao.insert(actual);
+    assertEquals(expected, actual);
+    expected.setExclusiveFlg("abc");
+    expected.setNewExclusiveFlg(null);
+    actual = departmentDao.select(actual.getDepartmentId()).orElse(null);
+    assertEquals(expected, actual);
+
+    // Nullable項目未設定
+    expected = DepartmentDto.builder()
+        .departmentId(10l)
+        .parentDepartmentId(null)
+        .departmentName("hoge2")
+        .departmentFullName("hogehoge2")
+        .deleteFlg(true)
+        .newExclusiveFlg("def")
+        .insertDatetime(
+            ZonedDateTime.of(2023, 1, 1, 0, 0, 0, 0, ZoneId.systemDefault()).toOffsetDateTime())
+        .insertUser(0l)
+        .insertFunction("xxxx")
+        .updateDatetime(
+            ZonedDateTime.of(2023, 2, 2, 0, 0, 0, 0, ZoneId.systemDefault()).toOffsetDateTime())
+        .updateUser(1l)
+        .updateFunction("yyyy")
+        .deleteDatetime(null)
+        .deleteUser(null)
+        .deleteFunction(null)
+        .build();
+    actual = DepartmentDto.builder()
+        .parentDepartmentId(null)
+        .departmentName("hoge2")
+        .departmentFullName("hogehoge2")
+        .deleteFlg(true)
+        .newExclusiveFlg("def")
+        .insertDatetime(
+            ZonedDateTime.of(2023, 1, 1, 0, 0, 0, 0, ZoneId.systemDefault()).toOffsetDateTime())
+        .insertUser(0l)
+        .insertFunction("xxxx")
+        .updateDatetime(
+            ZonedDateTime.of(2023, 2, 2, 0, 0, 0, 0, ZoneId.systemDefault()).toOffsetDateTime())
+        .updateUser(1l)
+        .updateFunction("yyyy")
+        .deleteDatetime(null)
+        .deleteUser(null)
+        .deleteFunction(null)
+        .build();
+    departmentDao.insert(actual);
+    assertEquals(expected, actual);
+    expected.setExclusiveFlg("def");
+    expected.setNewExclusiveFlg(null);
+    actual = departmentDao.select(actual.getDepartmentId()).orElse(null);
+    assertEquals(expected, actual);
+  }
+
+  /**
+   * {@link DepartmentDao#update()}のテスト・メソッド
+   */
+  @Test
+  public void updateTest() {
+    // Nullable項目設定
+    DepartmentDto expected = DepartmentDto.builder()
+        .departmentId(1l)
+        .parentDepartmentId(1l)
+        .departmentName("fuga")
+        .departmentFullName("fugafuga")
+        .deleteFlg(false)
+        .exclusiveFlg("abc")
+        .insertDatetime(
+            ZonedDateTime.of(2023, 1, 1, 0, 0, 0, 0, ZoneId.systemDefault()).toOffsetDateTime())
+        .insertUser(0l)
+        .insertFunction("xxx")
+        .updateDatetime(
+            ZonedDateTime.of(2023, 2, 2, 0, 0, 0, 0, ZoneId.systemDefault()).toOffsetDateTime())
+        .updateUser(1l)
+        .updateFunction("yyy")
+        .deleteDatetime(
+            ZonedDateTime.of(2023, 3, 3, 0, 0, 0, 0, ZoneId.systemDefault()).toOffsetDateTime())
+        .deleteUser(2l)
+        .deleteFunction("zzz")
+        .build();
+    DepartmentDto actual = DepartmentDto.builder()
+        .departmentId(1l)
+        .parentDepartmentId(1l)
+        .departmentName("fuga")
+        .departmentFullName("fugafuga")
+        .deleteFlg(false)
+        .exclusiveFlg("xxx")
+        .newExclusiveFlg("abc")
+        .insertDatetime(
+            ZonedDateTime.of(2023, 1, 1, 0, 0, 0, 0, ZoneId.systemDefault()).toOffsetDateTime())
+        .insertUser(0l)
+        .insertFunction("xxx")
+        .updateDatetime(
+            ZonedDateTime.of(2023, 2, 2, 0, 0, 0, 0, ZoneId.systemDefault()).toOffsetDateTime())
+        .updateUser(1l)
+        .updateFunction("yyy")
+        .deleteDatetime(
+            ZonedDateTime.of(2023, 3, 3, 0, 0, 0, 0, ZoneId.systemDefault()).toOffsetDateTime())
+        .deleteUser(2l)
+        .deleteFunction("zzz")
+        .build();
+    int count = departmentDao.update(actual);
+    assertEquals(1, count);
+    actual = departmentDao.select(1l).orElse(null);
+    assertEquals(expected, actual);
+
+    // Nullable項目未設定
+    expected = DepartmentDto.builder()
+        .departmentId(2l)
+        .parentDepartmentId(null)
+        .departmentName("fuga2")
+        .departmentFullName("fugafuga2")
+        .deleteFlg(true)
+        .exclusiveFlg("def")
+        .insertDatetime(
+            ZonedDateTime.of(2023, 1, 1, 0, 0, 0, 0, ZoneId.systemDefault()).toOffsetDateTime())
+        .insertUser(0l)
+        .insertFunction("xxxx")
+        .updateDatetime(
+            ZonedDateTime.of(2023, 2, 2, 0, 0, 0, 0, ZoneId.systemDefault()).toOffsetDateTime())
+        .updateUser(1l)
+        .updateFunction("yyyy")
+        .deleteDatetime(null)
+        .deleteUser(null)
+        .deleteFunction(null)
+        .build();
+    actual = DepartmentDto.builder()
+        .departmentId(2l)
+        .parentDepartmentId(null)
+        .departmentName("fuga2")
+        .departmentFullName("fugafuga2")
+        .deleteFlg(true)
+        .exclusiveFlg("xxx")
+        .newExclusiveFlg("def")
+        .insertDatetime(
+            ZonedDateTime.of(2023, 1, 1, 0, 0, 0, 0, ZoneId.systemDefault()).toOffsetDateTime())
+        .insertUser(0l)
+        .insertFunction("xxxx")
+        .updateDatetime(
+            ZonedDateTime.of(2023, 2, 2, 0, 0, 0, 0, ZoneId.systemDefault()).toOffsetDateTime())
+        .updateUser(1l)
+        .updateFunction("yyyy")
+        .deleteDatetime(null)
+        .deleteUser(null)
+        .deleteFunction(null)
+        .build();
+    count = departmentDao.update(actual);
+    assertEquals(1, count);
+    actual = departmentDao.select(2l).orElse(null);
     assertEquals(expected, actual);
   }
 }

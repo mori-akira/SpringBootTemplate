@@ -22,7 +22,7 @@ import lombok.experimental.SuperBuilder;
 public class DepartmentDto extends DtoBase {
 
   /** 部署ID */
-  private long departmentId;
+  private Long departmentId;
   /** 親部署ID */
   private Long parentDepartmentId;
   /** 部署名 */

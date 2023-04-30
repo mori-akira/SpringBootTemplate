@@ -45,4 +45,20 @@ public interface DepartmentDao {
       @Param("parentDepartmentIdList") List<Long> parentDepartmentIdList,
       @Param("departmentName") String departmentName,
       @Param("departmentFullName") String departmentFullName);
+
+  /**
+   * 登録メソッド
+   *
+   * @param dto 部署Dtoインスタンス
+   * @return 部署ID
+   */
+  public Long insert(DepartmentDto dto);
+
+  /**
+   * 更新メソッド
+   *
+   * @param dto 部署Dtoインスタンス
+   * @return 更新件数
+   */
+  public int update(DepartmentDto dto);
 }

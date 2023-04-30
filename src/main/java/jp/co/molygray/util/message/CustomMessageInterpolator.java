@@ -1,4 +1,4 @@
-package jp.co.molygray.util;
+package jp.co.molygray.util.message;
 
 import java.util.Locale;
 import java.util.Optional;

@@ -14,3 +14,11 @@ jp:
             RegisterValidator:
               departmentFullNameNotEndsWithDepartmentName:
                 message: '{0}は{1}で終わる必要があります。'
+
+# ビジネスエラーのエラーメッセージ定義
+      service:
+        DepartmentService:
+          duplicateDepartmentName:
+            message: '部署名が重複しています。'
+          duplicateDepartmentFullName:
+            message: '部署正式名が重複しています。'

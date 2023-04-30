@@ -9,13 +9,15 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import jp.co.molygray.enums.ErrorSummaryEnum;
+import jp.co.molygray.exception.BusinessErrorException;
 import jp.co.molygray.response.common.ErrorResponse;
-import jp.co.molygray.util.MultiMessageSource;
+import jp.co.molygray.util.message.MultiMessageSource;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -50,12 +52,41 @@ public class ApiControllerAdvice extends ResponseEntityExceptionHandler {
   }
 
   /**
+   * {@inheritDoc}
+   */
+  @Override
+  protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+      HttpHeaders headers,
+      HttpStatusCode status,
+      WebRequest request) {
+    log.error("MethodArgumentNotValidException occured.", ex);
+    return handleExceptionInternal(ex,
+        toErrorResponse(ex.getAllErrors(), ErrorSummaryEnum.INPUT_ERROR), headers,
+        status, request);
+  }
+
+  /**
+   * ビジネスエラーをハンドリングするメソッド
+   *
+   * @param ex 発生した例外
+   * @return エラーレスポンス・エンティティ
+   */
+  @ExceptionHandler(BusinessErrorException.class)
+  public ResponseEntity<ErrorResponse> handleBusinessErrorException(BusinessErrorException ex) {
+    log.error("BusinessErrorException occured.", ex);
+    HttpHeaders header = new HttpHeaders();
+    return new ResponseEntity<>(
+        ErrorResponse.builder()
+            .errorSummary(ex.getErrorSummary().getSummary())
+            .errorDetailList(ex.getErrorDetailList())
+            .build(),
+        header, HttpStatus.INTERNAL_SERVER_ERROR);
+  }
+
+  /**
    * システムエラーをハンドリングするメソッド
    *
    * @param ex 発生した例外
-   * @param headers HTTPヘッダ
-   * @param status HTTPステータス
-   * @param request HTTPリクエスト情報
    * @return エラーレスポンス・エンティティ
    */
   @ExceptionHandler(Exception.class)

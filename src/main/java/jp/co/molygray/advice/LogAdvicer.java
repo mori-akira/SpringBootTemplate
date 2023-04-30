@@ -2,12 +2,15 @@ package jp.co.molygray.advice;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.Signature;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import jp.co.molygray.util.accessor.FunctionIdAccessor;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -21,6 +24,10 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class LogAdvicer {
 
+  /** 機能IDアクセサ */
+  @Autowired
+  private FunctionIdAccessor functionIdAccessor;
+
   /**
    * コントローラの処理前にログ出力を差し込むメソッド
    *
@@ -30,7 +37,9 @@ public class LogAdvicer {
   public void logBeforeController(JoinPoint joinPoint) {
     String methodName = getMethodName(joinPoint);
     List<Object> args = getArguments(joinPoint);
-    log.info("before entry: {}, args: {}", methodName, args);
+    log.info("before entry: {}, functionId: {}, args: {}", methodName,
+        Optional.ofNullable(functionIdAccessor.getFunctionId()).map(Object::toString).orElse(""),
+        args);
   }
 
   /**
@@ -43,7 +52,9 @@ public class LogAdvicer {
       returning = "returnValue")
   public void logAfterController(JoinPoint joinPoint, Object returnValue) {
     String methodName = getMethodName(joinPoint);
-    log.info("after entry: {}, return: {}", methodName, returnValue);
+    log.info("after entry: {}, functionId: {}, return: {}", methodName,
+        Optional.ofNullable(functionIdAccessor.getFunctionId()).map(Object::toString).orElse(""),
+        returnValue);
   }
 
   /**

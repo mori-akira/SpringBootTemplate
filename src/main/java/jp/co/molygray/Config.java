@@ -8,12 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.validation.beanvalidation.CustomValidatorBean;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import jakarta.annotation.PostConstruct;
 import jakarta.annotation.PreDestroy;
 import jakarta.validation.MessageInterpolator;
-import jp.co.molygray.util.CustomMessageInterpolator;
-import jp.co.molygray.util.MultiMessageSource;
+import jp.co.molygray.advice.ApiInterceptor;
 import jp.co.molygray.util.SystemConstants;
+import jp.co.molygray.util.message.CustomMessageInterpolator;
+import jp.co.molygray.util.message.MultiMessageSource;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -24,11 +27,14 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Configuration
 @Slf4j
-public class Config {
+public class Config implements WebMvcConfigurer {
 
   /** システム定数 */
   @Autowired
   private SystemConstants systemConstants;
+  /** API処理のインターセプター */
+  @Autowired
+  private ApiInterceptor apiInterceptor;
 
   /**
    * DI完了後に呼び出されるメソッド
@@ -94,5 +100,13 @@ public class Config {
   @Bean
   MessageInterpolator messageInterpolator() {
     return new CustomMessageInterpolator();
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public void addInterceptors(InterceptorRegistry registry) {
+    registry.addInterceptor(apiInterceptor).order(0);
   }
 }

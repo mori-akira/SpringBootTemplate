@@ -1,12 +1,17 @@
 package jp.co.molygray.service;
 
 import java.util.List;
+import org.apache.commons.collections4.CollectionUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import jp.co.molygray.dao.entity.DepartmentDao;
 import jp.co.molygray.dto.DepartmentDto;
+import jp.co.molygray.exception.BusinessErrorException;
 import jp.co.molygray.model.DepartmentModel;
+import jp.co.molygray.response.common.ErrorResponse.ErrorDetail;
+import jp.co.molygray.util.DtoCommonFieldSetter;
+import jp.co.molygray.util.message.MultiMessageSource;
 
 /**
  * 部署サービスクラス
@@ -20,6 +25,12 @@ public class DepartmentService {
   /** 部署Dao */
   @Autowired
   private DepartmentDao departmentDao;
+  /** メッセージソース */
+  @Autowired
+  private MultiMessageSource messageSource;
+  /** Dto共通フィールドセッター */
+  @Autowired
+  private DtoCommonFieldSetter dtoCommonFieldSetter;
 
   /**
    * 部署を一件取得するメソッド
@@ -55,5 +66,59 @@ public class DepartmentService {
           return model;
         })
         .toList();
+  }
+
+  /**
+   * 部署を登録するメソッド
+   *
+   * @param model 部署モデル
+   * @return 登録された部署ID
+   */
+  public Long insert(DepartmentModel model) {
+    checkDuplicateDepartmentName(model.getDepartmentName());
+    checkDuplicateDepartmentFullName(model.getDepartmentFullName());
+    DepartmentDto dto = new DepartmentDto();
+    BeanUtils.copyProperties(model, dto);
+    dtoCommonFieldSetter.setCommonFieldWhenInsert(dto);
+    departmentDao.insert(dto);
+    return dto.getDepartmentId();
+  }
+
+  /**
+   * 部署名の重複チェックを行うメソッド
+   *
+   * @param departmentName 部署名
+   */
+  private void checkDuplicateDepartmentName(String departmentName) {
+    List<DepartmentDto> modelList = departmentDao.searchList(null, departmentName, null);
+    if (CollectionUtils.isNotEmpty(modelList)) {
+      String errorCode = "duplicateDepartmentName";
+      String errorMessage = messageSource.getMessage(this.getClass(), errorCode);
+      throw new BusinessErrorException(
+          ErrorDetail.builder()
+              .errorCode(errorCode)
+              .errorMessage(errorMessage)
+              .errorItem("departmentName")
+              .build());
+    }
+  }
+
+  /**
+   * 部署正式名の重複チェックを行うメソッド
+   *
+   * @param departmentFullName 部署正式名
+   */
+  private void checkDuplicateDepartmentFullName(String departmentFullName) {
+    List<DepartmentDto> modelList = departmentDao.searchList(null, null, departmentFullName);
+    if (CollectionUtils.isNotEmpty(modelList)) {
+      String errorCode = "duplicateDepartmentFullName";
+      String errorMessage = messageSource.getMessage(this.getClass(), errorCode);
+      throw new BusinessErrorException(
+          ErrorDetail.builder()
+              .errorCode(errorCode)
+              .errorMessage(errorMessage)
+              .errorItem("departmentFullName")
+              .build());
+    }
   }
 }

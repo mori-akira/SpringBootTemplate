@@ -15,6 +15,8 @@ public enum ErrorSummaryEnum {
 
     /** 入力エラー */
     INPUT_ERROR("Input Error"),
+    /** ビジネスエラー */
+    BUISINESS_ERROR("Business Error"),
     /** システムエラー */
     SYSTEM_ERROR("System Error");
 
