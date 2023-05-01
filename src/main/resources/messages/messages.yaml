@@ -15,7 +15,7 @@ jp:
               departmentFullNameNotEndsWithDepartmentName:
                 message: '{0}は{1}で終わる必要があります。'
 
-# ビジネスエラーのエラーメッセージ定義
+# システムメッセージ定義
       service:
         DepartmentService:
           duplicateDepartmentName:
@@ -24,5 +24,8 @@ jp:
             message: '部署正式名が重複しています。'
           notExistsDepartment:
             message: '部署が存在しません。'
-          exclusiveError:
-            message: '部署が更新されています。'
+      dao:
+        entity:
+          DepartmentDao:
+            exclusiveError:
+              message: '部署が更新されています。'

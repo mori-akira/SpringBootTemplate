@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import jp.co.molygray.annotation.WithExclusiveCheck;
 import jp.co.molygray.dto.DepartmentDto;
 
 /**
@@ -60,5 +61,6 @@ public interface DepartmentDao {
    * @param dto 部署Dtoインスタンス
    * @return 更新件数
    */
+  @WithExclusiveCheck
   public int update(DepartmentDto dto);
 }

@@ -1,5 +1,6 @@
 package jp.co.molygray.service;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 import static org.mockito.ArgumentMatchers.any;
@@ -344,5 +345,65 @@ public class DepartmentServiceTest {
             .build()),
         ex.getErrorDetailList());
     assertEquals(ErrorSummaryEnum.BUISINESS_ERROR, ex.getErrorSummary());
+  }
+
+  /**
+   * {@link DepartmentService#update()}のテストメソッド
+   */
+  @Test
+  public void updateTestOk() {
+    when(departmentDao.select(eq(1l))).thenReturn(Optional.of(
+        DepartmentDto.builder()
+            .departmentId(1l)
+            .parentDepartmentId(2l)
+            .departmentName("hoge")
+            .departmentFullName("fuga")
+            .deleteFlg(false)
+            .exclusiveFlg("xxx")
+            .insertDatetime(
+                ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.systemDefault()).toOffsetDateTime())
+            .insertUser(1l)
+            .insertFunction("func")
+            .updateDatetime(
+                ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.systemDefault()).toOffsetDateTime())
+            .updateUser(1l)
+            .updateFunction("func")
+            .deleteDatetime(null)
+            .deleteUser(null)
+            .deleteFunction(null)
+            .build()));
+    when(departmentDao.searchList(eq(null), eq("hoge"), eq(null)))
+        .thenReturn(Collections.emptyList());
+    when(departmentDao.searchList(eq(null), eq(null), eq("fuga")))
+        .thenReturn(Collections.emptyList());
+    when(departmentDao.update(any(DepartmentDto.class))).thenReturn(1);
+    DepartmentModel model = DepartmentModel.builder()
+        .departmentId(1l)
+        .exclusiveFlg("xxx")
+        .parentDepartmentId(2l)
+        .departmentName("hoge")
+        .departmentFullName("fuga")
+        .build();
+    assertDoesNotThrow(() -> departmentService.update(model));
+    verify(departmentDao).update(eq(DepartmentDto.builder()
+        .departmentId(1l)
+        .parentDepartmentId(2l)
+        .departmentName("hoge")
+        .departmentFullName("fuga")
+        .deleteFlg(false)
+        .exclusiveFlg("xxx")
+        .newExclusiveFlg("aaaaaaaabbbbccccddddeeeeeeeeeeee")
+        .insertDatetime(
+            ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.systemDefault()).toOffsetDateTime())
+        .insertUser(0l)
+        .insertFunction("func")
+        .updateDatetime(
+            ZonedDateTime.of(2023, 1, 1, 0, 0, 0, 0, ZoneId.systemDefault()).toOffsetDateTime())
+        .updateUser(1l)
+        .updateFunction("func")
+        .deleteDatetime(null)
+        .deleteUser(null)
+        .deleteFunction(null)
+        .build()));
   }
 }

@@ -1,6 +1,7 @@
 package jp.co.molygray.dao;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -12,6 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import jp.co.molygray.dao.entity.DepartmentDao;
 import jp.co.molygray.dto.DepartmentDto;
+import jp.co.molygray.enums.ErrorSummaryEnum;
+import jp.co.molygray.exception.BusinessErrorException;
+import jp.co.molygray.response.common.ErrorResponse.ErrorDetail;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -78,7 +82,7 @@ public class DepartmentDaoTest {
   }
 
   /**
-   * {@link DepartmentDao#selectList()}のテスト・メソッド
+   * {@link DepartmentDao#selectList()}のテストメソッド
    *
    * @param input テストデータ
    */
@@ -92,7 +96,7 @@ public class DepartmentDaoTest {
   }
 
   /**
-   * {@link DepartmentDao#insert()}のテスト・メソッド
+   * {@link DepartmentDao#insert()}のテストメソッド
    */
   @Test
   public void insertTest() {
@@ -190,7 +194,7 @@ public class DepartmentDaoTest {
   }
 
   /**
-   * {@link DepartmentDao#update()}のテスト・メソッド
+   * {@link DepartmentDao#update()}のテストメソッド
    */
   @Test
   public void updateTest() {
@@ -215,7 +219,7 @@ public class DepartmentDaoTest {
         .deleteUser(2l)
         .deleteFunction("zzz")
         .build();
-    DepartmentDto actual = DepartmentDto.builder()
+    DepartmentDto dto = DepartmentDto.builder()
         .departmentId(1l)
         .parentDepartmentId(1l)
         .departmentName("fuga")
@@ -236,9 +240,9 @@ public class DepartmentDaoTest {
         .deleteUser(2l)
         .deleteFunction("zzz")
         .build();
-    int count = departmentDao.update(actual);
+    int count = departmentDao.update(dto);
     assertEquals(1, count);
-    actual = departmentDao.select(1l).orElse(null);
+    DepartmentDto actual = departmentDao.select(1l).orElse(null);
     assertEquals(expected, actual);
 
     // Nullable項目未設定
@@ -261,7 +265,7 @@ public class DepartmentDaoTest {
         .deleteUser(null)
         .deleteFunction(null)
         .build();
-    actual = DepartmentDto.builder()
+    dto = DepartmentDto.builder()
         .departmentId(2l)
         .parentDepartmentId(null)
         .departmentName("fuga2")
@@ -281,9 +285,42 @@ public class DepartmentDaoTest {
         .deleteUser(null)
         .deleteFunction(null)
         .build();
-    count = departmentDao.update(actual);
+    count = departmentDao.update(dto);
     assertEquals(1, count);
     actual = departmentDao.select(2l).orElse(null);
     assertEquals(expected, actual);
+  }
+
+  /**
+   * {@link DepartmentDao#update()}の排他チェックのテストメソッド
+   */
+  @Test
+  public void updateTestExclusiveCheck() {
+    DepartmentDto dto = DepartmentDto.builder()
+        .departmentId(1l)
+        .parentDepartmentId(1l)
+        .departmentName("fuga")
+        .departmentFullName("fugafuga")
+        .deleteFlg(false)
+        .exclusiveFlg("yyy")
+        .newExclusiveFlg("abc")
+        .insertDatetime(
+            ZonedDateTime.of(2023, 1, 1, 0, 0, 0, 0, ZoneId.systemDefault()).toOffsetDateTime())
+        .insertUser(0l)
+        .insertFunction("xxx")
+        .updateDatetime(
+            ZonedDateTime.of(2023, 2, 2, 0, 0, 0, 0, ZoneId.systemDefault()).toOffsetDateTime())
+        .updateUser(1l)
+        .updateFunction("yyy")
+        .deleteDatetime(
+            ZonedDateTime.of(2023, 3, 3, 0, 0, 0, 0, ZoneId.systemDefault()).toOffsetDateTime())
+        .deleteUser(2l)
+        .deleteFunction("zzz")
+        .build();
+    BusinessErrorException ex =
+        assertThrowsExactly(BusinessErrorException.class, () -> departmentDao.update(dto));
+    assertEquals(ErrorSummaryEnum.BUISINESS_ERROR, ex.getErrorSummary());
+    assertEquals(List.of(new ErrorDetail("exclusiveError", "部署が更新されています。", null)),
+        ex.getErrorDetailList());
   }
 }

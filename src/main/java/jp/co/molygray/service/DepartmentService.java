@@ -101,15 +101,7 @@ public class DepartmentService {
     }
     BeanUtils.copyProperties(model, dto);
     dtoCommonFieldSetter.setCommonFieldWhenUpdate(dto);
-    if (departmentDao.update(dto) <= 0) {
-      String errorCode = "exclusiveError";
-      String errorMessage = messageSource.getMessage(this.getClass(), errorCode);
-      throw new BusinessErrorException(
-          ErrorDetail.builder()
-              .errorCode(errorCode)
-              .errorMessage(errorMessage)
-              .build());
-    }
+    departmentDao.update(dto);
   }
 
   /**
@@ -122,15 +114,7 @@ public class DepartmentService {
     DepartmentDto dto = departmentDao.select(departmentId).orElse(null);
     checkExistenceDepartment(dto);
     dtoCommonFieldSetter.setCommonFieldWhenDelete(dto);
-    if (departmentDao.update(dto) <= 0) {
-      String errorCode = "exclusiveError";
-      String errorMessage = messageSource.getMessage(this.getClass(), errorCode);
-      throw new BusinessErrorException(
-          ErrorDetail.builder()
-              .errorCode(errorCode)
-              .errorMessage(errorMessage)
-              .build());
-    }
+    departmentDao.update(dto);
   }
 
   /**
