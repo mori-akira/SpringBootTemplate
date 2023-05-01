@@ -7,10 +7,12 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -31,10 +33,12 @@ import jp.co.molygray.enums.ErrorSummaryEnum;
 import jp.co.molygray.model.DepartmentModel;
 import jp.co.molygray.parameter.department.GetParameter;
 import jp.co.molygray.parameter.department.ListParameter;
+import jp.co.molygray.parameter.department.RegisterParameter;
 import jp.co.molygray.parameter.department.validator.RegisterValidator;
 import jp.co.molygray.response.common.ErrorResponse;
 import jp.co.molygray.response.department.GetResponse;
 import jp.co.molygray.response.department.ListResponse;
+import jp.co.molygray.response.department.PutResponse;
 import jp.co.molygray.service.DepartmentService;
 
 /**
@@ -411,5 +415,33 @@ public class DepartmentControllerTest {
     // メソッド呼び出し検証
     verify(departmentController).list(any());
     verify(departmentService).searchList(any(), any(), any());
+  }
+
+  /**
+   * {@link DepartmentController#put()}の正常系のテストメソッド
+   */
+  @Test
+  public void putTestOk() throws Exception {
+    // サービスのMock設定
+    when(departmentService.insert(any()))
+        .thenReturn(1l);
+    // APIを呼び出して検証
+    mockMvc.perform(
+        put("/api/department/put")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(new HashMap<>() {
+              {
+                put("parentDepartmentId", "1");
+                put("departmentName", "hoge");
+                put("departmentFullName", "hogehoge");
+              }
+            })))
+      .andExpect(status().isCreated())
+      .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+      .andExpect(content().json(
+          objectMapper.writeValueAsString(new PutResponse(1l))));
+    // メソッド呼び出し検証
+    verify(departmentController).put(eq(new RegisterParameter(null, null, "1", "hoge", "hogehoge")));
+    verify(departmentService).insert(eq(new DepartmentModel(null, 1l, "hoge", "hogehoge", null)));
   }
 }
