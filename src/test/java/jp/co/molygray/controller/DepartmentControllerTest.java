@@ -100,6 +100,7 @@ public class DepartmentControllerTest {
         .parentDepartmentId(null)
         .departmentName("開発部")
         .departmentFullName("開発部")
+        .exclusiveFlg("xxx")
         .build();
     // サービスのMock設定
     when(departmentService.get(anyLong())).thenReturn(model);
@@ -218,18 +219,21 @@ public class DepartmentControllerTest {
             .parentDepartmentId(null)
             .departmentName("開発部")
             .departmentFullName("開発部")
+            .exclusiveFlg("xxx")
             .build(),
         DepartmentModel.builder()
             .departmentId(2l)
             .parentDepartmentId(1l)
             .departmentName("開発課A")
             .departmentFullName("開発部開発課A")
+            .exclusiveFlg("xxx")
             .build(),
         DepartmentModel.builder()
             .departmentId(3l)
             .parentDepartmentId(1l)
             .departmentName("開発課B")
             .departmentFullName("開発部開発課B")
+            .exclusiveFlg("xxx")
             .build());
     // サービスのMock設定
     when(departmentService.searchList(any(), any(), any()))
@@ -266,18 +270,21 @@ public class DepartmentControllerTest {
             .parentDepartmentId(null)
             .departmentName("開発部")
             .departmentFullName("開発部")
+            .exclusiveFlg("xxx")
             .build(),
         DepartmentModel.builder()
             .departmentId(2l)
             .parentDepartmentId(1l)
             .departmentName("開発課A")
             .departmentFullName("開発部開発課A")
+            .exclusiveFlg("xxx")
             .build(),
         DepartmentModel.builder()
             .departmentId(3l)
             .parentDepartmentId(1l)
             .departmentName("開発課B")
             .departmentFullName("開発部開発課B")
+            .exclusiveFlg("xxx")
             .build());
     // サービスのMock設定
     when(departmentService.searchList(any(), any(), any()))

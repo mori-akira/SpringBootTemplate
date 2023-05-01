@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import jakarta.validation.groups.Default;
 import jp.co.molygray.model.DepartmentModel;
 import jp.co.molygray.parameter.department.GetParameter;
 import jp.co.molygray.parameter.department.ListParameter;
@@ -99,7 +100,7 @@ public class DepartmentController {
   @PutMapping("/put")
   @ResponseStatus(value = HttpStatus.CREATED)
   public PutResponse put(
-      @RequestBody @Validated({Put.class}) RegisterParameter parameter)
+      @RequestBody @Validated({Default.class, Put.class}) RegisterParameter parameter)
       throws Exception {
     DepartmentModel model = convertParameterToModel(parameter);
     return new PutResponse(departmentService.insert(model));

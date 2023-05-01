@@ -25,4 +25,6 @@ public class DepartmentModel {
   private String departmentName;
   /** 部署正式名 */
   private String departmentFullName;
+  /** 排他フラグ */
+  private String exclusiveFlg;
 }
