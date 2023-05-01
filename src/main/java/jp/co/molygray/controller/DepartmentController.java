@@ -48,9 +48,9 @@ public class DepartmentController {
    * @param binder バインダー
    */
   @InitBinder
-  public void initBinder(WebDataBinder binder) {
+  void initBinder(WebDataBinder binder) {
     if (registerValidator.supports(binder.getTarget().getClass())) {
-      binder.setValidator(registerValidator);
+      binder.addValidators(registerValidator);
     }
   }
 
@@ -100,7 +100,7 @@ public class DepartmentController {
   @PutMapping("/put")
   @ResponseStatus(value = HttpStatus.CREATED)
   public PutResponse put(
-      @RequestBody @Validated({Default.class, Put.class}) RegisterParameter parameter)
+      @Validated({Put.class, Default.class}) @RequestBody RegisterParameter parameter)
       throws Exception {
     DepartmentModel model = convertParameterToModel(parameter);
     return new PutResponse(departmentService.insert(model));

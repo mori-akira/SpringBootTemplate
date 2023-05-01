@@ -28,6 +28,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.validation.Errors;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jp.co.molygray.enums.ErrorSummaryEnum;
 import jp.co.molygray.model.DepartmentModel;
@@ -55,7 +56,7 @@ public class DepartmentControllerTest {
   @MockBean
   private DepartmentService departmentService;
   /** {@link RegisterValidator}のモックインスタンス */
-  @MockBean
+  @SpyBean
   private RegisterValidator registerValidator;
   /** {@link DepartmentController}のモック・インスタンス */
   @SpyBean
@@ -341,7 +342,7 @@ public class DepartmentControllerTest {
   @Test
   public void listTestValidation1()
       throws Exception {
-    var expected = ErrorResponse.builder()
+    ErrorResponse expected = ErrorResponse.builder()
         .errorSummary(ErrorSummaryEnum.INPUT_ERROR.getSummary())
         .errorDetailList(Arrays.asList(
             ErrorResponse.ErrorDetail.builder()
@@ -441,7 +442,194 @@ public class DepartmentControllerTest {
       .andExpect(content().json(
           objectMapper.writeValueAsString(new PutResponse(1l))));
     // メソッド呼び出し検証
-    verify(departmentController).put(eq(new RegisterParameter(null, null, "1", "hoge", "hogehoge")));
-    verify(departmentService).insert(eq(new DepartmentModel(null, 1l, "hoge", "hogehoge", null)));
+    verify(departmentController).put(
+        eq(new RegisterParameter(null, null, "1", "hoge", "hogehoge")));
+    verify(departmentService).insert(
+        eq(new DepartmentModel(null, null, 1l, "hoge", "hogehoge")));
+    verify(registerValidator).validate(
+        eq(new RegisterParameter(null, null, "1", "hoge", "hogehoge")), any(Errors.class));
+  }
+
+  /**
+   * {@link DepartmentController#put()}のバリデーションのテストメソッド1
+   * <ul>
+   * <li>部署IDに空文字以外の値を設定する</li>
+   * <li>排他フラグに空文字以外の値を設定する</li>
+   * <li>親部署IDにLongで認識できない値を設定する</li>
+   * <li>部署名に空文字を設定する</li>
+   * <li>部署正式名に空文字を設定する</li>
+   * </ul>
+   */
+  @Test
+  public void putTestValidation1() throws Exception {
+    // サービスのMock設定
+    when(departmentService.insert(any()))
+        .thenReturn(1l);
+    // APIを呼び出して検証
+    ErrorResponse expected = ErrorResponse.builder()
+        .errorSummary(ErrorSummaryEnum.INPUT_ERROR.getSummary())
+        .errorDetailList(Arrays.asList(
+            ErrorResponse.ErrorDetail.builder()
+                .errorCode("Empty")
+                .errorMessage("部署IDは入力できません。")
+                .errorItem("departmentId")
+                .build(),
+            ErrorResponse.ErrorDetail.builder()
+                .errorCode("Empty")
+                .errorMessage("排他フラグは入力できません。")
+                .errorItem("exclusiveFlg")
+                .build(),
+            ErrorResponse.ErrorDetail.builder()
+                .errorCode("LongField")
+                .errorMessage("親部署IDは整数で入力してください。")
+                .errorItem("parentDepartmentId")
+                .build(),
+            ErrorResponse.ErrorDetail.builder()
+                .errorCode("NotEmpty")
+                .errorMessage("部署名を入力してください。")
+                .errorItem("departmentName")
+                .build(),
+            ErrorResponse.ErrorDetail.builder()
+                .errorCode("NotEmpty")
+                .errorMessage("部署正式名を入力してください。")
+                .errorItem("departmentFullName")
+                .build()))
+        .build();
+    mockMvc.perform(
+        put("/api/department/put")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(new HashMap<>() {
+              {
+                put("departmentId", "1");
+                put("exclusiveFlg", "xxx");
+                put("parentDepartmentId", "xxx");
+                put("departmentName", "");
+                put("departmentFullName", "");
+              }
+            })))
+      .andExpect(status().isBadRequest())
+      .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+      .andExpect(content().json(objectMapper.writeValueAsString(expected)));
+    // メソッド呼び出し検証
+    verify(departmentController, never()).put(any(RegisterParameter.class));
+    verify(departmentService, never()).insert(any(DepartmentModel.class));
+    verify(registerValidator, never()).validate(any(RegisterParameter.class), any(Errors.class));
+  }
+
+  /**
+   * {@link DepartmentController#put()}のバリデーションのテストメソッド2
+   * <ul>
+   * <li>部署名に65文字の値を設定する</li>
+   * <li>部署正式名に129文字の値を設定する</li>
+   * </ul>
+   */
+  @Test
+  public void putTestValidation2() throws Exception {
+    // サービスのMock設定
+    when(departmentService.insert(any()))
+        .thenReturn(1l);
+    // APIを呼び出して検証
+    ErrorResponse expected = ErrorResponse.builder()
+        .errorSummary(ErrorSummaryEnum.INPUT_ERROR.getSummary())
+        .errorDetailList(Arrays.asList(
+            ErrorResponse.ErrorDetail.builder()
+                .errorCode("Size")
+                .errorMessage("部署名は64文字以下で入力してください。")
+                .errorItem("departmentName")
+                .build(),
+            ErrorResponse.ErrorDetail.builder()
+                .errorCode("Size")
+                .errorMessage("部署正式名は128文字以下で入力してください。")
+                .errorItem("departmentFullName")
+                .build()))
+        .build();
+    mockMvc.perform(
+        put("/api/department/put")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(new HashMap<>() {
+              {
+                put("departmentName",
+                    Stream.generate(() -> "x").limit(65).collect(Collectors.joining()));
+                put("departmentFullName",
+                    Stream.generate(() -> "x").limit(129).collect(Collectors.joining()));
+              }
+            })))
+      .andExpect(status().isBadRequest())
+      .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+      .andExpect(content().json(objectMapper.writeValueAsString(expected)));
+    // メソッド呼び出し検証
+    verify(departmentController, never()).put(any(RegisterParameter.class));
+    verify(departmentService, never()).insert(any(DepartmentModel.class));
+    verify(registerValidator, never()).validate(any(RegisterParameter.class), any(Errors.class));
+  }
+
+  /**
+   * {@link DepartmentController#put()}のバリデーションのテストメソッド3
+   * <ul>
+   * <li>部署正式名が部署名で終わらない場合</li>
+   * </ul>
+   */
+  @Test
+  public void putTestValidation3() throws Exception {
+    // サービスのMock設定
+    when(departmentService.insert(any()))
+        .thenReturn(1l);
+    // APIを呼び出して検証
+    ErrorResponse expected = ErrorResponse.builder()
+        .errorSummary(ErrorSummaryEnum.INPUT_ERROR.getSummary())
+        .errorDetailList(Arrays.asList(
+            ErrorResponse.ErrorDetail.builder()
+                .errorCode("departmentFullNameNotEndsWithDepartmentName")
+                .errorMessage("部署正式名は部署名で終わる必要があります。")
+                .errorItem(null)
+                .build()))
+        .build();
+    mockMvc.perform(
+        put("/api/department/put")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(new HashMap<>() {
+              {
+                put("departmentName", "hoge");
+                put("departmentFullName", "hogee");
+              }
+            })))
+      .andExpect(status().isBadRequest())
+      .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+      .andExpect(content().json(objectMapper.writeValueAsString(expected)));
+    // メソッド呼び出し検証
+    verify(departmentController, never()).put(any(RegisterParameter.class));
+    verify(departmentService, never()).insert(any(DepartmentModel.class));
+    verify(registerValidator).validate(any(RegisterParameter.class), any(Errors.class));
+  }
+
+  /**
+   * {@link DepartmentController#put()}の境界値のテストメソッド
+   * <ul>
+   * <li>部署名に64文字の値を設定する</li>
+   * <li>部署正式名に128文字の値を設定する</li>
+   * </ul>
+   */
+  @Test
+  public void putTestBorder() throws Exception {
+    // サービスのMock設定
+    when(departmentService.insert(any()))
+        .thenReturn(1l);
+    // APIを呼び出して検証
+    mockMvc.perform(
+        put("/api/department/put")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(new HashMap<>() {
+              {
+                put("departmentName",
+                    Stream.generate(() -> "x").limit(64).collect(Collectors.joining()));
+                put("departmentFullName",
+                    Stream.generate(() -> "x").limit(128).collect(Collectors.joining()));
+              }
+            })))
+      .andExpect(status().isCreated());
+    // メソッド呼び出し検証
+    verify(departmentController).put(any(RegisterParameter.class));
+    verify(departmentService).insert(any(DepartmentModel.class));
+    verify(registerValidator).validate(any(RegisterParameter.class), any(Errors.class));
   }
 }

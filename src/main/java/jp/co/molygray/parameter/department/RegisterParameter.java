@@ -2,7 +2,6 @@ package jp.co.molygray.parameter.department;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
-import jakarta.validation.groups.Default;
 import jp.co.molygray.constraints.Empty;
 import jp.co.molygray.constraints.LongField;
 import lombok.AllArgsConstructor;
@@ -50,16 +49,14 @@ public class RegisterParameter {
   @NotEmpty(groups = {Patch.class})
   private String exclusiveFlg;
   /** 親部署ID */
-  @LongField(groups = {Default.class})
+  @LongField
   private String parentDepartmentId;
   /** 部署名 */
-  @NotEmpty(groups = {Default.class})
-  @Size(message = "{jakarta.validation.constraints.Size.max.message}", max = 64,
-      groups = {Default.class})
+  @NotEmpty
+  @Size(message = "{jakarta.validation.constraints.Size.max.message}", max = 64)
   private String departmentName;
   /** 部署正式名 */
-  @NotEmpty(groups = {Default.class})
-  @Size(message = "{jakarta.validation.constraints.Size.max.message}", max = 128,
-      groups = {Default.class})
+  @NotEmpty
+  @Size(message = "{jakarta.validation.constraints.Size.max.message}", max = 128)
   private String departmentFullName;
 }

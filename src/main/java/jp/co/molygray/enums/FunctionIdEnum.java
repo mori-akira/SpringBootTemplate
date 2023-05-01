@@ -1,7 +1,7 @@
 package jp.co.molygray.enums;
 
 import java.util.Arrays;
-import java.util.Map;
+import java.util.Map.Entry;
 import org.springframework.lang.NonNull;
 import org.springframework.lang.Nullable;
 import jakarta.servlet.http.HttpServletRequest;
@@ -60,7 +60,7 @@ public enum FunctionIdEnum {
             .matches(e.getRequestInfo().getRequestPathRegex()))
         // リクエストパラメータでフィルタリング
         .filter(e -> {
-          for (Map.Entry<String, Object> f : e.getRequestInfo().getRequestParameter().entrySet()) {
+          for (Entry<String, Object> f : e.getRequestInfo().getRequestParameter().entrySet()) {
             Object value = request.getAttribute(f.getKey());
             if (value != null && f.getValue().equals(value)) {
               continue;

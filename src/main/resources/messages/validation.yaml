@@ -25,7 +25,7 @@ jp:
     molygray:
       constraints:
         Empty:
-          message: '{field}は空文字を入力してください。'
+          message: '{field}は入力できません。'
         FormatDate:
           message: '{field}は「{format}」フォーマットで入力してください。'
         LongField:
