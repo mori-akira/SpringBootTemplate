@@ -22,3 +22,7 @@ jp:
             message: '部署名が重複しています。'
           duplicateDepartmentFullName:
             message: '部署正式名が重複しています。'
+          notExistsDepartment:
+            message: '部署が存在しません。'
+          exclusiveError:
+            message: '部署が更新されています。'

@@ -2,6 +2,7 @@ package jp.co.molygray.service;
 
 import java.util.List;
 import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -85,6 +86,54 @@ public class DepartmentService {
   }
 
   /**
+   * 部署を更新するメソッド
+   *
+   * @param model 部署モデル
+   */
+  public void update(DepartmentModel model) {
+    DepartmentDto dto = departmentDao.select(model.getDepartmentId()).orElse(null);
+    checkExistenceDepartment(dto);
+    if (!StringUtils.equals(model.getDepartmentName(), dto.getDepartmentName())) {
+      checkDuplicateDepartmentName(model.getDepartmentName());
+    }
+    if (!StringUtils.equals(model.getDepartmentFullName(), dto.getDepartmentFullName())) {
+      checkDuplicateDepartmentFullName(model.getDepartmentFullName());
+    }
+    BeanUtils.copyProperties(model, dto);
+    dtoCommonFieldSetter.setCommonFieldWhenUpdate(dto);
+    if (departmentDao.update(dto) <= 0) {
+      String errorCode = "exclusiveError";
+      String errorMessage = messageSource.getMessage(this.getClass(), errorCode);
+      throw new BusinessErrorException(
+          ErrorDetail.builder()
+              .errorCode(errorCode)
+              .errorMessage(errorMessage)
+              .build());
+    }
+  }
+
+  /**
+   * 部署を論理削除するメソッド
+   *
+   * @param departmentId 部署ID
+   * @param exclusiveFlg 排他フラグ
+   */
+  public void delete(Long departmentId, String exclusiveFlg) {
+    DepartmentDto dto = departmentDao.select(departmentId).orElse(null);
+    checkExistenceDepartment(dto);
+    dtoCommonFieldSetter.setCommonFieldWhenDelete(dto);
+    if (departmentDao.update(dto) <= 0) {
+      String errorCode = "exclusiveError";
+      String errorMessage = messageSource.getMessage(this.getClass(), errorCode);
+      throw new BusinessErrorException(
+          ErrorDetail.builder()
+              .errorCode(errorCode)
+              .errorMessage(errorMessage)
+              .build());
+    }
+  }
+
+  /**
    * 部署名の重複チェックを行うメソッド
    *
    * @param departmentName 部署名
@@ -118,6 +167,23 @@ public class DepartmentService {
               .errorCode(errorCode)
               .errorMessage(errorMessage)
               .errorItem("departmentFullName")
+              .build());
+    }
+  }
+
+  /**
+   * 部署の存在チェックを行うメソッド
+   *
+   * @param departmentFullName 部署dto
+   */
+  private void checkExistenceDepartment(DepartmentDto dto) {
+    if (dto == null) {
+      String errorCode = "notExistsDepartment";
+      String errorMessage = messageSource.getMessage(this.getClass(), errorCode);
+      throw new BusinessErrorException(
+          ErrorDetail.builder()
+              .errorCode(errorCode)
+              .errorMessage(errorMessage)
               .build());
     }
   }
