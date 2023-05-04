@@ -1,7 +1,10 @@
 package jp.co.molygray.dao.entity;
 
+import java.util.List;
+import java.util.Optional;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import jp.co.molygray.dto.EmployeeDto;
 
 /**
@@ -14,18 +17,27 @@ import jp.co.molygray.dto.EmployeeDto;
 public interface EmployeeDao {
 
   /**
-   * IDによる単一SELECT処理
+   * 一件選択メソッド
    *
-   * @param id ID
-   * @return 社員DTO
+   * @param employeeId 社員ID
+   * @return 社員
    */
-  public EmployeeDto select(@Param("id") long id);
+  @Select("SELECT * FROM employee WHERE employee_id = #{employeeId} AND delete_flg = FALSE")
+  public Optional<EmployeeDto> select(@Param("employeeId") long employeeId);
 
   /**
-   * 社員番号による単一SELECT処理
+   * 一覧選択メソッド
+   *
+   * @return 社員リスト
+   */
+  @Select("SELECT * FROM employee WHERE delete_flg = FALSE ORDER BY employee_id")
+  public List<EmployeeDto> selectList();
+
+  /**
+   * 社員番号による一件選択メソッド
    *
    * @param employeeNumber 社員番号
-   * @return 社員DTO
+   * @return 社員
    */
   public EmployeeDto selectByEmployeeNumber(@Param("employeeNumber") String employeeNumber);
 }

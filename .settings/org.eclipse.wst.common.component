@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
-    	
-    <wb-module deploy-name="spring-boot-template">
-        		
-        <property name="context-root" value="spring-boot-template"/>
-        		
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="src/main/resources"/>
-        		
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="src/main/java"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/bin/generated-sources/annotations"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/bin/generated-test-sources/annotations"/>
         	
-    </wb-module>
     
+    <wb-module deploy-name="spring-boot-template">
+                		
+        
+        <property name="context-root" value="spring-boot-template"/>
+                		
+        
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="src/main/resources"/>
+                		
+        
+        <wb-resource deploy-path="/WEB-INF/classes" source-path="src/main/java"/>
+                	
+    
+    </wb-module>
+        
+
 </project-modules>
