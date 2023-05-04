@@ -2,6 +2,7 @@ package jp.co.molygray.response;
 
 import java.util.ArrayList;
 import java.util.List;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.experimental.SuperBuilder;
 
@@ -13,6 +14,7 @@ import lombok.experimental.SuperBuilder;
  */
 @Data
 @SuperBuilder
+@AllArgsConstructor
 public class ResponseBase {
 
   /** メッセージリスト */

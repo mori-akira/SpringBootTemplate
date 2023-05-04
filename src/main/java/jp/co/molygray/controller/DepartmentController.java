@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,13 +17,16 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.groups.Default;
 import jp.co.molygray.model.DepartmentModel;
+import jp.co.molygray.parameter.department.DeleteParameter;
 import jp.co.molygray.parameter.department.GetParameter;
 import jp.co.molygray.parameter.department.ListParameter;
 import jp.co.molygray.parameter.department.RegisterParameter;
+import jp.co.molygray.parameter.department.RegisterParameter.Patch;
 import jp.co.molygray.parameter.department.RegisterParameter.Put;
 import jp.co.molygray.parameter.department.validator.RegisterValidator;
 import jp.co.molygray.response.department.GetResponse;
 import jp.co.molygray.response.department.ListResponse;
+import jp.co.molygray.response.department.PatchResponse;
 import jp.co.molygray.response.department.PutResponse;
 import jp.co.molygray.service.DepartmentService;
 
@@ -107,6 +112,37 @@ public class DepartmentController {
   }
 
   /**
+   * 部署Patch APIエントリポイント
+   *
+   * @param parameter Patchパラメータ
+   * @return Patchレスポンス
+   * @throws Exception 例外発生時
+   */
+  @PatchMapping("/patch")
+  public PatchResponse patch(
+      @Validated({Patch.class, Default.class}) @RequestBody RegisterParameter parameter)
+      throws Exception {
+    DepartmentModel model = convertParameterToModel(parameter);
+    departmentService.update(model);
+    return new PatchResponse();
+  }
+
+  /**
+   * 部署Delete APIエントリポイント
+   *
+   * @param parameter Deleteパラメータ
+   * @return Patchレスポンス
+   * @throws Exception 例外発生時
+   */
+  @DeleteMapping("/delete")
+  public PatchResponse delete(@Validated DeleteParameter parameter)
+      throws Exception {
+    Long departmentId = Long.valueOf(parameter.getDepartmentId());
+    departmentService.delete(departmentId, parameter.getExclusiveFlg());
+    return new PatchResponse();
+  }
+
+  /**
    * {@link RegisterParameter}を{@link DepartmentModel}に変換するメソッド
    *
    * @param parameter 部署登録パラメータ
@@ -118,6 +154,7 @@ public class DepartmentController {
             Optional.ofNullable(parameter.getDepartmentId())
                 .map(Long::valueOf)
                 .orElse(null))
+        .exclusiveFlg(parameter.getExclusiveFlg())
         .parentDepartmentId(
             Optional.ofNullable(parameter.getParentDepartmentId())
                 .map(Long::valueOf)

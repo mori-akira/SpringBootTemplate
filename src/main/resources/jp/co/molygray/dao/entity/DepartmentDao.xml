@@ -6,27 +6,31 @@
 <mapper namespace="jp.co.molygray.dao.entity.DepartmentDao">
     <select id="searchList"
         resultType="jp.co.molygray.dto.DepartmentDto">
-        SELECT *
-        FROM department
-        WHERE 0 = 0
-        <if test="parentDepartmentIdList != null and !parentDepartmentIdList.isEmpty()">
-            AND parent_department_id IN
-            <foreach item="parentDepartmentId"
-                collection="parentDepartmentIdList" open=" ("
-                separator="," close=")">
-                #{parentDepartmentId}
-            </foreach>
-        </if>
-        <if test="departmentName != null and departmentName != ''">
-            AND department_name LIKE concat('%',
-            #{departmentName}, '%')
-        </if>
-        <if test="departmentFullName != null and departmentName != ''">
-            AND department_full_name LIKE concat('%',
-            #{departmentFullName}, '%')
-        </if>
+        SELECT
+            *
+        FROM
+            department
+        WHERE
+            0 = 0
+            <if test="parentDepartmentIdList != null and !parentDepartmentIdList.isEmpty()">
+                AND parent_department_id IN
+                <foreach item="parentDepartmentId"
+                    collection="parentDepartmentIdList" open=" ("
+                    separator="," close=")">
+                    #{parentDepartmentId}
+                </foreach>
+            </if>
+            <if test="departmentName != null and departmentName != ''">
+                AND department_name LIKE concat('%',
+                #{departmentName}, '%')
+            </if>
+            <if test="departmentFullName != null and departmentName != ''">
+                AND department_full_name LIKE concat('%',
+                #{departmentFullName}, '%')
+            </if>
+            AND delete_flg = FALSE
         ORDER BY
-        department_id ASC
+            department_id ASC
     </select>
 
     <insert id="insert"
@@ -56,7 +60,17 @@
             , department_name = #{departmentName}
             , department_full_name = #{departmentFullName}
             <include refid="jp.co.molygray.dao.Common.common_set_block_update" />
-        WHERE department_id = #{departmentId}
+        WHERE
+            department_id = #{departmentId}
             AND exclusive_flg = #{exclusiveFlg}
+            AND delete_flg = FALSE
     </update>
+
+    <delete id="delete">
+        DELETE
+            department
+        WHERE
+            department_id = #{departmentId}
+            AND exclusive_flg = #{exclusiveFlg}
+    </delete>
 </mapper>

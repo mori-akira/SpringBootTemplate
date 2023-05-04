@@ -7,6 +7,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import java.time.Instant;
@@ -69,7 +70,7 @@ public class DepartmentServiceTest {
     closeable = MockitoAnnotations.openMocks(this);
     // UUID#randomUUIDのMock設定
     UUID uuid = UUID.fromString("aaaaaaaa-bbbb-cccc-dddd-eeeeeeeeeeee");
-    uuidMock = Mockito.mockStatic(UUID.class, Mockito.CALLS_REAL_METHODS);
+    uuidMock = Mockito.mockStatic(UUID.class);
     uuidMock.when(UUID::randomUUID)
         .thenReturn(uuid);
     // 共通処理のMock設定
@@ -90,10 +91,33 @@ public class DepartmentServiceTest {
       dto.setDeleteFunction(null);
       return null;
     }).when(dtoCommonFieldSetter).setCommonFieldWhenInsert(any(DepartmentDto.class));
+    doAnswer(invocation -> {
+      DtoBase dto = DtoBase.class.cast(invocation.getArgument(0));
+      dto.setNewExclusiveFlg(UUID.randomUUID().toString().replace("-", ""));
+      dto.setUpdateDatetime(
+          ZonedDateTime.of(2023, 1, 1, 0, 0, 0, 0, ZoneId.systemDefault()).toOffsetDateTime());
+      dto.setUpdateUser(0l);
+      dto.setUpdateFunction("func");
+      dto.setDeleteDatetime(null);
+      dto.setDeleteUser(null);
+      dto.setDeleteFunction(null);
+      return null;
+    }).when(dtoCommonFieldSetter).setCommonFieldWhenUpdate(any(DepartmentDto.class));
+    doAnswer(invocation -> {
+      DtoBase dto = DtoBase.class.cast(invocation.getArgument(0));
+      dto.setDeleteFlg(true);
+      dto.setNewExclusiveFlg(UUID.randomUUID().toString().replace("-", ""));
+      dto.setDeleteDatetime(null);
+      dto.setDeleteUser(null);
+      dto.setDeleteFunction(null);
+      return null;
+    }).when(dtoCommonFieldSetter).setCommonFieldWhenDelete(any(DepartmentDto.class));
     when(messageSource.getMessage(DepartmentService.class, "duplicateDepartmentName"))
         .thenReturn("deplicate department name");
     when(messageSource.getMessage(DepartmentService.class, "duplicateDepartmentFullName"))
         .thenReturn("deplicate department full name");
+    when(messageSource.getMessage(DepartmentService.class, "notExistsDepartment"))
+        .thenReturn("not exist department");
   }
 
   /**
@@ -348,10 +372,13 @@ public class DepartmentServiceTest {
   }
 
   /**
-   * {@link DepartmentService#update()}のテストメソッド
+   * {@link DepartmentService#update()}の正常系のテストメソッド1
+   * <p>
+   * 部署名と部署正式名を更新する場合
+   * </p>
    */
   @Test
-  public void updateTestOk() {
+  public void updateTestOk1() {
     when(departmentDao.select(eq(1l))).thenReturn(Optional.of(
         DepartmentDto.builder()
             .departmentId(1l)
@@ -363,11 +390,74 @@ public class DepartmentServiceTest {
             .insertDatetime(
                 ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.systemDefault()).toOffsetDateTime())
             .insertUser(1l)
-            .insertFunction("func")
+            .insertFunction("f")
             .updateDatetime(
                 ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.systemDefault()).toOffsetDateTime())
             .updateUser(1l)
-            .updateFunction("func")
+            .updateFunction("f")
+            .deleteDatetime(null)
+            .deleteUser(null)
+            .deleteFunction(null)
+            .build()));
+    when(departmentDao.searchList(eq(null), eq("hogehoge"), eq(null)))
+        .thenReturn(Collections.emptyList());
+    when(departmentDao.searchList(eq(null), eq(null), eq("fugafuga")))
+        .thenReturn(Collections.emptyList());
+    when(departmentDao.update(any(DepartmentDto.class))).thenReturn(1);
+    DepartmentModel model = DepartmentModel.builder()
+        .departmentId(1l)
+        .exclusiveFlg("xxx")
+        .parentDepartmentId(3l)
+        .departmentName("hogehoge")
+        .departmentFullName("fugafuga")
+        .build();
+    assertDoesNotThrow(() -> departmentService.update(model));
+    verify(departmentDao).update(eq(DepartmentDto.builder()
+        .departmentId(1l)
+        .parentDepartmentId(3l)
+        .departmentName("hogehoge")
+        .departmentFullName("fugafuga")
+        .deleteFlg(false)
+        .exclusiveFlg("xxx")
+        .newExclusiveFlg("aaaaaaaabbbbccccddddeeeeeeeeeeee")
+        .insertDatetime(
+            ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.systemDefault()).toOffsetDateTime())
+        .insertUser(1l)
+        .insertFunction("f")
+        .updateDatetime(
+            ZonedDateTime.of(2023, 1, 1, 0, 0, 0, 0, ZoneId.systemDefault()).toOffsetDateTime())
+        .updateUser(0l)
+        .updateFunction("func")
+        .deleteDatetime(null)
+        .deleteUser(null)
+        .deleteFunction(null)
+        .build()));
+  }
+
+  /**
+   * {@link DepartmentService#update()}の正常系のテストメソッド2
+   * <p>
+   * 部署名と部署正式名を更新しない場合
+   * </p>
+   */
+  @Test
+  public void updateTestOk2() {
+    when(departmentDao.select(eq(1l))).thenReturn(Optional.of(
+        DepartmentDto.builder()
+            .departmentId(1l)
+            .parentDepartmentId(2l)
+            .departmentName("hoge")
+            .departmentFullName("fuga")
+            .deleteFlg(false)
+            .exclusiveFlg("xxx")
+            .insertDatetime(
+                ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.systemDefault()).toOffsetDateTime())
+            .insertUser(1l)
+            .insertFunction("f")
+            .updateDatetime(
+                ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.systemDefault()).toOffsetDateTime())
+            .updateUser(1l)
+            .updateFunction("f")
             .deleteDatetime(null)
             .deleteUser(null)
             .deleteFunction(null)
@@ -380,14 +470,15 @@ public class DepartmentServiceTest {
     DepartmentModel model = DepartmentModel.builder()
         .departmentId(1l)
         .exclusiveFlg("xxx")
-        .parentDepartmentId(2l)
+        .parentDepartmentId(3l)
         .departmentName("hoge")
         .departmentFullName("fuga")
         .build();
     assertDoesNotThrow(() -> departmentService.update(model));
+    verify(departmentDao, never()).searchList(any(), any(), any());
     verify(departmentDao).update(eq(DepartmentDto.builder()
         .departmentId(1l)
-        .parentDepartmentId(2l)
+        .parentDepartmentId(3l)
         .departmentName("hoge")
         .departmentFullName("fuga")
         .deleteFlg(false)
@@ -395,15 +486,168 @@ public class DepartmentServiceTest {
         .newExclusiveFlg("aaaaaaaabbbbccccddddeeeeeeeeeeee")
         .insertDatetime(
             ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.systemDefault()).toOffsetDateTime())
-        .insertUser(0l)
-        .insertFunction("func")
+        .insertUser(1l)
+        .insertFunction("f")
         .updateDatetime(
             ZonedDateTime.of(2023, 1, 1, 0, 0, 0, 0, ZoneId.systemDefault()).toOffsetDateTime())
-        .updateUser(1l)
+        .updateUser(0l)
         .updateFunction("func")
         .deleteDatetime(null)
         .deleteUser(null)
         .deleteFunction(null)
         .build()));
+  }
+
+  /**
+   * {@link DepartmentService#update()}のテストメソッド
+   * <p>
+   * 部署の存在エラー発生時
+   * </p>
+   */
+  @Test
+  public void updateTestError1() {
+    when(departmentDao.select(eq(1l))).thenReturn(Optional.empty());
+    when(departmentDao.searchList(eq(null), eq("hoge"), eq(null)))
+        .thenReturn(Collections.emptyList());
+    when(departmentDao.searchList(eq(null), eq(null), eq("fuga")))
+        .thenReturn(Collections.emptyList());
+    when(departmentDao.update(any(DepartmentDto.class))).thenReturn(1);
+    DepartmentModel model = DepartmentModel.builder()
+        .departmentId(1l)
+        .exclusiveFlg("xxx")
+        .parentDepartmentId(2l)
+        .departmentName("hoge")
+        .departmentFullName("fuga")
+        .build();
+    BusinessErrorException ex = assertThrowsExactly(BusinessErrorException.class,
+        () -> departmentService.update(model));
+    assertEquals(
+        List.of(ErrorDetail.builder()
+            .errorCode("notExistsDepartment")
+            .errorMessage("not exist department")
+            .build()),
+        ex.getErrorDetailList());
+    assertEquals(ErrorSummaryEnum.BUISINESS_ERROR, ex.getErrorSummary());
+    verify(departmentDao, never()).update(any());
+  }
+
+  /**
+   * {@link DepartmentService#update()}のテストメソッド
+   * <p>
+   * 部署名の重複エラー発生時
+   * </p>
+   */
+  @Test
+  public void updateTestError2() {
+    when(departmentDao.select(eq(1l))).thenReturn(Optional.of(new DepartmentDto()));
+    when(departmentDao.searchList(eq(null), eq("hoge"), eq(null)))
+        .thenReturn(List.of(new DepartmentDto()));
+    when(departmentDao.searchList(eq(null), eq(null), eq("fuga")))
+        .thenReturn(Collections.emptyList());
+    when(departmentDao.update(any(DepartmentDto.class))).thenReturn(1);
+    DepartmentModel model = DepartmentModel.builder()
+        .departmentId(1l)
+        .exclusiveFlg("xxx")
+        .parentDepartmentId(2l)
+        .departmentName("hoge")
+        .departmentFullName("fuga")
+        .build();
+    BusinessErrorException ex = assertThrowsExactly(BusinessErrorException.class,
+        () -> departmentService.update(model));
+    assertEquals(
+        List.of(ErrorDetail.builder()
+            .errorCode("duplicateDepartmentName")
+            .errorMessage("deplicate department name")
+            .errorItem("departmentName")
+            .build()),
+        ex.getErrorDetailList());
+    assertEquals(ErrorSummaryEnum.BUISINESS_ERROR, ex.getErrorSummary());
+    verify(departmentDao, never()).update(any());
+  }
+
+  /**
+   * {@link DepartmentService#update()}のテストメソッド
+   * <p>
+   * 部署正式名の重複エラー発生時
+   * </p>
+   */
+  @Test
+  public void updateTestError3() {
+    when(departmentDao.select(eq(1l))).thenReturn(Optional.of(new DepartmentDto()));
+    when(departmentDao.searchList(eq(null), eq("hoge"), eq(null)))
+        .thenReturn(Collections.emptyList());
+    when(departmentDao.searchList(eq(null), eq(null), eq("fuga")))
+        .thenReturn(List.of(new DepartmentDto()));
+    when(departmentDao.update(any(DepartmentDto.class))).thenReturn(1);
+    DepartmentModel model = DepartmentModel.builder()
+        .departmentId(1l)
+        .exclusiveFlg("xxx")
+        .parentDepartmentId(2l)
+        .departmentName("hoge")
+        .departmentFullName("fuga")
+        .build();
+    BusinessErrorException ex = assertThrowsExactly(BusinessErrorException.class,
+        () -> departmentService.update(model));
+    assertEquals(
+        List.of(ErrorDetail.builder()
+            .errorCode("duplicateDepartmentFullName")
+            .errorMessage("deplicate department full name")
+            .errorItem("departmentFullName")
+            .build()),
+        ex.getErrorDetailList());
+    assertEquals(ErrorSummaryEnum.BUISINESS_ERROR, ex.getErrorSummary());
+    verify(departmentDao, never()).update(any());
+  }
+
+  /**
+   * {@link DepartmentService#delete()}の正常系のテストメソッド
+   */
+  @Test
+  public void deleteTestOk() {
+    when(departmentDao.select(eq(1l))).thenReturn(Optional.of(
+        DepartmentDto.builder()
+            .departmentId(1l)
+            .parentDepartmentId(2l)
+            .departmentName("hoge")
+            .departmentFullName("fuga")
+            .deleteFlg(false)
+            .exclusiveFlg("xxx")
+            .insertDatetime(
+                ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.systemDefault()).toOffsetDateTime())
+            .insertUser(1l)
+            .insertFunction("f")
+            .updateDatetime(
+                ZonedDateTime.of(2022, 1, 1, 0, 0, 0, 0, ZoneId.systemDefault()).toOffsetDateTime())
+            .updateUser(1l)
+            .updateFunction("f")
+            .deleteDatetime(null)
+            .deleteUser(null)
+            .deleteFunction(null)
+            .build()));
+    when(departmentDao.delete(any(Long.class), any(String.class))).thenReturn(1);
+    assertDoesNotThrow(() -> departmentService.delete(1l, "xxx"));
+    verify(departmentDao).delete(eq(1l), eq("xxx"));
+  }
+
+  /**
+   * {@link DepartmentService#delete()}のエラーのテストメソッド
+   * <p>
+   * 部署の存在エラー発生時
+   * </p>
+   */
+  @Test
+  public void deleteTestError() {
+    when(departmentDao.select(eq(1l))).thenReturn(Optional.empty());
+    when(departmentDao.delete(any(Long.class), any(String.class))).thenReturn(1);
+    BusinessErrorException ex = assertThrowsExactly(BusinessErrorException.class,
+        () -> departmentService.delete(1l, "xxx"));
+    assertEquals(
+        List.of(ErrorDetail.builder()
+            .errorCode("notExistsDepartment")
+            .errorMessage("not exist department")
+            .build()),
+        ex.getErrorDetailList());
+    assertEquals(ErrorSummaryEnum.BUISINESS_ERROR, ex.getErrorSummary());
+    verify(departmentDao, never()).delete(anyLong(), any());
   }
 }

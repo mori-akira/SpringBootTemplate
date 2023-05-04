@@ -46,9 +46,9 @@ public class ApiControllerAdvice extends ResponseEntityExceptionHandler {
       HttpStatusCode status,
       WebRequest request) {
     log.error("BindException occured.", ex);
-    return handleExceptionInternal(ex,
-        toErrorResponse(ex.getAllErrors(), ErrorSummaryEnum.INPUT_ERROR), headers,
-        status, request);
+    return new ResponseEntity<>(
+        toErrorResponse(ex.getAllErrors(), ErrorSummaryEnum.INPUT_ERROR),
+        HttpStatus.BAD_REQUEST);
   }
 
   /**
@@ -59,10 +59,7 @@ public class ApiControllerAdvice extends ResponseEntityExceptionHandler {
       HttpHeaders headers,
       HttpStatusCode status,
       WebRequest request) {
-    log.error("MethodArgumentNotValidException occured.", ex);
-    return handleExceptionInternal(ex,
-        toErrorResponse(ex.getAllErrors(), ErrorSummaryEnum.INPUT_ERROR), headers,
-        status, request);
+    return handleBindException(ex, headers, status, request);
   }
 
   /**
@@ -72,7 +69,7 @@ public class ApiControllerAdvice extends ResponseEntityExceptionHandler {
    * @return エラーレスポンス・エンティティ
    */
   @ExceptionHandler(BusinessErrorException.class)
-  public ResponseEntity<ErrorResponse> handleBusinessErrorException(BusinessErrorException ex) {
+  public ResponseEntity<Object> handleBusinessErrorException(BusinessErrorException ex) {
     log.error("BusinessErrorException occured.", ex);
     HttpHeaders header = new HttpHeaders();
     return new ResponseEntity<>(
@@ -80,7 +77,20 @@ public class ApiControllerAdvice extends ResponseEntityExceptionHandler {
             .errorSummary(ex.getErrorSummary().getSummary())
             .errorDetailList(ex.getErrorDetailList())
             .build(),
-        header, HttpStatus.INTERNAL_SERVER_ERROR);
+        header, HttpStatus.BAD_REQUEST);
+  }
+
+  /**
+   * {@inheritDoc}
+   * <p>
+   * {@link ResponseEntityExceptionHandler}で扱う例外のうち、管理外のものを全てシステムエラーに紐づける。
+   * </p>
+   */
+  @Override
+  protected ResponseEntity<Object> handleExceptionInternal(
+      Exception ex, Object body, HttpHeaders headers, HttpStatusCode statusCode,
+      WebRequest request) {
+    return handleUnexpectedException(ex);
   }
 
   /**
@@ -90,7 +100,7 @@ public class ApiControllerAdvice extends ResponseEntityExceptionHandler {
    * @return エラーレスポンス・エンティティ
    */
   @ExceptionHandler(Exception.class)
-  public ResponseEntity<ErrorResponse> handleUnexpectedException(Exception ex) {
+  public ResponseEntity<Object> handleUnexpectedException(Exception ex) {
     log.error("Unexpected Exception occured.", ex);
     HttpHeaders header = new HttpHeaders();
     return new ResponseEntity<>(getSystemErrorResponse(), header, HttpStatus.INTERNAL_SERVER_ERROR);

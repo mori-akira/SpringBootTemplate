@@ -91,8 +91,7 @@ public class DepartmentService {
    * @param model 部署モデル
    */
   public void update(DepartmentModel model) {
-    DepartmentDto dto = departmentDao.select(model.getDepartmentId()).orElse(null);
-    checkExistenceDepartment(dto);
+    DepartmentDto dto = getAndCheckExistenceDepartment(model.getDepartmentId());
     if (!StringUtils.equals(model.getDepartmentName(), dto.getDepartmentName())) {
       checkDuplicateDepartmentName(model.getDepartmentName());
     }
@@ -105,16 +104,14 @@ public class DepartmentService {
   }
 
   /**
-   * 部署を論理削除するメソッド
+   * 部署を削除するメソッド
    *
    * @param departmentId 部署ID
    * @param exclusiveFlg 排他フラグ
    */
   public void delete(Long departmentId, String exclusiveFlg) {
-    DepartmentDto dto = departmentDao.select(departmentId).orElse(null);
-    checkExistenceDepartment(dto);
-    dtoCommonFieldSetter.setCommonFieldWhenDelete(dto);
-    departmentDao.update(dto);
+    getAndCheckExistenceDepartment(departmentId);
+    departmentDao.delete(departmentId, exclusiveFlg);
   }
 
   /**
@@ -158,9 +155,11 @@ public class DepartmentService {
   /**
    * 部署の存在チェックを行うメソッド
    *
-   * @param departmentFullName 部署dto
+   * @param departmentId 部署ID
+   * @return 部署DTO
    */
-  private void checkExistenceDepartment(DepartmentDto dto) {
+  private DepartmentDto getAndCheckExistenceDepartment(Long departmentId) {
+    DepartmentDto dto = departmentDao.select(departmentId).orElse(null);
     if (dto == null) {
       String errorCode = "notExistsDepartment";
       String errorMessage = messageSource.getMessage(this.getClass(), errorCode);
@@ -170,5 +169,6 @@ public class DepartmentService {
               .errorMessage(errorMessage)
               .build());
     }
+    return dto;
   }
 }

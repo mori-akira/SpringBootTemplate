@@ -23,7 +23,7 @@ public interface DepartmentDao {
    * @param departmentId 部署ID
    * @return 部署
    */
-  @Select("SELECT * FROM department WHERE department_id = #{departmentId}")
+  @Select("SELECT * FROM department WHERE department_id = #{departmentId} AND delete_flg = FALSE")
   public Optional<DepartmentDto> select(@Param("departmentId") long departmentId);
 
   /**
@@ -31,7 +31,7 @@ public interface DepartmentDao {
    *
    * @return 部署リスト
    */
-  @Select("SELECT * FROM department ORDER BY department_id")
+  @Select("SELECT * FROM department WHERE delete_flg = FALSE ORDER BY department_id")
   public List<DepartmentDto> selectList();
 
   /**
@@ -63,4 +63,15 @@ public interface DepartmentDao {
    */
   @WithExclusiveCheck
   public int update(DepartmentDto dto);
+
+  /**
+   * 削除メソッド
+   *
+   * @param departmentId 部署ID
+   * @param exclusiveFlg 排他フラグ
+   * @return 削除件数
+   */
+  @WithExclusiveCheck
+  public int delete(@Param("departmentId") long departmentId,
+      @Param("exclusiveFlg") String exclusiveFlg);
 }

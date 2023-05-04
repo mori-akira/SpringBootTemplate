@@ -3,10 +3,13 @@ package jp.co.molygray.controller;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -32,13 +35,16 @@ import org.springframework.validation.Errors;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jp.co.molygray.enums.ErrorSummaryEnum;
 import jp.co.molygray.model.DepartmentModel;
+import jp.co.molygray.parameter.department.DeleteParameter;
 import jp.co.molygray.parameter.department.GetParameter;
 import jp.co.molygray.parameter.department.ListParameter;
 import jp.co.molygray.parameter.department.RegisterParameter;
 import jp.co.molygray.parameter.department.validator.RegisterValidator;
 import jp.co.molygray.response.common.ErrorResponse;
+import jp.co.molygray.response.department.DeleteResponse;
 import jp.co.molygray.response.department.GetResponse;
 import jp.co.molygray.response.department.ListResponse;
+import jp.co.molygray.response.department.PatchResponse;
 import jp.co.molygray.response.department.PutResponse;
 import jp.co.molygray.service.DepartmentService;
 
@@ -422,7 +428,8 @@ public class DepartmentControllerTest {
    * {@link DepartmentController#put()}の正常系のテストメソッド
    */
   @Test
-  public void putTestOk() throws Exception {
+  public void putTestOk()
+      throws Exception {
     // サービスのMock設定
     when(departmentService.insert(any()))
         .thenReturn(1l);
@@ -431,16 +438,17 @@ public class DepartmentControllerTest {
         put("/api/department/put")
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(new HashMap<>() {
+
               {
                 put("parentDepartmentId", "1");
                 put("departmentName", "hoge");
                 put("departmentFullName", "hogehoge");
               }
             })))
-      .andExpect(status().isCreated())
-      .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-      .andExpect(content().json(
-          objectMapper.writeValueAsString(new PutResponse(1l))));
+        .andExpect(status().isCreated())
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+        .andExpect(content().json(
+            objectMapper.writeValueAsString(new PutResponse(1l))));
     // メソッド呼び出し検証
     verify(departmentController).put(
         eq(new RegisterParameter(null, null, "1", "hoge", "hogehoge")));
@@ -461,7 +469,8 @@ public class DepartmentControllerTest {
    * </ul>
    */
   @Test
-  public void putTestValidation1() throws Exception {
+  public void putTestValidation1()
+      throws Exception {
     // サービスのMock設定
     when(departmentService.insert(any()))
         .thenReturn(1l);
@@ -499,6 +508,7 @@ public class DepartmentControllerTest {
         put("/api/department/put")
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(new HashMap<>() {
+
               {
                 put("departmentId", "1");
                 put("exclusiveFlg", "xxx");
@@ -507,9 +517,9 @@ public class DepartmentControllerTest {
                 put("departmentFullName", "");
               }
             })))
-      .andExpect(status().isBadRequest())
-      .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-      .andExpect(content().json(objectMapper.writeValueAsString(expected)));
+        .andExpect(status().isBadRequest())
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+        .andExpect(content().json(objectMapper.writeValueAsString(expected)));
     // メソッド呼び出し検証
     verify(departmentController, never()).put(any(RegisterParameter.class));
     verify(departmentService, never()).insert(any(DepartmentModel.class));
@@ -524,7 +534,8 @@ public class DepartmentControllerTest {
    * </ul>
    */
   @Test
-  public void putTestValidation2() throws Exception {
+  public void putTestValidation2()
+      throws Exception {
     // サービスのMock設定
     when(departmentService.insert(any()))
         .thenReturn(1l);
@@ -547,6 +558,7 @@ public class DepartmentControllerTest {
         put("/api/department/put")
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(new HashMap<>() {
+
               {
                 put("departmentName",
                     Stream.generate(() -> "x").limit(65).collect(Collectors.joining()));
@@ -554,9 +566,9 @@ public class DepartmentControllerTest {
                     Stream.generate(() -> "x").limit(129).collect(Collectors.joining()));
               }
             })))
-      .andExpect(status().isBadRequest())
-      .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-      .andExpect(content().json(objectMapper.writeValueAsString(expected)));
+        .andExpect(status().isBadRequest())
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+        .andExpect(content().json(objectMapper.writeValueAsString(expected)));
     // メソッド呼び出し検証
     verify(departmentController, never()).put(any(RegisterParameter.class));
     verify(departmentService, never()).insert(any(DepartmentModel.class));
@@ -570,7 +582,8 @@ public class DepartmentControllerTest {
    * </ul>
    */
   @Test
-  public void putTestValidation3() throws Exception {
+  public void putTestValidation3()
+      throws Exception {
     // サービスのMock設定
     when(departmentService.insert(any()))
         .thenReturn(1l);
@@ -588,14 +601,15 @@ public class DepartmentControllerTest {
         put("/api/department/put")
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(new HashMap<>() {
+
               {
                 put("departmentName", "hoge");
                 put("departmentFullName", "hogee");
               }
             })))
-      .andExpect(status().isBadRequest())
-      .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-      .andExpect(content().json(objectMapper.writeValueAsString(expected)));
+        .andExpect(status().isBadRequest())
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+        .andExpect(content().json(objectMapper.writeValueAsString(expected)));
     // メソッド呼び出し検証
     verify(departmentController, never()).put(any(RegisterParameter.class));
     verify(departmentService, never()).insert(any(DepartmentModel.class));
@@ -610,7 +624,8 @@ public class DepartmentControllerTest {
    * </ul>
    */
   @Test
-  public void putTestBorder() throws Exception {
+  public void putTestBorder()
+      throws Exception {
     // サービスのMock設定
     when(departmentService.insert(any()))
         .thenReturn(1l);
@@ -619,6 +634,7 @@ public class DepartmentControllerTest {
         put("/api/department/put")
             .contentType(MediaType.APPLICATION_JSON)
             .content(objectMapper.writeValueAsString(new HashMap<>() {
+
               {
                 put("departmentName",
                     Stream.generate(() -> "x").limit(64).collect(Collectors.joining()));
@@ -626,10 +642,307 @@ public class DepartmentControllerTest {
                     Stream.generate(() -> "x").limit(128).collect(Collectors.joining()));
               }
             })))
-      .andExpect(status().isCreated());
+        .andExpect(status().isCreated());
     // メソッド呼び出し検証
     verify(departmentController).put(any(RegisterParameter.class));
     verify(departmentService).insert(any(DepartmentModel.class));
     verify(registerValidator).validate(any(RegisterParameter.class), any(Errors.class));
+  }
+
+  /**
+   * {@link DepartmentController#patch()}の正常系のテストメソッド
+   */
+  @Test
+  public void patchTestOk()
+      throws Exception {
+    // サービスのMock設定
+    doAnswer(invocation -> null).when(departmentService).update(any());
+    // APIを呼び出して検証
+    mockMvc.perform(
+        patch("/api/department/patch")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(new HashMap<>() {
+
+              {
+                put("departmentId", "1");
+                put("exclusiveFlg", "xxx");
+                put("parentDepartmentId", "2");
+                put("departmentName", "hoge");
+                put("departmentFullName", "hogehoge");
+              }
+            })))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+        .andExpect(content().json(
+            objectMapper.writeValueAsString(new PatchResponse())));
+    // メソッド呼び出し検証
+    verify(departmentController).patch(
+        eq(new RegisterParameter("1", "xxx", "2", "hoge", "hogehoge")));
+    verify(departmentService).update(
+        eq(new DepartmentModel(1l, "xxx", 2l, "hoge", "hogehoge")));
+    verify(registerValidator).validate(
+        eq(new RegisterParameter("1", "xxx", "2", "hoge", "hogehoge")), any(Errors.class));
+  }
+
+  /**
+   * {@link DepartmentController#patch()}のバリデーションのテストメソッド1
+   * <ul>
+   * <li>部署IDに空文字を設定する</li>
+   * <li>排他フラグに空文字を設定する</li>
+   * <li>親部署IDにLongで認識できない値を設定する</li>
+   * <li>部署名に空文字を設定する</li>
+   * <li>部署正式名に空文字を設定する</li>
+   * </ul>
+   */
+  @Test
+  public void patchTestValidation1()
+      throws Exception {
+    // サービスのMock設定
+    doAnswer(invocation -> null).when(departmentService).update(any());
+    // APIを呼び出して検証
+    ErrorResponse expected = ErrorResponse.builder()
+        .errorSummary(ErrorSummaryEnum.INPUT_ERROR.getSummary())
+        .errorDetailList(Arrays.asList(
+            ErrorResponse.ErrorDetail.builder()
+                .errorCode("NotEmpty")
+                .errorMessage("部署IDを入力してください。")
+                .errorItem("departmentId")
+                .build(),
+            ErrorResponse.ErrorDetail.builder()
+                .errorCode("NotEmpty")
+                .errorMessage("排他フラグを入力してください。")
+                .errorItem("exclusiveFlg")
+                .build(),
+            ErrorResponse.ErrorDetail.builder()
+                .errorCode("LongField")
+                .errorMessage("親部署IDは整数で入力してください。")
+                .errorItem("parentDepartmentId")
+                .build(),
+            ErrorResponse.ErrorDetail.builder()
+                .errorCode("NotEmpty")
+                .errorMessage("部署名を入力してください。")
+                .errorItem("departmentName")
+                .build(),
+            ErrorResponse.ErrorDetail.builder()
+                .errorCode("NotEmpty")
+                .errorMessage("部署正式名を入力してください。")
+                .errorItem("departmentFullName")
+                .build()))
+        .build();
+    mockMvc.perform(
+        patch("/api/department/patch")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(new HashMap<>() {
+
+              {
+                put("departmentId", "");
+                put("exclusiveFlg", "");
+                put("parentDepartmentId", "xxx");
+                put("departmentName", "");
+                put("departmentFullName", "");
+              }
+            })))
+        .andExpect(status().isBadRequest())
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+        .andExpect(content().json(objectMapper.writeValueAsString(expected)));
+    // メソッド呼び出し検証
+    verify(departmentController, never()).patch(any(RegisterParameter.class));
+    verify(departmentService, never()).update(any(DepartmentModel.class));
+    verify(registerValidator, never()).validate(any(RegisterParameter.class), any(Errors.class));
+  }
+
+  /**
+   * {@link DepartmentController#patch()}のバリデーションのテストメソッド2
+   * <ul>
+   * <li>部署IDにがLongに変換出来ない値を設定する</li>
+   * <li>部署名に65文字の値を設定する</li>
+   * <li>部署正式名に129文字の値を設定する</li>
+   * </ul>
+   */
+  @Test
+  public void patchTestValidation2()
+      throws Exception {
+    // サービスのMock設定
+    doAnswer(invocation -> null).when(departmentService).update(any());
+    // APIを呼び出して検証
+    ErrorResponse expected = ErrorResponse.builder()
+        .errorSummary(ErrorSummaryEnum.INPUT_ERROR.getSummary())
+        .errorDetailList(Arrays.asList(
+            ErrorResponse.ErrorDetail.builder()
+                .errorCode("LongField")
+                .errorMessage("部署IDは整数で入力してください。")
+                .errorItem("departmentId")
+                .build(),
+            ErrorResponse.ErrorDetail.builder()
+                .errorCode("Size")
+                .errorMessage("部署名は64文字以下で入力してください。")
+                .errorItem("departmentName")
+                .build(),
+            ErrorResponse.ErrorDetail.builder()
+                .errorCode("Size")
+                .errorMessage("部署正式名は128文字以下で入力してください。")
+                .errorItem("departmentFullName")
+                .build()))
+        .build();
+    mockMvc.perform(
+        patch("/api/department/patch")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(new HashMap<>() {
+
+              {
+                put("departmentId", "xxx");
+                put("exclusiveFlg", "xxx");
+                put("departmentName",
+                    Stream.generate(() -> "x").limit(65).collect(Collectors.joining()));
+                put("departmentFullName",
+                    Stream.generate(() -> "x").limit(129).collect(Collectors.joining()));
+              }
+            })))
+        .andExpect(status().isBadRequest())
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+        .andExpect(content().json(objectMapper.writeValueAsString(expected)));
+    // メソッド呼び出し検証
+    verify(departmentController, never()).patch(any(RegisterParameter.class));
+    verify(departmentService, never()).update(any(DepartmentModel.class));
+    verify(registerValidator, never()).validate(any(RegisterParameter.class), any(Errors.class));
+  }
+
+  /**
+   * {@link DepartmentController#patch()}のバリデーションのテストメソッド3
+   * <ul>
+   * <li>部署正式名が部署名で終わらない場合</li>
+   * </ul>
+   */
+  @Test
+  public void patchTestValidation3()
+      throws Exception {
+    // サービスのMock設定
+    doAnswer(invocation -> null).when(departmentService).update(any());
+    // APIを呼び出して検証
+    ErrorResponse expected = ErrorResponse.builder()
+        .errorSummary(ErrorSummaryEnum.INPUT_ERROR.getSummary())
+        .errorDetailList(Arrays.asList(
+            ErrorResponse.ErrorDetail.builder()
+                .errorCode("departmentFullNameNotEndsWithDepartmentName")
+                .errorMessage("部署正式名は部署名で終わる必要があります。")
+                .errorItem(null)
+                .build()))
+        .build();
+    mockMvc.perform(
+        patch("/api/department/patch")
+            .contentType(MediaType.APPLICATION_JSON)
+            .content(objectMapper.writeValueAsString(new HashMap<>() {
+
+              {
+                put("departmentId", "1");
+                put("exclusiveFlg", "xxx");
+                put("departmentName", "hoge");
+                put("departmentFullName", "hogee");
+              }
+            })))
+        .andExpect(status().isBadRequest())
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+        .andExpect(content().json(objectMapper.writeValueAsString(expected)));
+    // メソッド呼び出し検証
+    verify(departmentController, never()).patch(any(RegisterParameter.class));
+    verify(departmentService, never()).update(any(DepartmentModel.class));
+    verify(registerValidator).validate(any(RegisterParameter.class), any(Errors.class));
+  }
+
+  /**
+   * {@link DepartmentController#delete()}の正常系のテストメソッド
+   */
+  @Test
+  public void deleteTestOk()
+      throws Exception {
+    // サービスのMock設定
+    doAnswer(invocation -> null).when(departmentService).delete(anyLong(), any());
+    // APIを呼び出して検証
+    mockMvc.perform(
+        delete("/api/department/delete")
+            .queryParam("departmentId", "1")
+            .queryParam("exclusiveFlg", "xxx"))
+        .andExpect(status().isOk())
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+        .andExpect(content().json(
+            objectMapper.writeValueAsString(new DeleteResponse())));
+    // メソッド呼び出し検証
+    verify(departmentController).delete(
+        eq(new DeleteParameter("1", "xxx")));
+    verify(departmentService).delete(eq(1l), eq("xxx"));
+  }
+
+  /**
+   * {@link DepartmentController#delete()}のバリデーションのテストメソッド1
+   * <ul>
+   * <li>部署IDが空文字の場合</li>
+   * <li>排他フラグが空文字の場合</li>
+   * </ul>
+   */
+  @Test
+  public void deleteTestValidation1()
+      throws Exception {
+    // サービスのMock設定
+    doAnswer(invocation -> null).when(departmentService).delete(anyLong(), any());
+    // APIを呼び出して検証
+    ErrorResponse expected = ErrorResponse.builder()
+        .errorSummary(ErrorSummaryEnum.INPUT_ERROR.getSummary())
+        .errorDetailList(Arrays.asList(
+            ErrorResponse.ErrorDetail.builder()
+                .errorCode("NotEmpty")
+                .errorMessage("部署IDを入力してください。")
+                .errorItem("departmentId")
+                .build(),
+            ErrorResponse.ErrorDetail.builder()
+                .errorCode("NotEmpty")
+                .errorMessage("排他フラグを入力してください。")
+                .errorItem("exclusiveFlg")
+                .build()))
+        .build();
+    mockMvc.perform(
+        delete("/api/department/delete")
+            .queryParam("departmentId", "")
+            .queryParam("exclusiveFlg", ""))
+        .andExpect(status().isBadRequest())
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+        .andExpect(content().json(
+            objectMapper.writeValueAsString(expected)));
+    // メソッド呼び出し検証
+    verify(departmentController, never()).delete(any());
+    verify(departmentService, never()).delete(anyLong(), any());
+  }
+
+  /**
+   * {@link DepartmentController#delete()}のバリデーションのテストメソッド2
+   * <ul>
+   * <li>部署IDがLongに変換出来ない値の場合</li>
+   * </ul>
+   */
+  @Test
+  public void deleteTestValidation2()
+      throws Exception {
+    // サービスのMock設定
+    doAnswer(invocation -> null).when(departmentService).delete(anyLong(), any());
+    // APIを呼び出して検証
+    ErrorResponse expected = ErrorResponse.builder()
+        .errorSummary(ErrorSummaryEnum.INPUT_ERROR.getSummary())
+        .errorDetailList(Arrays.asList(
+            ErrorResponse.ErrorDetail.builder()
+                .errorCode("LongField")
+                .errorMessage("部署IDは整数で入力してください。")
+                .errorItem("departmentId")
+                .build()))
+        .build();
+    mockMvc.perform(
+        delete("/api/department/delete")
+            .queryParam("departmentId", "xxx")
+            .queryParam("exclusiveFlg", "xxx"))
+        .andExpect(status().isBadRequest())
+        .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+        .andExpect(content().json(
+            objectMapper.writeValueAsString(expected)));
+    // メソッド呼び出し検証
+    verify(departmentController, never()).delete(any());
+    verify(departmentService, never()).delete(anyLong(), any());
   }
 }

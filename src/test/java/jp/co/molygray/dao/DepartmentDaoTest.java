@@ -1,6 +1,7 @@
 package jp.co.molygray.dao;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
@@ -153,7 +154,7 @@ public class DepartmentDaoTest {
         .parentDepartmentId(null)
         .departmentName("hoge2")
         .departmentFullName("hogehoge2")
-        .deleteFlg(true)
+        .deleteFlg(false)
         .newExclusiveFlg("def")
         .insertDatetime(
             ZonedDateTime.of(2023, 1, 1, 0, 0, 0, 0, ZoneId.systemDefault()).toOffsetDateTime())
@@ -171,7 +172,7 @@ public class DepartmentDaoTest {
         .parentDepartmentId(null)
         .departmentName("hoge2")
         .departmentFullName("hogehoge2")
-        .deleteFlg(true)
+        .deleteFlg(false)
         .newExclusiveFlg("def")
         .insertDatetime(
             ZonedDateTime.of(2023, 1, 1, 0, 0, 0, 0, ZoneId.systemDefault()).toOffsetDateTime())
@@ -251,7 +252,7 @@ public class DepartmentDaoTest {
         .parentDepartmentId(null)
         .departmentName("fuga2")
         .departmentFullName("fugafuga2")
-        .deleteFlg(true)
+        .deleteFlg(false)
         .exclusiveFlg("def")
         .insertDatetime(
             ZonedDateTime.of(2023, 1, 1, 0, 0, 0, 0, ZoneId.systemDefault()).toOffsetDateTime())
@@ -270,7 +271,7 @@ public class DepartmentDaoTest {
         .parentDepartmentId(null)
         .departmentName("fuga2")
         .departmentFullName("fugafuga2")
-        .deleteFlg(true)
+        .deleteFlg(false)
         .exclusiveFlg("xxx")
         .newExclusiveFlg("def")
         .insertDatetime(
@@ -319,6 +320,29 @@ public class DepartmentDaoTest {
         .build();
     BusinessErrorException ex =
         assertThrowsExactly(BusinessErrorException.class, () -> departmentDao.update(dto));
+    assertEquals(ErrorSummaryEnum.BUISINESS_ERROR, ex.getErrorSummary());
+    assertEquals(List.of(new ErrorDetail("exclusiveError", "部署が更新されています。", null)),
+        ex.getErrorDetailList());
+  }
+
+  /**
+   * {@link DepartmentDao#delete()}のテストメソッド
+   */
+  @Test
+  public void deleteTest() {
+    int actual = departmentDao.delete(3l, "xxx");
+    assertEquals(1, actual);
+    DepartmentDto dto = departmentDao.select(3l).orElse(null);
+    assertNull(dto);
+  }
+
+  /**
+   * {@link DepartmentDao#delete()}の排他チェックのテストメソッド
+   */
+  @Test
+  public void deleteTestExclusiveCheck() {
+    BusinessErrorException ex =
+        assertThrowsExactly(BusinessErrorException.class, () -> departmentDao.delete(4l, "xxxx"));
     assertEquals(ErrorSummaryEnum.BUISINESS_ERROR, ex.getErrorSummary());
     assertEquals(List.of(new ErrorDetail("exclusiveError", "部署が更新されています。", null)),
         ex.getErrorDetailList());
