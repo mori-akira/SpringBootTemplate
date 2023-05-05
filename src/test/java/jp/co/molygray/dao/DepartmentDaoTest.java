@@ -7,6 +7,7 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.stream.Stream;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -33,6 +34,12 @@ public class DepartmentDaoTest {
   @Autowired
   private DepartmentDao departmentDao;
 
+  @Test
+  @Order(0)
+  public void selectTest() {
+
+  }
+
   /**
    * テストデータを取得するメソッド
    *
@@ -47,14 +54,14 @@ public class DepartmentDaoTest {
   }
 
   /**
-   * {@link DepartmentDao#selectList()}に対する入力と期待値の組み合わせを管理するクラス
+   * {@link DepartmentDao#searchList()}に対する入力と期待値の組み合わせを管理するクラス
    *
    * @author Moriaki Kogure
    * @version 0.0.1
    */
   @Data
   @AllArgsConstructor
-  private static class SelectListParamAndExpected {
+  private static class SearchtListParamAndExpected {
 
     /** 親部署IDリスト */
     private List<Long> parentDepartmentIdList;
@@ -71,15 +78,15 @@ public class DepartmentDaoTest {
    *
    * @return テストデータ
    */
-  private static Stream<SelectListParamAndExpected> selectListSource() {
+  private static Stream<SearchtListParamAndExpected> searchListSource() {
     return Stream.of(
-        new SelectListParamAndExpected(null, null, null, List.of(1l, 2l, 3l, 4l, 5l, 6l, 7l, 8l)),
-        new SelectListParamAndExpected(List.of(), "", "", List.of(1l, 2l, 3l, 4l, 5l, 6l, 7l, 8l)),
-        new SelectListParamAndExpected(List.of(1l), null, null, List.of(2l)),
-        new SelectListParamAndExpected(null, "IT", null, List.of(1l)),
-        new SelectListParamAndExpected(null, null, "東京", List.of(3l)),
-        new SelectListParamAndExpected(List.of(2l), "大阪", "IT", List.of(4l)),
-        new SelectListParamAndExpected(List.of(10l), null, null, List.of()));
+        new SearchtListParamAndExpected(null, null, null, List.of(1l, 2l, 3l, 4l, 5l, 6l, 7l, 8l)),
+        new SearchtListParamAndExpected(List.of(), "", "", List.of(1l, 2l, 3l, 4l, 5l, 6l, 7l, 8l)),
+        new SearchtListParamAndExpected(List.of(1l), null, null, List.of(2l)),
+        new SearchtListParamAndExpected(null, "IT", null, List.of(1l)),
+        new SearchtListParamAndExpected(null, null, "東京", List.of(3l)),
+        new SearchtListParamAndExpected(List.of(2l), "大阪", "IT", List.of(4l)),
+        new SearchtListParamAndExpected(List.of(10l), null, null, List.of()));
   }
 
   /**
@@ -88,8 +95,8 @@ public class DepartmentDaoTest {
    * @param input テストデータ
    */
   @ParameterizedTest
-  @MethodSource("selectListSource")
-  public void selectListTest(SelectListParamAndExpected input) {
+  @MethodSource("searchListSource")
+  public void selectListTest(SearchtListParamAndExpected input) {
     List<DepartmentDto> expected = getTestData(input.getExpected());
     List<DepartmentDto> actual = departmentDao.searchList(input.getParentDepartmentIdList(),
         input.getDepartmentName(), input.getDepartmentFullName());

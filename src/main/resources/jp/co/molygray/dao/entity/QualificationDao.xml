@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="jp.co.molygray.dao.entity.QualificationDao">
+	<insert id="insert"
+        parameterType="jp.co.molygray.dto.QualificationDto"
+        useGeneratedKeys="true"
+        keyProperty="qualificationId">
+        INSERT INTO qualification(
+            qualification_name
+            , qualification_abbreviated_name
+            , valid_period_years
+            , provider
+            <include refid="jp.co.molygray.dao.Common.common_column_block_insert" />
+        )
+        VALUES (
+            #{qualificationName}
+            , #{qualificationAbbreviatedName}
+            , #{validPeriodYears}
+            , #{provider}
+            <include refid="jp.co.molygray.dao.Common.common_values_block_insert" />
+        )
+    </insert>
+
+    <update id="update"
+        parameterType="jp.co.molygray.dto.QualificationDto">
+        UPDATE
+            qualification
+        SET
+            qualification_name = #{qualificationName}
+            , qualification_abbreviated_name = #{qualificationAbbreviatedName}
+            , valid_period_years = #{validPeriodYears}
+            , provider = #{provider}
+            <include refid="jp.co.molygray.dao.Common.common_set_block_update" />
+        WHERE
+            qualification_id = #{qualificationId}
+            AND exclusive_flg = #{exclusiveFlg}
+    </update>
+
+    <delete id="delete">
+        DELETE
+            qualification
+        WHERE
+            qualification_id = #{qualificationId}
+            AND exclusive_flg = #{exclusiveFlg}
+    </delete>
+</mapper>

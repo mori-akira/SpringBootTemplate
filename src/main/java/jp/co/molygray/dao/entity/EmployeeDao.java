@@ -5,6 +5,7 @@ import java.util.Optional;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
+import jp.co.molygray.annotation.WithExclusiveCheck;
 import jp.co.molygray.dto.EmployeeDto;
 
 /**
@@ -40,4 +41,32 @@ public interface EmployeeDao {
    * @return 社員
    */
   public EmployeeDto selectByEmployeeNumber(@Param("employeeNumber") String employeeNumber);
+
+  /**
+   * 登録メソッド
+   *
+   * @param dto 社員Dtoインスタンス
+   * @return 登録件数
+   */
+  public Long insert(EmployeeDto dto);
+
+  /**
+   * 更新メソッド
+   *
+   * @param dto 社員Dtoインスタンス
+   * @return 更新件数
+   */
+  @WithExclusiveCheck
+  public int update(EmployeeDto dto);
+
+  /**
+   * 削除メソッド
+   *
+   * @param employeeId 社員ID
+   * @param exclusiveFlg 排他フラグ
+   * @return 削除件数
+   */
+  @WithExclusiveCheck
+  public int delete(@Param("employeeId") long employeeId,
+      @Param("exclusiveFlg") String exclusiveFlg);
 }

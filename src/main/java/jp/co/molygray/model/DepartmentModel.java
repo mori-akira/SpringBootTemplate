@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- * 部署モデル
+ * 部署モデルクラス
  *
  * @author Moriaki Kogure
  * @version 0.0.1

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="jp.co.molygray.dao.entity.EmployeeQualificationMapDao">
+	<insert id="insert"
+        parameterType="jp.co.molygray.dto.EmployeeQualificationMapDto"
+        useGeneratedKeys="true"
+        keyProperty="employeeQualificationMapId">
+        INSERT INTO employee_qualification_map(
+            employee_id
+            , qualification_id
+            <include refid="jp.co.molygray.dao.Common.common_column_block_insert" />
+        )
+        VALUES (
+            #{employeeId}
+            , #{qualificationId}
+            <include refid="jp.co.molygray.dao.Common.common_values_block_insert" />
+        )
+    </insert>
+
+    <update id="update"
+        parameterType="jp.co.molygray.dto.EmployeeQualificationMapDto">
+        UPDATE
+            employee_qualification_map
+        SET
+            employee_id = #{employeeId}
+            , qualification_id = #{qualificationId}
+            <include refid="jp.co.molygray.dao.Common.common_set_block_update" />
+        WHERE
+            employee_qualification_map_id = #{employeeQualificationMapId}
+            AND exclusive_flg = #{exclusiveFlg}
+    </update>
+
+    <delete id="delete">
+        DELETE
+            employee_qualification_map
+        WHERE
+            employee_qualification_map_id = #{employeeQualificationMapId}
+            AND exclusive_flg = #{exclusiveFlg}
+    </delete>
+</mapper>

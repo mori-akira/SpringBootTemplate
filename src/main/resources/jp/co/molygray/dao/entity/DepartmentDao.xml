@@ -63,7 +63,6 @@
         WHERE
             department_id = #{departmentId}
             AND exclusive_flg = #{exclusiveFlg}
-            AND delete_flg = FALSE
     </update>
 
     <delete id="delete">

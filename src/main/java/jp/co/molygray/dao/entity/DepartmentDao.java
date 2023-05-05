@@ -51,7 +51,7 @@ public interface DepartmentDao {
    * 登録メソッド
    *
    * @param dto 部署Dtoインスタンス
-   * @return 部署ID
+   * @return 登録件数
    */
   public Long insert(DepartmentDto dto);
 
