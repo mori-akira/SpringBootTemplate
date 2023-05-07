@@ -28,7 +28,7 @@ databaseChangeLog:
                     nullable: true
               - column:
                   name: valid_period_years
-                  type: bigint
+                  type: int
                   remarks: 有効年数
                   constraints:
                     nullable: true

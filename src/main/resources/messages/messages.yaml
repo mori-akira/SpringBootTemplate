@@ -29,3 +29,15 @@ jp:
           DepartmentDao:
             exclusiveError:
               message: '部署が更新されています。'
+          EmployeeDao:
+            exclusiveError:
+              message: '社員が更新されています。'
+          EmployeeAddressDao:
+            exclusiveError:
+              message: '社員住所が更新されています。'
+          EmployeeQualificationMapDao:
+            exclusiveError:
+              message: '社員所持資格が更新されています。'
+          QualificationDao:
+            exclusiveError:
+              message: '資格が更新されています。'

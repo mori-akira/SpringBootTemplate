@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
 import jp.co.molygray.annotation.WithExclusiveCheck;
 import jp.co.molygray.dto.EmployeeQualificationMapDto;
 
@@ -23,7 +22,6 @@ public interface EmployeeQualificationMapDao {
    * @param employeeQualificationMapId 社員所持資格ID
    * @return 社員所持資格
    */
-  @Select("SELECT * FROM employee_qualification_map WHERE employee_qualification_map_id = #{employeeQualificationMapId} AND delete_flg = FALSE")
   public Optional<EmployeeQualificationMapDto> select(
       @Param("employeeQualificationMapId") long employeeQualificationMapId);
 
@@ -32,7 +30,6 @@ public interface EmployeeQualificationMapDao {
    *
    * @return 社員所持資格リスト
    */
-  @Select("SELECT * FROM employee_qualification_map WHERE delete_flg = FALSE ORDER BY employee_qualification_map_id")
   public List<EmployeeQualificationMapDto> selectList();
 
   /**

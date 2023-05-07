@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
 import jp.co.molygray.annotation.WithExclusiveCheck;
 import jp.co.molygray.dto.EmployeeAddressDto;
 
@@ -23,7 +22,6 @@ public interface EmployeeAddressDao {
    * @param employeeAddressId 社員住所ID
    * @return 社員住所
    */
-  @Select("SELECT * FROM employee_address WHERE employee_addresss_id = #{employeeAddressId} AND delete_flg = FALSE")
   public Optional<EmployeeAddressDto> select(@Param("employeeAddressId") long employeeAddressId);
 
   /**
@@ -31,7 +29,6 @@ public interface EmployeeAddressDao {
    *
    * @return 社員住所リスト
    */
-  @Select("SELECT * FROM employee_address WHERE delete_flg = FALSE ORDER BY employee_address_id")
   public List<EmployeeAddressDto> selectList();
 
   /**

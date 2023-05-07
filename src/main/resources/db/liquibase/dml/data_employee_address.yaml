@@ -302,7 +302,7 @@ databaseChangeLog:
                   value: 神奈川県
               - column:
                   name: city
-                  value: 横間市
+                  value: 横浜市
               - column:
                   name: ward
                   value: 神奈川区

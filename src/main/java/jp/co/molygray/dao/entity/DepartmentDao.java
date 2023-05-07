@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Optional;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
 import jp.co.molygray.annotation.WithExclusiveCheck;
 import jp.co.molygray.dto.DepartmentDto;
 
@@ -23,7 +22,6 @@ public interface DepartmentDao {
    * @param departmentId 部署ID
    * @return 部署
    */
-  @Select("SELECT * FROM department WHERE department_id = #{departmentId} AND delete_flg = FALSE")
   public Optional<DepartmentDto> select(@Param("departmentId") long departmentId);
 
   /**
@@ -31,7 +29,6 @@ public interface DepartmentDao {
    *
    * @return 部署リスト
    */
-  @Select("SELECT * FROM department WHERE delete_flg = FALSE ORDER BY department_id")
   public List<DepartmentDto> selectList();
 
   /**

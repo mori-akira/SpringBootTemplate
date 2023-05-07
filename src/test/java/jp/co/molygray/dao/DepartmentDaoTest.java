@@ -6,15 +6,20 @@ import static org.junit.jupiter.api.Assertions.assertThrowsExactly;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Stream;
+import org.junit.jupiter.api.MethodOrderer;
 import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import jp.co.molygray.dao.entity.DepartmentDao;
 import jp.co.molygray.dto.DepartmentDto;
+import jp.co.molygray.dto.DtoBase;
 import jp.co.molygray.enums.ErrorSummaryEnum;
 import jp.co.molygray.exception.BusinessErrorException;
 import jp.co.molygray.response.common.ErrorResponse.ErrorDetail;
@@ -28,16 +33,114 @@ import lombok.Data;
  * @version 0.0.1
  */
 @SpringBootTest
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 public class DepartmentDaoTest {
 
   /** 部署DAO */
   @Autowired
   private DepartmentDao departmentDao;
 
+  /**
+   * {@link DepartmentDao#select()}のテストメソッド
+   */
   @Test
-  @Order(0)
+  @Order(1)
   public void selectTest() {
+    Optional<DepartmentDto> expected =
+        Optional.of(DepartmentDto.builder()
+            .departmentId(1l)
+            .parentDepartmentId(null)
+            .departmentName("IT事業部")
+            .departmentFullName("IT事業部")
+            .deleteFlg(false)
+            .exclusiveFlg("xxx")
+            .insertDatetime(
+                ZonedDateTime.of(2023, 3, 1, 12, 0, 0, 0, ZoneId.systemDefault())
+                    .toOffsetDateTime())
+            .insertUser(0l)
+            .insertFunction("manual")
+            .updateDatetime(
+                ZonedDateTime.of(2023, 3, 1, 12, 0, 0, 0, ZoneId.systemDefault())
+                    .toOffsetDateTime())
+            .updateUser(0l)
+            .updateFunction("manual")
+            .build());
+    Optional<DepartmentDto> actual = departmentDao.select(1l);
+    assertEquals(expected, actual);
+  }
 
+  /**
+   * {@link DepartmentDao#selectList()}のテストメソッド
+   */
+  @Test
+  @Order(2)
+  public void selectListTest() {
+    DtoBase base = DtoBase.builder()
+        .deleteFlg(false)
+        .exclusiveFlg("xxx")
+        .insertDatetime(
+            ZonedDateTime.of(2023, 3, 1, 12, 0, 0, 0, ZoneId.systemDefault())
+                .toOffsetDateTime())
+        .insertUser(0l)
+        .insertFunction("manual")
+        .updateDatetime(
+            ZonedDateTime.of(2023, 3, 1, 12, 0, 0, 0, ZoneId.systemDefault())
+                .toOffsetDateTime())
+        .updateUser(0l)
+        .updateFunction("manual")
+        .build();
+    List<DepartmentDto> expected = List.of(
+        DepartmentDto.builder()
+            .departmentId(1l)
+            .parentDepartmentId(null)
+            .departmentName("IT事業部")
+            .departmentFullName("IT事業部")
+            .build(),
+        DepartmentDto.builder()
+            .departmentId(2l)
+            .parentDepartmentId(1l)
+            .departmentName("システム開発部")
+            .departmentFullName("IT事業部　システム開発部")
+            .build(),
+        DepartmentDto.builder()
+            .departmentId(3l)
+            .parentDepartmentId(2l)
+            .departmentName("東京開発課")
+            .departmentFullName("IT事業部　システム開発部　東京開発課")
+            .build(),
+        DepartmentDto.builder()
+            .departmentId(4l)
+            .parentDepartmentId(2l)
+            .departmentName("大阪開発課")
+            .departmentFullName("IT事業部　システム開発部　大阪開発課")
+            .build(),
+        DepartmentDto.builder()
+            .departmentId(5l)
+            .parentDepartmentId(null)
+            .departmentName("管理本部")
+            .departmentFullName("管理本部")
+            .build(),
+        DepartmentDto.builder()
+            .departmentId(6l)
+            .parentDepartmentId(5l)
+            .departmentName("経理課")
+            .departmentFullName("管理本部　経理課")
+            .build(),
+        DepartmentDto.builder()
+            .departmentId(7l)
+            .parentDepartmentId(5l)
+            .departmentName("総務課")
+            .departmentFullName("管理本部　総務課")
+            .build(),
+        DepartmentDto.builder()
+            .departmentId(8l)
+            .parentDepartmentId(5l)
+            .departmentName("教育課")
+            .departmentFullName("管理本部　教育課")
+            .build());
+    expected.forEach(e -> BeanUtils.copyProperties(base, e));
+    List<DepartmentDto> actual = departmentDao.selectList();
+    assertEquals(expected, actual);
   }
 
   /**
@@ -74,7 +177,7 @@ public class DepartmentDaoTest {
   }
 
   /**
-   * 一覧選択メソッド用のテストデータ
+   * {@link DepartmentDao#selectList()}のテストデータ
    *
    * @return テストデータ
    */
@@ -96,7 +199,8 @@ public class DepartmentDaoTest {
    */
   @ParameterizedTest
   @MethodSource("searchListSource")
-  public void selectListTest(SearchtListParamAndExpected input) {
+  @Order(3)
+  public void searchListTest(SearchtListParamAndExpected input) {
     List<DepartmentDto> expected = getTestData(input.getExpected());
     List<DepartmentDto> actual = departmentDao.searchList(input.getParentDepartmentIdList(),
         input.getDepartmentName(), input.getDepartmentFullName());
@@ -107,6 +211,7 @@ public class DepartmentDaoTest {
    * {@link DepartmentDao#insert()}のテストメソッド
    */
   @Test
+  @Order(4)
   public void insertTest() {
     // Nullable項目設定
     DepartmentDto expected = DepartmentDto.builder()
@@ -148,7 +253,7 @@ public class DepartmentDaoTest {
         .deleteUser(2l)
         .deleteFunction("zzz")
         .build();
-    departmentDao.insert(actual);
+    assertEquals(1, departmentDao.insert(actual));
     assertEquals(expected, actual);
     expected.setExclusiveFlg("abc");
     expected.setNewExclusiveFlg(null);
@@ -193,7 +298,7 @@ public class DepartmentDaoTest {
         .deleteUser(null)
         .deleteFunction(null)
         .build();
-    departmentDao.insert(actual);
+    assertEquals(1, departmentDao.insert(actual));
     assertEquals(expected, actual);
     expected.setExclusiveFlg("def");
     expected.setNewExclusiveFlg(null);
@@ -205,6 +310,7 @@ public class DepartmentDaoTest {
    * {@link DepartmentDao#update()}のテストメソッド
    */
   @Test
+  @Order(5)
   public void updateTest() {
     // Nullable項目設定
     DepartmentDto expected = DepartmentDto.builder()
@@ -303,6 +409,7 @@ public class DepartmentDaoTest {
    * {@link DepartmentDao#update()}の排他チェックのテストメソッド
    */
   @Test
+  @Order(6)
   public void updateTestExclusiveCheck() {
     DepartmentDto dto = DepartmentDto.builder()
         .departmentId(1l)
@@ -336,6 +443,7 @@ public class DepartmentDaoTest {
    * {@link DepartmentDao#delete()}のテストメソッド
    */
   @Test
+  @Order(7)
   public void deleteTest() {
     int actual = departmentDao.delete(3l, "xxx");
     assertEquals(1, actual);
@@ -347,6 +455,7 @@ public class DepartmentDaoTest {
    * {@link DepartmentDao#delete()}の排他チェックのテストメソッド
    */
   @Test
+  @Order(8)
   public void deleteTestExclusiveCheck() {
     BusinessErrorException ex =
         assertThrowsExactly(BusinessErrorException.class, () -> departmentDao.delete(4l, "xxxx"));

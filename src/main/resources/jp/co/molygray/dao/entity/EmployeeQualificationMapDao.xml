@@ -4,7 +4,30 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="jp.co.molygray.dao.entity.EmployeeQualificationMapDao">
-	<insert id="insert"
+    <select id="select"
+        resultType="jp.co.molygray.dto.EmployeeQualificationMapDto">
+        SELECT
+            *
+        FROM
+            employee_qualification_map
+        WHERE
+            employee_qualification_map_id = #{employeeQualificationMapId}
+            AND delete_flg = FALSE
+    </select>
+
+    <select id="selectList"
+        resultType="jp.co.molygray.dto.EmployeeQualificationMapDto">
+        SELECT
+            *
+        FROM
+            employee_qualification_map
+        WHERE
+            delete_flg = FALSE
+        ORDER BY
+            employee_qualification_map_id
+    </select>
+
+    <insert id="insert"
         parameterType="jp.co.molygray.dto.EmployeeQualificationMapDto"
         useGeneratedKeys="true"
         keyProperty="employeeQualificationMapId">

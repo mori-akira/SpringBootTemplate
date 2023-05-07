@@ -36,5 +36,5 @@ public class EmployeeAddressDto extends DtoBase {
   /** 詳細1 */
   private String detail1;
   /** 詳細2 */
-  private Integer detail2;
+  private String detail2;
 }

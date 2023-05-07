@@ -28,7 +28,7 @@ public class QualificationDto extends DtoBase {
   /** 資格省略名 */
   private String qualificationAbbreviatedName;
   /** 有効年数 */
-  private Long validPeriodYears;
+  private Integer validPeriodYears;
   /** 提供組織 */
   private String provider;
 }
