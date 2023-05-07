@@ -26,6 +26,9 @@ public class RegisterValidator implements Validator {
    */
   @Override
   public boolean supports(Class<?> clazz) {
+    if (clazz == null) {
+      return false;
+    }
     return RegisterParameter.class.isAssignableFrom(clazz);
   }
 

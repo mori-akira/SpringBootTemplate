@@ -54,7 +54,8 @@ public class DepartmentController {
    */
   @InitBinder
   void initBinder(WebDataBinder binder) {
-    if (registerValidator.supports(binder.getTarget().getClass())) {
+    Class<?> target = Optional.ofNullable(binder.getTarget()).map(Object::getClass).orElse(null);
+    if (registerValidator.supports(target)) {
       binder.addValidators(registerValidator);
     }
   }

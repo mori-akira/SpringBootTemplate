@@ -53,7 +53,10 @@ public enum FunctionIdEnum {
    * @return
    */
   @Nullable
-  public static FunctionIdEnum ofRequest(@NonNull HttpServletRequest request) {
+  public static FunctionIdEnum ofRequest(@Nullable HttpServletRequest request) {
+    if (request == null) {
+      return null;
+    }
     return Arrays.stream(FunctionIdEnum.values())
         // リクエストパスでフィルタリング
         .filter(e -> request.getServletPath()

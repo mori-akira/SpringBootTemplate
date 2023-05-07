@@ -32,6 +32,20 @@ public interface QualificationDao {
   public List<QualificationDto> selectList();
 
   /**
+   * 一覧検索メソッド
+   *
+   * @param qualificationName 資格名
+   * @param qualificationAbbreviatedName 資格省略名
+   * @param validPeriodYears 有効年数
+   * @param provider 提供組織
+   * @return 資格リスト
+   */
+  public List<QualificationDto> searchList(@Param("qualificationName") String qualificationName,
+      @Param("qualificationAbbreviatedName") String qualificationAbbreviatedName,
+      @Param("validPeriodYears") Integer validPeriodYears,
+      @Param("provider") String provider);
+
+  /**
    * 登録メソッド
    *
    * @param dto 資格Dtoインスタンス

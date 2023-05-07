@@ -44,12 +44,10 @@
                 </foreach>
             </if>
             <if test="departmentName != null and departmentName != ''">
-                AND department_name LIKE concat('%',
-                #{departmentName}, '%')
+                AND department_name LIKE concat('%', #{departmentName}, '%')
             </if>
             <if test="departmentFullName != null and departmentName != ''">
-                AND department_full_name LIKE concat('%',
-                #{departmentFullName}, '%')
+                AND department_full_name LIKE concat('%', #{departmentFullName}, '%')
             </if>
             AND delete_flg = FALSE
         ORDER BY

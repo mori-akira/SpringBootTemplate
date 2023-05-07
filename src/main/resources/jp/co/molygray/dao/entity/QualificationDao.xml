@@ -27,6 +27,31 @@
             qualification_id
     </select>
 
+    <select id="searchList"
+        resultType="jp.co.molygray.dto.QualificationDto">
+        SELECT
+            *
+        FROM
+            qualification
+        WHERE
+            0 = 0
+            <if test="qualificationName != null and qualificationName != ''">
+                AND qualification_name LIKE concat('%', #{qualificationName}, '%')
+            </if>
+            <if test="qualificationAbbreviatedName != null and qualificationAbbreviatedName != ''">
+                AND qualification_abbreviated_name LIKE concat('%', #{qualificationAbbreviatedName}, '%')
+            </if>
+            <if test="validPeriodYears != null">
+                AND valid_period_years = #{validPeriodYears}
+            </if>
+            <if test="provider != null and provider != ''">
+                AND provider LIKE concat('%', #{provider}, '%')
+            </if>
+            delete_flg = FALSE
+        ORDER BY
+            qualification_id
+    </select>
+
     <insert id="insert"
         parameterType="jp.co.molygray.dto.QualificationDto"
         useGeneratedKeys="true"

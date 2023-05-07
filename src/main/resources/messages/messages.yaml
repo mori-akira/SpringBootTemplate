@@ -24,6 +24,11 @@ jp:
             message: '部署正式名が重複しています。'
           notExistsDepartment:
             message: '部署が存在しません。'
+        QualificationService:
+          duplicateQualificationName:
+            message: '資格名が重複しています。'
+          notExistsQualification:
+            message: '資格が存在しません。'
       dao:
         entity:
           DepartmentDao:
