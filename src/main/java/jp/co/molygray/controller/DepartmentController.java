@@ -24,6 +24,7 @@ import jp.co.molygray.parameter.department.RegisterParameter;
 import jp.co.molygray.parameter.department.RegisterParameter.Patch;
 import jp.co.molygray.parameter.department.RegisterParameter.Put;
 import jp.co.molygray.parameter.department.validator.RegisterValidator;
+import jp.co.molygray.response.department.DeleteResponse;
 import jp.co.molygray.response.department.GetResponse;
 import jp.co.molygray.response.department.ListResponse;
 import jp.co.molygray.response.department.PatchResponse;
@@ -132,15 +133,15 @@ public class DepartmentController {
    * 部署Delete APIエントリポイント
    *
    * @param parameter Deleteパラメータ
-   * @return Patchレスポンス
+   * @return Deleteレスポンス
    * @throws Exception 例外発生時
    */
   @DeleteMapping("/delete")
-  public PatchResponse delete(@Validated DeleteParameter parameter)
+  public DeleteResponse delete(@Validated DeleteParameter parameter)
       throws Exception {
     Long departmentId = Long.valueOf(parameter.getDepartmentId());
     departmentService.delete(departmentId, parameter.getExclusiveFlg());
-    return new PatchResponse();
+    return new DeleteResponse();
   }
 
   /**
