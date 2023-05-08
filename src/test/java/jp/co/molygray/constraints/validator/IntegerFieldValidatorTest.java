@@ -8,14 +8,15 @@ import java.util.Map.Entry;
 import java.util.stream.Stream;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import jakarta.validation.ConstraintValidatorContext;
 
 /**
- * {@link LongFieldValidator}のテストクラス
+ * {@link IntegerFieldValidator}のテストクラス
  *
  * @author Moriaki Kogure
  * @version 0.0.1
  */
-public class LongFieldValidatorTest {
+public class IntegerFieldValidatorTest {
 
   /**
    * 空検証の入力値
@@ -36,10 +37,10 @@ public class LongFieldValidatorTest {
     map.put("1", true);
     map.put("0", true);
     map.put("-1", true);
-    map.put("9223372036854775807", true);
-    map.put("9223372036854775808", false);
-    map.put("-9223372036854775808", true);
-    map.put("-9223372036854775809", false);
+    map.put("2147483647", true);
+    map.put("2147483648", false);
+    map.put("-2147483648", true);
+    map.put("-2147483649", false);
     map.put("0.1", false);
     map.put("abc", false);
     map.put(" 1 ", false);
@@ -50,20 +51,19 @@ public class LongFieldValidatorTest {
   }
 
   /**
-   * {@link LongFieldValidator#isValid(String, jakarta.validation.ConstraintValidatorContext)}
-   * の空検証を行うテストクラス
+   * {@link IntegerFieldValidator#isValid(String, ConstraintValidatorContext)} の空検証を行うテストクラス
    *
    * @param value 入力パターン
    */
   @ParameterizedTest
   @MethodSource("emptySource")
   public void isValidTestEmpty(String value) {
-    LongFieldValidator validator = new LongFieldValidator();
+    IntegerFieldValidator validator = new IntegerFieldValidator();
     assertTrue(validator.isValid(value, null));
   }
 
   /**
-   * {@link LongFieldValidator#isValid(String, jakarta.validation.ConstraintValidatorContext)}
+   * {@link IntegerFieldValidator#isValid(String, jConstraintValidatorContext)}
    * のパターン検証を行うテストクラス
    *
    * @param source 入力パターン
@@ -73,7 +73,7 @@ public class LongFieldValidatorTest {
   @MethodSource("patternSrouce")
   public void isValidTestFormatPattern(Entry<String, Boolean> source)
       throws Throwable {
-    LongFieldValidator validator = new LongFieldValidator();
+    IntegerFieldValidator validator = new IntegerFieldValidator();
     assertEquals(source.getValue(), validator.isValid(source.getKey(), null));
   }
 }

@@ -4,22 +4,22 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-import jp.co.molygray.constraints.LongField;
+import jp.co.molygray.constraints.IntegerField;
 
 /**
- * {@link LongField}のバリデーション実装クラス
+ * {@link IntegerField}のバリデーション実装クラス
  *
  * @author Moriaki Kogure
  * @version 0.0.1
  */
 @Component
-public class LongFieldValidator implements ConstraintValidator<LongField, String> {
+public class IntegerFieldValidator implements ConstraintValidator<IntegerField, String> {
 
   /**
    * {@inheritDoc}
    */
   @Override
-  public void initialize(LongField longField) {}
+  public void initialize(IntegerField integerField) {}
 
   /**
    * {@inheritDoc}
@@ -31,7 +31,7 @@ public class LongFieldValidator implements ConstraintValidator<LongField, String
       return true;
     }
     try {
-      Long.valueOf(value);
+      Integer.valueOf(value);
       return true;
     } catch (NumberFormatException ex) {
       return false;

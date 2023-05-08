@@ -28,5 +28,7 @@ jp:
           message: '{field}は入力できません。'
         FormatDate:
           message: '{field}は「{format}」フォーマットで入力してください。'
+        IntegerField:
+          message: '{field}は整数で入力してください。'
         LongField:
           message: '{field}は整数で入力してください。'

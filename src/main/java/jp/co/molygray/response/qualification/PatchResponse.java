@@ -1,7 +1,6 @@
-package jp.co.molygray.response.department;
+package jp.co.molygray.response.qualification;
 
 import jp.co.molygray.response.ResponseBase;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -9,7 +8,7 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 /**
- * 部署Put APIレスポンスクラス
+ * 資格Patch APIレスポンスクラス
  *
  * @author Moriaki Kogure
  * @version 0.0.1
@@ -17,11 +16,7 @@ import lombok.experimental.SuperBuilder;
 @Data
 @SuperBuilder
 @NoArgsConstructor
-@AllArgsConstructor
 @ToString(callSuper = true)
 @EqualsAndHashCode(callSuper = true)
-public class PutResponse extends ResponseBase {
-
-  /** 部署ID */
-  private Long departmentId;
+public class PatchResponse extends ResponseBase {
 }

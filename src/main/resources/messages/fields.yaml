@@ -31,3 +31,25 @@ meiKana: 名カナ
 gender: 性別
 birthDate: 生年月日
 hireDate: 入社日
+
+# 社員住所
+employeeAddress: 社員住所
+employeeAddressId: 社員住所ID
+country: 国
+prefecture: 県
+city: 市
+ward: 区
+detail1: 詳細1
+detail2: 詳細2
+
+# 社員所持資格
+employeeQualificationMap: 社員所持資格
+employeeQualificationMapId: 社員所持資格ID
+
+# 資格
+qualification: 資格
+qualificationId: 資格ID
+qualificationName: 資格名
+qualificationAbbreviatedName: 資格省略名
+validPeriodYears: 有効年数
+provider: 提供組織

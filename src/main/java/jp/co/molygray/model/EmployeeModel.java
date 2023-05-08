@@ -34,6 +34,8 @@ public class EmployeeModel {
 
     /** 社員住所ID */
     private Long employeeAddressId;
+    /** 排他フラグ */
+    private String exclusiveFlg;
     /** 国 */
     private String country;
     /** 県 */

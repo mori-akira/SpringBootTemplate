@@ -107,9 +107,10 @@ public class DepartmentServiceTest {
       DtoBase dto = DtoBase.class.cast(invocation.getArgument(0));
       dto.setDeleteFlg(true);
       dto.setNewExclusiveFlg(UUID.randomUUID().toString().replace("-", ""));
-      dto.setDeleteDatetime(null);
-      dto.setDeleteUser(null);
-      dto.setDeleteFunction(null);
+      dto.setDeleteDatetime(
+          ZonedDateTime.of(2023, 1, 1, 0, 0, 0, 0, ZoneId.systemDefault()).toOffsetDateTime());
+      dto.setDeleteUser(0l);
+      dto.setDeleteFunction("func");
       return null;
     }).when(dtoCommonFieldSetter).setCommonFieldWhenDelete(any(DepartmentDto.class));
     when(messageSource.getMessage(DepartmentService.class, "duplicateDepartmentName"))
