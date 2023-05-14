@@ -48,6 +48,7 @@ public class Config implements WebMvcConfigurer {
     // デフォルトロケールを設定
     Locale.setDefault(LocaleUtils
         .toLocale(systemConstants.getConstantsWithDefault("default.locale", "ja")));
+    // デフォルトタイムゾーンを設定
     TimeZone.setDefault(TimeZone
         .getTimeZone(systemConstants.getConstantsWithDefault("default.timezone", "Asia/Tokyo")));
   }
@@ -71,8 +72,7 @@ public class Config implements WebMvcConfigurer {
   @Bean
   MultiMessageSource messageSource() {
     MultiMessageSource messageSource = new MultiMessageSource();
-    messageSource.setBasenames("messages/messages", "messages/fields",
-        "messages/validation");
+    messageSource.setBasenames("messages/messages", "messages/fields", "messages/validation");
     messageSource.setDefaultEncoding(StandardCharsets.UTF_8.name());
     messageSource.setAlwaysUseMessageFormat(false);
     messageSource.setUseCodeAsDefaultMessage(true);
