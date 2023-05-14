@@ -29,7 +29,19 @@ public enum FunctionIdEnum {
     /** 部署Patch API */
     API_DEP_PATCH(new ApiRequestInfo("/department/patch.*")),
     /** 部署Delete API */
-    API_DEP_DELETE(new ApiRequestInfo("/department/delete.*"));
+    API_DEP_DELETE(new ApiRequestInfo("/department/delete.*")),
+    /** 社員情報Get API */
+    API_EMP_GET_INFO(new ApiRequestInfo("/employee/getInfo.*")),
+    /** 資格Get API */
+    API_QUA_GET(new ApiRequestInfo("/qualification/get.*")),
+    /** 資格List API */
+    API_QUA_LIST(new ApiRequestInfo("/qualification/list.*")),
+    /** 資格Put API */
+    API_QUA_PUT(new ApiRequestInfo("/qualification/put.*")),
+    /** 資格Patch API */
+    API_QUA_PATCH(new ApiRequestInfo("/qualification/patch.*")),
+    /** 資格Delete API */
+    API_QUA_DELETE(new ApiRequestInfo("/qualification/delete.*"));
 
   /** 機能に紐づくリクエスト情報 */
   private RequestInfo requestInfo;
