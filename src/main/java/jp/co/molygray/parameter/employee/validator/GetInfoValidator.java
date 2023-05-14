@@ -2,7 +2,6 @@ package jp.co.molygray.parameter.employee.validator;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -47,9 +46,7 @@ public class GetInfoValidator implements Validator {
     // employeeIdとemployeeNumberの両方が未指定の場合エラー
     if (StringUtils.isEmpty(employeeId) && StringUtils.isEmpty(employeeNumber)) {
       String key = "requireEmployeeIdOrEmployeeNumber";
-      String message = messageSource.getMessage(this.getClass(), key,
-          new Object[] {new DefaultMessageSourceResolvable("employeeId"),
-              new DefaultMessageSourceResolvable("employeeNumber")});
+      String message = messageSource.getMessage(this.getClass(), key);
       errors.reject(key, message);
     }
   }

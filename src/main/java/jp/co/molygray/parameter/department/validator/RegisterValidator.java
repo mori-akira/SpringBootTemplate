@@ -1,7 +1,6 @@
 package jp.co.molygray.parameter.department.validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -46,9 +45,7 @@ public class RegisterValidator implements Validator {
     // departmentFullNameがdepartmentNameで終わらない場合エラー
     if (!departmentFullName.endsWith(departmentName)) {
       String key = "departmentFullNameNotEndsWithDepartmentName";
-      String message = messageSource.getMessage(this.getClass(), key,
-          new Object[] {new DefaultMessageSourceResolvable("departmentFullName"),
-              new DefaultMessageSourceResolvable("departmentName")});
+      String message = messageSource.getMessage(this.getClass(), key);
       errors.reject(key, message);
     }
   }

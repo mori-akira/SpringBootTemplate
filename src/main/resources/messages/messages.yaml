@@ -13,12 +13,12 @@ jp:
           validator:
             RegisterValidator:
               departmentFullNameNotEndsWithDepartmentName:
-                message: '{0}は{1}で終わる必要があります。'
+                message: '部署正式名は部署名で終わる必要があります。'
         employee:
           validator:
             GetInfoValidator:
               requireEmployeeIdOrEmployeeNumber:
-                message: '{0}または{1}のどちらかは必須です。'
+                message: '社員IDまたは社員番号のどちらかは必須です。'
 
 # システムメッセージ定義
       service:
