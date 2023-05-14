@@ -8,7 +8,7 @@
         resultMap="jp.co.molygray.dao.Common.employee_model_result_map">
         SELECT
             employee.employee_id
-            , employee.exclusive_flg
+            , employee.exclusive_flg AS employeeExclusiveFlg
             , employee.employee_number
             , employee.sei
             , employee.mei
@@ -18,12 +18,12 @@
             , employee.birth_date
             , employee.hire_date
             , department.department_id
-            , department.exclusive_flg
+            , department.exclusive_flg AS departmentExclusiveFlg
             , department.parent_department_id
             , department.department_name
             , department.department_full_name
             , employee_address.employee_address_id
-            , employee_address.exclusive_flg
+            , employee_address.exclusive_flg AS employeeAddressExclusiveFlg
             , employee_address.country
             , employee_address.prefecture
             , employee_address.city
@@ -31,7 +31,7 @@
             , employee_address.detail1
             , employee_address.detail2
             , qualification.qualification_id
-            , qualification.exclusive_flg
+            , qualification.exclusive_flg AS qualificationExclusiveFlg
             , qualification.qualification_name
             , qualification.qualification_abbreviated_name
             , qualification.valid_period_years

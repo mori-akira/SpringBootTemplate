@@ -11,6 +11,8 @@
         autoMapping="true">
         <id property="departmentId"
             column="department_id" />
+        <result property="exclusiveFlg"
+            column="departmentExclusiveFlg" />
     </resultMap>
     <!-- 社員モデル -->
     <resultMap id="employee_model_result_map"
@@ -18,6 +20,8 @@
         autoMapping="true">
         <id property="employeeId"
             column="employee_id" />
+        <result property="exclusiveFlg"
+            column="employeeExclusiveFlg" />
         <association property="department"
             resultMap="department_model_result_map" />
         <association property="employeeAddress"
@@ -25,6 +29,8 @@
             autoMapping="true">
             <id property="employeeAddressId"
                 column="employee_address_id" />
+            <result property="exclusiveFlg"
+                column="employeeAddressExclusiveFlg" />
         </association>
         <collection property="qualificationList"
             resultMap="qualification_model_result_map" />
@@ -35,6 +41,8 @@
         autoMapping="true">
         <id property="qualificationId"
             column="qualification_id" />
+        <result property="exclusiveFlg"
+            column="qualificationExclusiveFlg" />
     </resultMap>
 
     <!-- 共通カラムブロック定義 -->

@@ -3,6 +3,7 @@ package jp.co.molygray.dao.service;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.Collections;
 import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -132,6 +133,37 @@ public class EmployeeInfoDaoTest {
     actual = employeeInfoDao.selectEmployeeInfo(null, "0000000001").orElse(null);
     assertEquals(expected, actual);
     actual = employeeInfoDao.selectEmployeeInfo(1l, "0000000001").orElse(null);
+    assertEquals(expected, actual);
+
+    // リスト要素が空の場合
+    employeeAddress = EmployeeAddressModel.builder()
+        .employeeAddressId(3l)
+        .exclusiveFlg("xxx")
+        .country("日本")
+        .prefecture("東京都")
+        .city(null)
+        .ward("大田区")
+        .detail1("北糀谷1-1-1")
+        .detail2("XXXアパート　203号室")
+        .build();
+    expected = EmployeeModel.builder()
+        .employeeId(3l)
+        .exclusiveFlg("xxx")
+        .employeeNumber("0000000003")
+        .sei("青木")
+        .mei("愛華")
+        .seiKana("アオキ")
+        .meiKana("アイカ")
+        .gender(GenderEnum.WOMAN)
+        .birthDate(
+            ZonedDateTime.of(1996, 12, 1, 0, 0, 0, 0, ZoneId.systemDefault()).toOffsetDateTime())
+        .hireDate(
+            ZonedDateTime.of(2020, 4, 1, 0, 0, 0, 0, ZoneId.systemDefault()).toOffsetDateTime())
+        .department(department)
+        .employeeAddress(employeeAddress)
+        .qualificationList(Collections.emptyList())
+        .build();
+    actual = employeeInfoDao.selectEmployeeInfo(3l, null).orElse(null);
     assertEquals(expected, actual);
   }
 }
