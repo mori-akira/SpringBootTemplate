@@ -13,7 +13,6 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.ObjectError;
 import jp.co.molygray.parameter.department.validator.RegisterValidator;
@@ -116,9 +115,8 @@ public class GetInfoValidatorTest {
     getInfoValidator.validate(param, errors);
     assertEquals(List.of(new ObjectError("hoge",
         new String[] {"requireEmployeeIdOrEmployeeNumber.hoge",
-            "requireEmployeeIdOrEmployeeNumber"}, null, null)),
+            "requireEmployeeIdOrEmployeeNumber"}, null, "err")),
         errors.getAllErrors());
-    verify(messageSource).getMessage(any(Class.class), any(String.class),
-        any(DefaultMessageSourceResolvable.class), any(DefaultMessageSourceResolvable.class));
+    verify(messageSource).getMessage(any(Class.class), any(String.class));
   }
 }
