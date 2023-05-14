@@ -40,7 +40,8 @@ public interface QualificationDao {
    * @param provider 提供組織
    * @return 資格リスト
    */
-  public List<QualificationDto> searchList(@Param("qualificationName") String qualificationName,
+  public List<QualificationDto> searchList(
+      @Param("qualificationName") String qualificationName,
       @Param("qualificationAbbreviatedName") String qualificationAbbreviatedName,
       @Param("validPeriodYears") Integer validPeriodYears,
       @Param("provider") String provider);

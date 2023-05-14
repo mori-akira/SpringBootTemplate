@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 /**
- * Dto共通部
+ * Dtoの基底クラス
  *
  * @author Moriaki Kogure
  * @version 0.0.1

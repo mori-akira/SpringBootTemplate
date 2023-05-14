@@ -20,7 +20,7 @@ import jp.co.molygray.util.message.MultiMessageSource;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * 設定クラス
+ * アプリ設定クラス
  *
  * @author Moriaki Kogure
  * @version 0.0.1

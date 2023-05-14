@@ -24,6 +24,7 @@ public interface EmployeeInfoDao {
    * @param employeeNumber 社員番号
    * @return 社員情報
    */
-  public Optional<EmployeeModel> selectEmployeeInfo(@Param("employeeId") Long employeeId,
+  public Optional<EmployeeModel> selectEmployeeInfo(
+      @Param("employeeId") Long employeeId,
       @Param("employeeNumber") String employeeNumber);
 }

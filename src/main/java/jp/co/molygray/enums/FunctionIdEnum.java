@@ -61,8 +61,10 @@ public enum FunctionIdEnum {
   }
 
   /**
-   * @param request
-   * @return
+   * {@link HttpServletRequest}から機能IDを取得するメソッド
+   *
+   * @param request {@link HttpServletRequest}
+   * @return 機能ID (対応する機能IDが存在しない場合はnull)
    */
   @Nullable
   public static FunctionIdEnum ofRequest(@Nullable HttpServletRequest request) {

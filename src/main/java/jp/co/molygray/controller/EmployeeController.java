@@ -46,8 +46,8 @@ public class EmployeeController {
   /**
    * 社員情報Get APIエントリポイント
    *
-   * @param param 情報Getパラメータ
-   * @return 情報Getレスポンス
+   * @param param 社員情報Getパラメータ
+   * @return 社員情報Getレスポンス
    * @throws Exception 例外発生時
    */
   @GetMapping("/getInfo")

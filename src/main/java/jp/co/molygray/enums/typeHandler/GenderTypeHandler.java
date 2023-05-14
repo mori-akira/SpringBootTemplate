@@ -10,7 +10,7 @@ import org.apache.ibatis.type.MappedTypes;
 import jp.co.molygray.enums.GenderEnum;
 
 /**
- * {@link GenderEnum}の型変換ハンドラクラス
+ * MyBatis用に定義する、{@link GenderEnum}の型変換ハンドラクラス
  *
  * @author Moriaki Kogure
  * @version 0.0.1

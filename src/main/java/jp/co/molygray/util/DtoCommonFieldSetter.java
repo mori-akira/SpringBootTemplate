@@ -30,7 +30,7 @@ public class DtoCommonFieldSetter {
   /**
    * 登録時の共通フィールドを設定するメソッド
    * <p>
-   * 登録情報、更新情報に共通フィールドを設定し、削除情報にnullを設定する。
+   * 登録情報、更新情報に共通フィールドを設定する。
    * </p>
    *
    * @param dto Dtoインスタンス
@@ -51,9 +51,6 @@ public class DtoCommonFieldSetter {
 
   /**
    * 更新時の共通フィールドを設定するメソッド
-   * <p>
-   * 更新情報に共通フィールドを設定する。
-   * </p>
    *
    * @param dto Dtoインスタンス
    */
@@ -66,9 +63,6 @@ public class DtoCommonFieldSetter {
 
   /**
    * 削除時の共通フィールドを設定するメソッド
-   * <p>
-   * 削除情報に共通フィールドを設定する。
-   * </p>
    *
    * @param dto Dtoインスタンス
    */

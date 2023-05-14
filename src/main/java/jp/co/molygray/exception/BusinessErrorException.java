@@ -7,7 +7,7 @@ import jp.co.molygray.response.common.ErrorResponse.ErrorDetail;
 import lombok.Getter;
 
 /**
- * ビジネスチェックによるエラーに対応する例外クラス
+ * ビジネスチェックによるエラーの例外クラス
  *
  * @author Moriaki Kogure
  * @version 0.0.1

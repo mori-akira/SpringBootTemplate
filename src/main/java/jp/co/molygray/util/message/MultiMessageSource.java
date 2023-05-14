@@ -10,7 +10,15 @@ import jakarta.servlet.http.HttpServletRequest;
 import net.rakugakibox.util.YamlResourceBundle;
 
 /**
- * 多言語化用のメッセージソース
+ * 独自メッセージソース
+ * <p>
+ * 次をカスタムするため作成する。
+ * </p>
+ * <ol>
+ * <li>メッセージの多言語化</li>
+ * <li>呼び出しクラスによるメッセージキーの共通化</li>
+ * <li>Yamlによるメッセージリソース定義</li>
+ * </ol>
  *
  * @author Moriaki Kogure
  * @version 0.0.1

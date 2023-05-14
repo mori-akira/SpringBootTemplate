@@ -8,7 +8,7 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 /**
- * 社員住所DTOクラス
+ * 社員住所Dtoクラス
  *
  * @author Moriaki Kogure
  * @version 0.0.1

@@ -22,9 +22,9 @@ import jakarta.validation.Path.Node;
  */
 public class CustomMessageInterpolator implements MessageInterpolator {
 
-  /** カッコ始め */
+  /** プレースホルダのカッコ始め */
   public static final String BRACE_OPEN = "{";
-  /** カッコ終わり */
+  /** プレースホルダのカッコ終わり */
   public static final String BRACE_CLOSE = "}";
   /** メッセージ中のプレースホルダ検知用の正規表現 */
   public static final String REGEX_MESSAGE_PLACEHOLDER = String.format("\\%s+(.+?)\\%s",

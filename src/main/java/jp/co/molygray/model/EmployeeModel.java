@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 public class EmployeeModel {
 
   /**
-   * 社員住所モデル
+   * 社員住所モデルクラス
    *
    * @author Moriaki Kogure
    * @version 0.0.1
