@@ -8,6 +8,7 @@ import java.util.Map.Entry;
 import java.util.stream.Stream;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import jakarta.validation.ConstraintValidatorContext;
 
 /**
  * {@link LongFieldValidator}のテストクラス
@@ -50,8 +51,7 @@ public class LongFieldValidatorTest {
   }
 
   /**
-   * {@link LongFieldValidator#isValid(String, jakarta.validation.ConstraintValidatorContext)}
-   * の空検証を行うテストクラス
+   * {@link LongFieldValidator#isValid(String, ConstraintValidatorContext)} の空検証を行うテストクラス
    *
    * @param value 入力パターン
    */
@@ -63,8 +63,7 @@ public class LongFieldValidatorTest {
   }
 
   /**
-   * {@link LongFieldValidator#isValid(String, jakarta.validation.ConstraintValidatorContext)}
-   * のパターン検証を行うテストクラス
+   * {@link LongFieldValidator#isValid(String, ConstraintValidatorContext)} のパターン検証を行うテストクラス
    *
    * @param source 入力パターン
    * @throws Throwable エラー発生時

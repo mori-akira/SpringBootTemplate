@@ -134,7 +134,7 @@ public class DepartmentServiceTest {
   }
 
   /**
-   * {@link DepartmentService#get()}のテストメソッド
+   * {@link DepartmentService#get(long)}のテストメソッド
    * <p>
    * 検索ヒットありの場合
    * </p>
@@ -171,7 +171,7 @@ public class DepartmentServiceTest {
   }
 
   /**
-   * {@link DepartmentService#get()}のテストメソッド
+   * {@link DepartmentService#get(long)}のテストメソッド
    * <p>
    * 検索ヒットなしの場合
    * </p>
@@ -187,7 +187,7 @@ public class DepartmentServiceTest {
   }
 
   /**
-   * {@link DepartmentService#searchList()}のテストメソッド
+   * {@link DepartmentService#searchList(List, String, String)}のテストメソッド
    * <p>
    * 検索条件あり、検索ヒットありの場合
    * </p>
@@ -248,7 +248,7 @@ public class DepartmentServiceTest {
   }
 
   /**
-   * {@link DepartmentService#searchList()}のテストメソッド
+   * {@link DepartmentService#searchList(List, String, String)}のテストメソッド
    * <p>
    * 検索条件なし、検索ヒットなしの場合
    * </p>
@@ -263,7 +263,7 @@ public class DepartmentServiceTest {
   }
 
   /**
-   * {@link DepartmentService#insert()}のテストメソッド
+   * {@link DepartmentService#insert(DepartmentModel)}のテストメソッド
    */
   @Test
   public void insertTestOk() {
@@ -305,7 +305,7 @@ public class DepartmentServiceTest {
   }
 
   /**
-   * {@link DepartmentService#insert()}のテストメソッド
+   * {@link DepartmentService#insert(DepartmentModel)}のテストメソッド
    * <p>
    * 部署名の重複エラー発生時
    * </p>
@@ -339,7 +339,7 @@ public class DepartmentServiceTest {
   }
 
   /**
-   * {@link DepartmentService#insert()}のテストメソッド
+   * {@link DepartmentService#insert(DepartmentModel)}のテストメソッド
    * <p>
    * 部署正式名の重複エラー発生時
    * </p>
@@ -373,7 +373,7 @@ public class DepartmentServiceTest {
   }
 
   /**
-   * {@link DepartmentService#update()}の正常系のテストメソッド1
+   * {@link DepartmentService#update(DepartmentModel)}の正常系のテストメソッド1
    * <p>
    * 部署名と部署正式名を更新する場合
    * </p>
@@ -436,7 +436,7 @@ public class DepartmentServiceTest {
   }
 
   /**
-   * {@link DepartmentService#update()}の正常系のテストメソッド2
+   * {@link DepartmentService#update(DepartmentModel)}の正常系のテストメソッド2
    * <p>
    * 部署名と部署正式名を更新しない場合
    * </p>
@@ -500,7 +500,7 @@ public class DepartmentServiceTest {
   }
 
   /**
-   * {@link DepartmentService#update()}のテストメソッド
+   * {@link DepartmentService#update(DepartmentModel)}のテストメソッド
    * <p>
    * 部署の存在エラー発生時
    * </p>
@@ -533,7 +533,7 @@ public class DepartmentServiceTest {
   }
 
   /**
-   * {@link DepartmentService#update()}のテストメソッド
+   * {@link DepartmentService#update(DepartmentModel)}のテストメソッド
    * <p>
    * 部署名の重複エラー発生時
    * </p>
@@ -567,7 +567,7 @@ public class DepartmentServiceTest {
   }
 
   /**
-   * {@link DepartmentService#update()}のテストメソッド
+   * {@link DepartmentService#update(DepartmentModel)}のテストメソッド
    * <p>
    * 部署正式名の重複エラー発生時
    * </p>
@@ -601,7 +601,7 @@ public class DepartmentServiceTest {
   }
 
   /**
-   * {@link DepartmentService#delete()}の正常系のテストメソッド
+   * {@link DepartmentService#delete(Long, String)}の正常系のテストメソッド
    */
   @Test
   public void deleteTestOk() {
@@ -631,7 +631,7 @@ public class DepartmentServiceTest {
   }
 
   /**
-   * {@link DepartmentService#delete()}のエラーのテストメソッド
+   * {@link DepartmentService#delete(Long, String)}のエラーのテストメソッド
    * <p>
    * 部署の存在エラー発生時
    * </p>

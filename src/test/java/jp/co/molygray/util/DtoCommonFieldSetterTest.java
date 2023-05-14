@@ -105,7 +105,7 @@ public class DtoCommonFieldSetterTest {
   }
 
   /**
-   * {@link DtoCommonFieldSetter#setCommonFieldWhenInsert()}のテストメソッド
+   * {@link DtoCommonFieldSetter#setCommonFieldWhenInsert(DtoBase)}のテストメソッド
    */
   @Test
   public void setCommonFieldWhenInsertTest() {
@@ -135,7 +135,7 @@ public class DtoCommonFieldSetterTest {
   }
 
   /**
-   * {@link DtoCommonFieldSetter#setCommonFieldWhenUpdate()}のテストメソッド
+   * {@link DtoCommonFieldSetter#setCommonFieldWhenUpdate(DtoBase)}のテストメソッド
    */
   @Test
   public void setCommonFieldWhenUpdateTest() {
@@ -166,7 +166,7 @@ public class DtoCommonFieldSetterTest {
   }
 
   /**
-   * {@link DtoCommonFieldSetter#setCommonFieldWhenDelete()}のテストメソッド
+   * {@link DtoCommonFieldSetter#setCommonFieldWhenDelete(DtoBase)}のテストメソッド
    */
   @Test
   public void setCommonFieldWhenDeleteTest() {

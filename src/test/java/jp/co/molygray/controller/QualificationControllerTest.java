@@ -91,7 +91,7 @@ public class QualificationControllerTest {
   }
 
   /**
-   * {@link QualificationController#get()}の正常系のテストメソッド1
+   * {@link QualificationController#get(GetParameter)}の正常系のテストメソッド1
    * <p>
    * 取得できる場合
    * </p>
@@ -123,7 +123,7 @@ public class QualificationControllerTest {
   }
 
   /**
-   * {@link QualificationController#get()}の正常系のテストメソッド2
+   * {@link QualificationController#get(GetParameter)}の正常系のテストメソッド2
    * <p>
    * 取得できない場合
    * </p>
@@ -147,7 +147,7 @@ public class QualificationControllerTest {
   }
 
   /**
-   * {@link QualificationController#get()}のバリデーションのテストメソッド1
+   * {@link QualificationController#get(GetParameter)}のバリデーションのテストメソッド1
    * <p>
    * 資格IDに空文字を指定する場合
    * <p>
@@ -179,7 +179,7 @@ public class QualificationControllerTest {
   }
 
   /**
-   * {@link QualificationController#get()}のバリデーションのテストメソッド2
+   * {@link QualificationController#get(GetParameter)}のバリデーションのテストメソッド2
    * <p>
    * 資格IDにLongに変換できない値を指定する場合
    * <p>
@@ -210,7 +210,7 @@ public class QualificationControllerTest {
   }
 
   /**
-   * {@link QualificationController#list()}の正常系のテストメソッド1
+   * {@link QualificationController#list(ListParameter)}の正常系のテストメソッド1
    * <p>
    * パラメータを全て設定し、取得できる場合
    * </p>
@@ -264,7 +264,7 @@ public class QualificationControllerTest {
   }
 
   /**
-   * {@link QualificationController#list()}の正常系のテストメソッド2
+   * {@link QualificationController#list(ListParameter)}の正常系のテストメソッド2
    * <p>
    * パラメータを全て設定せず、取得できる場合
    * </p>
@@ -313,7 +313,7 @@ public class QualificationControllerTest {
   }
 
   /**
-   * {@link QualificationController#list()}の正常系のテストメソッド3
+   * {@link QualificationController#list(ListParameter)}の正常系のテストメソッド3
    * <p>
    * パラメータを全て設定せず、取得できない場合
    * </p>
@@ -338,7 +338,7 @@ public class QualificationControllerTest {
   }
 
   /**
-   * {@link QualificationController#list()}のバリデーションのテストメソッド1
+   * {@link QualificationController#list(ListParameter)}のバリデーションのテストメソッド1
    * <ul>
    * <li>資格名に129文字の文字列を指定</li>
    * <li>資格省略名に129文字の文字列を指定</li>
@@ -397,7 +397,7 @@ public class QualificationControllerTest {
   }
 
   /**
-   * {@link QualificationController#list()}の境界値のテストメソッド1
+   * {@link QualificationController#list(ListParameter)}の境界値のテストメソッド1
    * <ul>
    * <li>資格名に128文字の文字列を指定</li>
    * <li>資格省略名に128文字の文字列を指定</li>
@@ -434,7 +434,7 @@ public class QualificationControllerTest {
   }
 
   /**
-   * {@link QualificationController#put()}の正常系のテストメソッド
+   * {@link QualificationController#put(RegisterParameter)}の正常系のテストメソッド
    */
   @Test
   public void putTestOk()
@@ -467,7 +467,7 @@ public class QualificationControllerTest {
   }
 
   /**
-   * {@link QualificationController#put()}のバリデーションのテストメソッド1
+   * {@link QualificationController#put(RegisterParameter)}のバリデーションのテストメソッド1
    * <ul>
    * <li>資格IDに空文字以外の値を設定する</li>
    * <li>排他フラグに空文字以外の値を設定する</li>
@@ -545,7 +545,7 @@ public class QualificationControllerTest {
   }
 
   /**
-   * {@link QualificationController#put()}のバリデーションのテストメソッド2
+   * {@link QualificationController#put(RegisterParameter)}のバリデーションのテストメソッド2
    * <ul>
    * <li>資格名に129文字の文字列を設定する</li>
    * </ul>
@@ -585,7 +585,7 @@ public class QualificationControllerTest {
   }
 
   /**
-   * {@link QualificationController#put()}の境界値のテストメソッド
+   * {@link QualificationController#put(RegisterParameter)}の境界値のテストメソッド
    * <ul>
    * <li>資格名に128文字の値を設定する</li>
    * <li>資格省略名に128文字の値を設定する</li>
@@ -620,7 +620,7 @@ public class QualificationControllerTest {
   }
 
   /**
-   * {@link QualificationController#patch()}の正常系のテストメソッド
+   * {@link QualificationController#patch(RegisterParameter)}の正常系のテストメソッド
    */
   @Test
   public void patchTestOk()
@@ -654,7 +654,7 @@ public class QualificationControllerTest {
   }
 
   /**
-   * {@link QualificationController#patch()}のバリデーションのテストメソッド1
+   * {@link QualificationController#patch(RegisterParameter)}のバリデーションのテストメソッド1
    * <ul>
    * <li>資格IDに空文字を設定する</li>
    * <li>排他フラグに空文字を設定する</li>
@@ -731,7 +731,7 @@ public class QualificationControllerTest {
   }
 
   /**
-   * {@link QualificationController#patch()}のバリデーションのテストメソッド2
+   * {@link QualificationController#patch(RegisterParameter)}のバリデーションのテストメソッド2
    * <ul>
    * <li>資格名に129文字の文字列を設定する</li>
    * </ul>
@@ -772,7 +772,7 @@ public class QualificationControllerTest {
   }
 
   /**
-   * {@link QualificationController#delete()}の正常系のテストメソッド
+   * {@link QualificationController#delete(DeleteParameter)}の正常系のテストメソッド
    */
   @Test
   public void deleteTestOk()
@@ -795,7 +795,7 @@ public class QualificationControllerTest {
   }
 
   /**
-   * {@link QualificationController#delete()}のバリデーションのテストメソッド1
+   * {@link QualificationController#delete(DeleteParameter)}のバリデーションのテストメソッド1
    * <ul>
    * <li>資格IDが空文字の場合</li>
    * <li>排他フラグが空文字の場合</li>
@@ -835,7 +835,7 @@ public class QualificationControllerTest {
   }
 
   /**
-   * {@link QualificationController#delete()}のバリデーションのテストメソッド2
+   * {@link QualificationController#delete(DeleteParameter)}のバリデーションのテストメソッド2
    * <ul>
    * <li>資格IDがLongに変換出来ない値の場合</li>
    * </ul>

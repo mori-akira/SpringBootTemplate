@@ -14,6 +14,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
 import jp.co.molygray.parameter.department.RegisterParameter;
 import jp.co.molygray.util.message.MultiMessageSource;
@@ -55,7 +56,7 @@ public class RegisterValidatorTest {
   }
 
   /**
-   * {@link RegisterValidator#validate()}のテストメソッド
+   * {@link RegisterValidator#validate(Object, Errors)}のテストメソッド
    * <p>
    * OKの場合をテスト
    * </p>
@@ -76,7 +77,7 @@ public class RegisterValidatorTest {
   }
 
   /**
-   * {@link RegisterValidator#validate()}のテストメソッド
+   * {@link RegisterValidator#validate(Object, Errors)}のテストメソッド
    * <p>
    * NGの場合をテスト
    * </p>

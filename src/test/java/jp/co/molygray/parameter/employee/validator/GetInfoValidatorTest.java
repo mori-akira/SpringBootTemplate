@@ -14,6 +14,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.validation.BeanPropertyBindingResult;
+import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
 import jp.co.molygray.parameter.department.validator.RegisterValidator;
 import jp.co.molygray.parameter.employee.GetInfoParameter;
@@ -56,7 +57,7 @@ public class GetInfoValidatorTest {
   }
 
   /**
-   * {@link GetInfoValidator#validate()}のテストメソッド
+   * {@link GetInfoValidator#validate(Object, Errors)}のテストメソッド
    * <p>
    * OKの場合をテスト
    * </p>
@@ -98,7 +99,7 @@ public class GetInfoValidatorTest {
   }
 
   /**
-   * {@link GetInfoValidator#validate()}のテストメソッド
+   * {@link GetInfoValidator#validate(Object, Errors)}のテストメソッド
    * <p>
    * NGの場合をテスト
    * </p>

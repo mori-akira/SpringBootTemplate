@@ -96,7 +96,7 @@ public class DepartmentControllerTest {
   }
 
   /**
-   * {@link DepartmentController#get()}の正常系のテストメソッド1
+   * {@link DepartmentController#get(GetParameter)}の正常系のテストメソッド1
    * <p>
    * 取得できる場合
    * </p>
@@ -127,7 +127,7 @@ public class DepartmentControllerTest {
   }
 
   /**
-   * {@link DepartmentController#get()}の正常系のテストメソッド2
+   * {@link DepartmentController#get(GetParameter)}の正常系のテストメソッド2
    * <p>
    * 取得できない場合
    * </p>
@@ -151,7 +151,7 @@ public class DepartmentControllerTest {
   }
 
   /**
-   * {@link DepartmentController#get()}のバリデーションのテストメソッド1
+   * {@link DepartmentController#get(GetParameter)}のバリデーションのテストメソッド1
    * <p>
    * 部署IDに空文字を指定する場合
    * <p>
@@ -183,7 +183,7 @@ public class DepartmentControllerTest {
   }
 
   /**
-   * {@link DepartmentController#get()}のバリデーションのテストメソッド2
+   * {@link DepartmentController#get(GetParameter)}のバリデーションのテストメソッド2
    * <p>
    * 部署IDにLongに変換できない値を指定する場合
    * <p>
@@ -214,7 +214,7 @@ public class DepartmentControllerTest {
   }
 
   /**
-   * {@link DepartmentController#list()}の正常系のテストメソッド1
+   * {@link DepartmentController#list(ListParameter)}の正常系のテストメソッド1
    * <p>
    * パラメータを全て設定し、取得できる場合
    * </p>
@@ -265,7 +265,7 @@ public class DepartmentControllerTest {
   }
 
   /**
-   * {@link DepartmentController#list()}の正常系のテストメソッド2
+   * {@link DepartmentController#list(ListParameter)}の正常系のテストメソッド2
    * <p>
    * パラメータを全て設定せず、取得できる場合
    * </p>
@@ -311,7 +311,7 @@ public class DepartmentControllerTest {
   }
 
   /**
-   * {@link DepartmentController#list()}の正常系のテストメソッド3
+   * {@link DepartmentController#list(ListParameter)}の正常系のテストメソッド3
    * <p>
    * パラメータを全て設定せず、取得できない場合
    * </p>
@@ -336,7 +336,7 @@ public class DepartmentControllerTest {
   }
 
   /**
-   * {@link DepartmentController#list()}のバリデーションのテストメソッド1
+   * {@link DepartmentController#list(ListParameter)}のバリデーションのテストメソッド1
    * <ul>
    * <li>親部署IDにLongと認識できない文字列を指定</li>
    * <li>部署名に65文字の文字列を指定</li>
@@ -392,7 +392,7 @@ public class DepartmentControllerTest {
   }
 
   /**
-   * {@link DepartmentController#list()}の境界値のテストメソッド1
+   * {@link DepartmentController#list(ListParameter)}の境界値のテストメソッド1
    * <ul>
    * <li>部署名に64文字の文字列を指定</li>
    * <li>部署正式名に128文字の文字列を指定</li>
@@ -425,7 +425,7 @@ public class DepartmentControllerTest {
   }
 
   /**
-   * {@link DepartmentController#put()}の正常系のテストメソッド
+   * {@link DepartmentController#put(RegisterParameter)}の正常系のテストメソッド
    */
   @Test
   public void putTestOk()
@@ -459,7 +459,7 @@ public class DepartmentControllerTest {
   }
 
   /**
-   * {@link DepartmentController#put()}のバリデーションのテストメソッド1
+   * {@link DepartmentController#put(RegisterParameter)}のバリデーションのテストメソッド1
    * <ul>
    * <li>部署IDに空文字以外の値を設定する</li>
    * <li>排他フラグに空文字以外の値を設定する</li>
@@ -527,7 +527,7 @@ public class DepartmentControllerTest {
   }
 
   /**
-   * {@link DepartmentController#put()}のバリデーションのテストメソッド2
+   * {@link DepartmentController#put(RegisterParameter)}のバリデーションのテストメソッド2
    * <ul>
    * <li>部署名に65文字の値を設定する</li>
    * <li>部署正式名に129文字の値を設定する</li>
@@ -576,7 +576,7 @@ public class DepartmentControllerTest {
   }
 
   /**
-   * {@link DepartmentController#put()}のバリデーションのテストメソッド3
+   * {@link DepartmentController#put(RegisterParameter)}のバリデーションのテストメソッド3
    * <ul>
    * <li>部署正式名が部署名で終わらない場合</li>
    * </ul>
@@ -617,7 +617,7 @@ public class DepartmentControllerTest {
   }
 
   /**
-   * {@link DepartmentController#put()}の境界値のテストメソッド
+   * {@link DepartmentController#put(RegisterParameter)}の境界値のテストメソッド
    * <ul>
    * <li>部署名に64文字の値を設定する</li>
    * <li>部署正式名に128文字の値を設定する</li>
@@ -650,7 +650,7 @@ public class DepartmentControllerTest {
   }
 
   /**
-   * {@link DepartmentController#patch()}の正常系のテストメソッド
+   * {@link DepartmentController#patch(RegisterParameter)}の正常系のテストメソッド
    */
   @Test
   public void patchTestOk()
@@ -685,7 +685,7 @@ public class DepartmentControllerTest {
   }
 
   /**
-   * {@link DepartmentController#patch()}のバリデーションのテストメソッド1
+   * {@link DepartmentController#patch(RegisterParameter)}のバリデーションのテストメソッド1
    * <ul>
    * <li>部署IDに空文字を設定する</li>
    * <li>排他フラグに空文字を設定する</li>
@@ -752,7 +752,7 @@ public class DepartmentControllerTest {
   }
 
   /**
-   * {@link DepartmentController#patch()}のバリデーションのテストメソッド2
+   * {@link DepartmentController#patch(RegisterParameter)}のバリデーションのテストメソッド2
    * <ul>
    * <li>部署IDにがLongに変換出来ない値を設定する</li>
    * <li>部署名に65文字の値を設定する</li>
@@ -808,7 +808,7 @@ public class DepartmentControllerTest {
   }
 
   /**
-   * {@link DepartmentController#patch()}のバリデーションのテストメソッド3
+   * {@link DepartmentController#patch(RegisterParameter)}のバリデーションのテストメソッド3
    * <ul>
    * <li>部署正式名が部署名で終わらない場合</li>
    * </ul>
@@ -850,7 +850,7 @@ public class DepartmentControllerTest {
   }
 
   /**
-   * {@link DepartmentController#delete()}の正常系のテストメソッド
+   * {@link DepartmentController#delete(DeleteParameter)}の正常系のテストメソッド
    */
   @Test
   public void deleteTestOk()
@@ -873,7 +873,7 @@ public class DepartmentControllerTest {
   }
 
   /**
-   * {@link DepartmentController#delete()}のバリデーションのテストメソッド1
+   * {@link DepartmentController#delete(DeleteParameter)}のバリデーションのテストメソッド1
    * <ul>
    * <li>部署IDが空文字の場合</li>
    * <li>排他フラグが空文字の場合</li>
@@ -913,7 +913,7 @@ public class DepartmentControllerTest {
   }
 
   /**
-   * {@link DepartmentController#delete()}のバリデーションのテストメソッド2
+   * {@link DepartmentController#delete(DeleteParameter)}のバリデーションのテストメソッド2
    * <ul>
    * <li>部署IDがLongに変換出来ない値の場合</li>
    * </ul>

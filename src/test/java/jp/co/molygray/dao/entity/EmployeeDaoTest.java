@@ -42,7 +42,7 @@ public class EmployeeDaoTest {
   private EmployeeDao employeeDao;
 
   /**
-   * {@link EmployeeDao#select()}のテストメソッド
+   * {@link EmployeeDao#select(long)}のテストメソッド
    */
   @Test
   @Order(1)
@@ -228,7 +228,7 @@ public class EmployeeDaoTest {
   }
 
   /**
-   * {@link EmployeeDao#selectByEmployeeNumber()}のテストデータ
+   * {@link EmployeeDao#selectByEmployeeNumber(String)}のテストデータ
    *
    * @return テストデータ
    */
@@ -240,7 +240,7 @@ public class EmployeeDaoTest {
   }
 
   /**
-   * {@link EmployeeDao#selectByEmployeeNumber()}のテストメソッド
+   * {@link EmployeeDao#selectByEmployeeNumber(String)}のテストメソッド
    *
    * @param source テストデータ
    */
@@ -256,7 +256,7 @@ public class EmployeeDaoTest {
   }
 
   /**
-   * {@link EmployeeDao#insert()}のテストメソッド
+   * {@link EmployeeDao#insert(EmployeeDto)}のテストメソッド
    */
   @Test
   @Order(4)
@@ -338,7 +338,7 @@ public class EmployeeDaoTest {
   }
 
   /**
-   * {@link EmployeeDao#update()}のテストメソッド
+   * {@link EmployeeDao#update(EmployeeDto)}のテストメソッド
    */
   @Test
   @Order(5)
@@ -415,7 +415,7 @@ public class EmployeeDaoTest {
   }
 
   /**
-   * {@link EmployeeDao#update()}の排他チェックのテストメソッド
+   * {@link EmployeeDao#update(EmployeeDto)}の排他チェックのテストメソッド
    */
   @Test
   @Order(6)
@@ -457,7 +457,7 @@ public class EmployeeDaoTest {
   }
 
   /**
-   * {@link EmployeeDao#delete()}のテストメソッド
+   * {@link EmployeeDao#delete(long, String)}のテストメソッド
    */
   @Test
   @Order(7)
@@ -467,7 +467,7 @@ public class EmployeeDaoTest {
   }
 
   /**
-   * {@link EmployeeDao#delete()}の排他チェックのテストメソッド
+   * {@link EmployeeDao#delete(long, String)}の排他チェックのテストメソッド
    */
   @Test
   @Order(8)

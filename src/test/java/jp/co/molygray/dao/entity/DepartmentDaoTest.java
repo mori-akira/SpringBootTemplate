@@ -40,7 +40,7 @@ public class DepartmentDaoTest {
   private DepartmentDao departmentDao;
 
   /**
-   * {@link DepartmentDao#select()}のテストメソッド
+   * {@link DepartmentDao#select(long)}のテストメソッド
    */
   @Test
   @Order(1)
@@ -156,7 +156,7 @@ public class DepartmentDaoTest {
   }
 
   /**
-   * {@link DepartmentDao#searchList()}に対する入力と期待値の組み合わせを管理するクラス
+   * {@link DepartmentDao#searchList(List, String, String)}に対する入力と期待値の組み合わせを管理するクラス
    *
    * @author Moriaki Kogure
    * @version 0.0.1
@@ -176,7 +176,7 @@ public class DepartmentDaoTest {
   }
 
   /**
-   * {@link DepartmentDao#selectList()}のテストデータ
+   * {@link DepartmentDao#searchList(List, String, String)}のテストデータ
    *
    * @return テストデータ
    */
@@ -192,7 +192,7 @@ public class DepartmentDaoTest {
   }
 
   /**
-   * {@link DepartmentDao#selectList()}のテストメソッド
+   * {@link DepartmentDao#searchList(List, String, String)}のテストメソッド
    *
    * @param input テストデータ
    */
@@ -207,7 +207,7 @@ public class DepartmentDaoTest {
   }
 
   /**
-   * {@link DepartmentDao#insert()}のテストメソッド
+   * {@link DepartmentDao#insert(DepartmentDto)}のテストメソッド
    */
   @Test
   @Order(4)
@@ -306,7 +306,7 @@ public class DepartmentDaoTest {
   }
 
   /**
-   * {@link DepartmentDao#update()}のテストメソッド
+   * {@link DepartmentDao#update(DepartmentDto)}のテストメソッド
    */
   @Test
   @Order(5)
@@ -405,7 +405,7 @@ public class DepartmentDaoTest {
   }
 
   /**
-   * {@link DepartmentDao#update()}の排他チェックのテストメソッド
+   * {@link DepartmentDao#update(DepartmentDto)}の排他チェックのテストメソッド
    */
   @Test
   @Order(6)
@@ -439,7 +439,7 @@ public class DepartmentDaoTest {
   }
 
   /**
-   * {@link DepartmentDao#delete()}のテストメソッド
+   * {@link DepartmentDao#delete(long, String)}のテストメソッド
    */
   @Test
   @Order(7)
@@ -451,7 +451,7 @@ public class DepartmentDaoTest {
   }
 
   /**
-   * {@link DepartmentDao#delete()}の排他チェックのテストメソッド
+   * {@link DepartmentDao#delete(long, String)}の排他チェックのテストメソッド
    */
   @Test
   @Order(8)

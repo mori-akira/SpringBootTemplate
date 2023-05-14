@@ -136,7 +136,7 @@ public class ApiControllerAdviceTest {
   }
 
   /**
-   * {@link ApiControllerAdvice#handleUnexpectedException(Exception))}のテストメソッド
+   * {@link ApiControllerAdvice#handleUnexpectedException(Exception)}のテストメソッド
    *
    * @throws Exception 例外発生時
    */

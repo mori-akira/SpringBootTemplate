@@ -35,7 +35,7 @@ public class EmployeeAddressDaoTest {
   private EmployeeAddressDao employeeAddressDao;
 
   /**
-   * {@link EmployeeAddressDao#select()}のテストメソッド
+   * {@link EmployeeAddressDao#select(long)}のテストメソッド
    */
   @Test
   @Order(1)
@@ -163,7 +163,7 @@ public class EmployeeAddressDaoTest {
   }
 
   /**
-   * {@link EmployeeAddressDao#insert()}のテストメソッド
+   * {@link EmployeeAddressDao#insert(EmployeeAddressDto)}のテストメソッド
    */
   @Test
   @Order(3)
@@ -239,7 +239,7 @@ public class EmployeeAddressDaoTest {
   }
 
   /**
-   * {@link EmployeeAddressDao#update()}のテストメソッド
+   * {@link EmployeeAddressDao#update(EmployeeAddressDto)}のテストメソッド
    */
   @Test
   @Order(4)
@@ -309,7 +309,7 @@ public class EmployeeAddressDaoTest {
   }
 
   /**
-   * {@link EmployeeAddressDao#update()}の排他チェックのテストメソッド
+   * {@link EmployeeAddressDao#update(EmployeeAddressDto)}の排他チェックのテストメソッド
    */
   @Test
   @Order(5)
@@ -347,7 +347,7 @@ public class EmployeeAddressDaoTest {
   }
 
   /**
-   * {@link EmployeeAddressDao#delete()}のテストメソッド
+   * {@link EmployeeAddressDao#delete(long, String)}のテストメソッド
    */
   @Test
   @Order(6)
@@ -357,7 +357,7 @@ public class EmployeeAddressDaoTest {
   }
 
   /**
-   * {@link EmployeeAddressDao#delete()}の排他チェックのテストメソッド
+   * {@link EmployeeAddressDao#delete(long, String)}の排他チェックのテストメソッド
    */
   @Test
   @Order(8)

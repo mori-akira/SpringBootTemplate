@@ -46,9 +46,9 @@ public class FormatDateValidatorTest {
   }
 
   /**
-   * フォーマット・日付の組み合わせ検証の入力値
+   * フォーマット・日付・結果の組み合わせ検証の入力値
    *
-   * @return フォーマット・日付の組み合わせ
+   * @return フォーマット・日付・結果の組み合わせ
    */
   public static Stream<FormatDatePatternSource> patternSrouce() {
     return Stream.of(

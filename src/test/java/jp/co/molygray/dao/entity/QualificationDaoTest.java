@@ -35,7 +35,7 @@ public class QualificationDaoTest {
   private QualificationDao qualificationDao;
 
   /**
-   * {@link QualificationDao#select()}のテストメソッド
+   * {@link QualificationDao#select(long)}のテストメソッド
    */
   @Test
   @Order(1)
@@ -160,7 +160,7 @@ public class QualificationDaoTest {
   }
 
   /**
-   * {@link QualificationDao#insert()}のテストメソッド
+   * {@link QualificationDao#insert(QualificationDto)}のテストメソッド
    */
   @Test
   @Order(3)
@@ -230,7 +230,7 @@ public class QualificationDaoTest {
   }
 
   /**
-   * {@link QualificationDao#update()}のテストメソッド
+   * {@link QualificationDao#update(QualificationDto)}のテストメソッド
    */
   @Test
   @Order(4)
@@ -294,7 +294,7 @@ public class QualificationDaoTest {
   }
 
   /**
-   * {@link QualificationDao#update()}の排他チェックのテストメソッド
+   * {@link QualificationDao#update(QualificationDto)}の排他チェックのテストメソッド
    */
   @Test
   @Order(5)
@@ -329,7 +329,7 @@ public class QualificationDaoTest {
   }
 
   /**
-   * {@link QualificationDao#delete()}のテストメソッド
+   * {@link QualificationDao#delete(long, String)}のテストメソッド
    */
   @Test
   @Order(6)
@@ -339,7 +339,7 @@ public class QualificationDaoTest {
   }
 
   /**
-   * {@link QualificationDao#delete()}の排他チェックのテストメソッド
+   * {@link QualificationDao#delete(long, String)}の排他チェックのテストメソッド
    */
   @Test
   @Order(8)

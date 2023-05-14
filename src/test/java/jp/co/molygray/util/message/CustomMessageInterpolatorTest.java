@@ -71,7 +71,7 @@ public class CustomMessageInterpolatorTest {
   }
 
   /**
-   * {@link CustomMessageInterpolator#interpolate(String, jakarta.validation.MessageInterpolator.Context)}のテストメソッド
+   * {@link CustomMessageInterpolator#interpolate(String, Context)}のテストメソッド
    * <p>
    * メッセージを直接使用、置換なし
    * </p>
@@ -84,7 +84,7 @@ public class CustomMessageInterpolatorTest {
   }
 
   /**
-   * {@link CustomMessageInterpolator#interpolate(String, jakarta.validation.MessageInterpolator.Context)}のテストメソッド
+   * {@link CustomMessageInterpolator#interpolate(String, Context)}のテストメソッド
    * <p>
    * メッセージを直接使用、フィールド・検証値置換あり
    * </p>
@@ -98,7 +98,7 @@ public class CustomMessageInterpolatorTest {
   }
 
   /**
-   * {@link CustomMessageInterpolator#interpolate(String, jakarta.validation.MessageInterpolator.Context)}のテストメソッド
+   * {@link CustomMessageInterpolator#interpolate(String, Context)}のテストメソッド
    * <p>
    * メッセージを直接使用、残りのプレースホルダあり
    * </p>
@@ -112,7 +112,7 @@ public class CustomMessageInterpolatorTest {
   }
 
   /**
-   * {@link CustomMessageInterpolator#interpolate(String, jakarta.validation.MessageInterpolator.Context)}のテストメソッド
+   * {@link CustomMessageInterpolator#interpolate(String, Context)}のテストメソッド
    * <p>
    * メッセージを直接使用、フィールド・検証値置換あり、検証値=null、残りのプレースホルダあり
    * </p>
@@ -126,7 +126,7 @@ public class CustomMessageInterpolatorTest {
   }
 
   /**
-   * {@link CustomMessageInterpolator#interpolate(String, jakarta.validation.MessageInterpolator.Context)}のテストメソッド
+   * {@link CustomMessageInterpolator#interpolate(String, Context)}のテストメソッド
    * <p>
    * メッセージを置換使用、置換なし
    * </p>
@@ -139,7 +139,7 @@ public class CustomMessageInterpolatorTest {
   }
 
   /**
-   * {@link CustomMessageInterpolator#interpolate(String, jakarta.validation.MessageInterpolator.Context)}のテストメソッド
+   * {@link CustomMessageInterpolator#interpolate(String, Context)}のテストメソッド
    * <p>
    * メッセージを直接使用、フィールド・検証値置換あり
    * </p>
@@ -152,7 +152,7 @@ public class CustomMessageInterpolatorTest {
   }
 
   /**
-   * {@link CustomMessageInterpolator#interpolate(String, jakarta.validation.MessageInterpolator.Context)}のテストメソッド
+   * {@link CustomMessageInterpolator#interpolate(String, Context)}のテストメソッド
    * <p>
    * メッセージを直接使用、残りのプレースホルダあり
    * </p>
@@ -166,7 +166,7 @@ public class CustomMessageInterpolatorTest {
   }
 
   /**
-   * {@link CustomMessageInterpolator#interpolate(String, jakarta.validation.MessageInterpolator.Context)}のテストメソッド
+   * {@link CustomMessageInterpolator#interpolate(String, Context)}のテストメソッド
    * <p>
    * メッセージを直接使用、フィールド・検証値置換あり、検証値=null、残りのプレースホルダあり
    * </p>
@@ -179,7 +179,7 @@ public class CustomMessageInterpolatorTest {
   }
 
   /**
-   * {@link CustomMessageInterpolator#interpolate(String, jakarta.validation.MessageInterpolator.Context)}のテストメソッド
+   * {@link CustomMessageInterpolator#interpolate(String, Context)}のテストメソッド
    * <p>
    * プレースホルダ検知の正常確認
    * </p>
@@ -196,7 +196,7 @@ public class CustomMessageInterpolatorTest {
   }
 
   /**
-   * {@link CustomMessageInterpolator#interpolate(String, jakarta.validation.MessageInterpolator.Context)}のテストメソッド
+   * {@link CustomMessageInterpolator#interpolate(String, Context)}のテストメソッド
    * <p>
    * プレースホルダの重複確認
    * </p>

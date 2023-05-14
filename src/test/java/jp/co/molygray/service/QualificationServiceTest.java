@@ -130,7 +130,7 @@ public class QualificationServiceTest {
   }
 
   /**
-   * {@link QualificationService#get()}のテストメソッド
+   * {@link QualificationService#get(long)}のテストメソッド
    * <p>
    * 検索ヒットありの場合
    * </p>
@@ -169,7 +169,7 @@ public class QualificationServiceTest {
   }
 
   /**
-   * {@link QualificationService#get()}のテストメソッド
+   * {@link QualificationService#get(long)}のテストメソッド
    * <p>
    * 検索ヒットなしの場合
    * </p>
@@ -185,7 +185,7 @@ public class QualificationServiceTest {
   }
 
   /**
-   * {@link QualificationService#searchList(String, String, Integer, String))}のテストメソッド
+   * {@link QualificationService#searchList(String, String, Integer, String)}のテストメソッド
    * <p>
    * 検索条件あり、検索ヒットありの場合
    * </p>
@@ -250,7 +250,7 @@ public class QualificationServiceTest {
   }
 
   /**
-   * {@link QualificationService#searchList()}のテストメソッド
+   * {@link QualificationService#searchList(String, String, Integer, String)}のテストメソッド
    * <p>
    * 検索条件なし、検索ヒットなしの場合
    * </p>
@@ -265,7 +265,7 @@ public class QualificationServiceTest {
   }
 
   /**
-   * {@link QualificationService#insert()}のテストメソッド
+   * {@link QualificationService#insert(QualificationModel)}のテストメソッド
    */
   @Test
   public void insertTestOk() {
@@ -310,7 +310,7 @@ public class QualificationServiceTest {
   }
 
   /**
-   * {@link QualificationService#insert()}のテストメソッド
+   * {@link QualificationService#insert(QualificationModel)}のテストメソッド
    * <p>
    * 資格名の重複エラー発生時
    * </p>
@@ -345,7 +345,7 @@ public class QualificationServiceTest {
   }
 
   /**
-   * {@link QualificationService#update()}の正常系のテストメソッド1
+   * {@link QualificationService#update(QualificationModel)}の正常系のテストメソッド1
    * <p>
    * 部署名と部署正式名を更新する場合
    * </p>
@@ -411,7 +411,7 @@ public class QualificationServiceTest {
   }
 
   /**
-   * {@link QualificationService#update()}の正常系のテストメソッド2
+   * {@link QualificationService#update(QualificationModel)}の正常系のテストメソッド2
    * <p>
    * 部署名と部署正式名を更新しない場合
    * </p>
@@ -477,7 +477,7 @@ public class QualificationServiceTest {
   }
 
   /**
-   * {@link QualificationService#update()}のテストメソッド
+   * {@link QualificationService#update(QualificationModel)}のテストメソッド
    * <p>
    * 資格の存在エラー発生時
    * </p>
@@ -509,7 +509,7 @@ public class QualificationServiceTest {
   }
 
   /**
-   * {@link QualificationService#update()}のテストメソッド
+   * {@link QualificationService#update(QualificationModel)}のテストメソッド
    * <p>
    * 資格名の重複エラー発生時
    * </p>
@@ -542,7 +542,7 @@ public class QualificationServiceTest {
   }
 
   /**
-   * {@link QualificationService#delete()}の正常系のテストメソッド
+   * {@link QualificationService#delete(Long, String)}の正常系のテストメソッド
    */
   @Test
   public void deleteTestOk() {
@@ -574,7 +574,7 @@ public class QualificationServiceTest {
   }
 
   /**
-   * {@link QualificationService#delete()}のエラーのテストメソッド
+   * {@link QualificationService#delete(Long, String)}のエラーのテストメソッド
    * <p>
    * 資格の存在エラー発生時
    * </p>

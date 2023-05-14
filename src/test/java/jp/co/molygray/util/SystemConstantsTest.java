@@ -15,7 +15,7 @@ import org.junit.jupiter.api.Test;
 public class SystemConstantsTest {
 
   /**
-   * {@link SystemConstants#getConstants()}のテストメソッド
+   * {@link SystemConstants#getConstants(String)}のテストメソッド
    *
    * @throws Exception 例外発生時
    */
@@ -34,6 +34,26 @@ public class SystemConstantsTest {
         constants, true);
     assertEquals("v1", systemConstants.getConstants("k1"));
     assertEquals(null, systemConstants.getConstants("k2"));
+  }
+
+  /**
+   * {@link SystemConstants#getConstantsWithDefault(String, String)}のテストメソッド
+   *
+   * @throws Exception
+   */
+  @Test
+  public void getConstantsWithDefault()
+      throws Exception {
+    SystemConstants systemConstants = new SystemConstants();
+    Map<String, String> constants = new HashMap<>() {
+
+      {
+        put("k1", "v1");
+        put("k3", "v3");
+      }
+    };
+    FieldUtils.writeField(SystemConstants.class.getDeclaredField("constants"), systemConstants,
+        constants, true);
     assertEquals("v3", systemConstants.getConstantsWithDefault("k3", "V3"));
     assertEquals("V4", systemConstants.getConstantsWithDefault("k4", "V4"));
   }
