@@ -6,6 +6,7 @@ import java.util.stream.Stream;
 import org.apache.commons.lang3.reflect.FieldUtils;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
+import jakarta.validation.ConstraintValidatorContext;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.ToString;
@@ -28,7 +29,7 @@ public class FormatDateValidatorTest {
   }
 
   /**
-   * {@link FormatDateValidator#isValid(String, jakarta.validation.ConstraintValidatorContext)}
+   * {@link FormatDateValidator#isValid(String, ConstraintValidatorContext)}
    * の検証を行うための、データの組み合わせを定義するサブクラス
    *
    * @author Moriaki Kogure
@@ -70,8 +71,7 @@ public class FormatDateValidatorTest {
   }
 
   /**
-   * {@link FormatDateValidator#isValid(String, jakarta.validation.ConstraintValidatorContext)}
-   * の空検証を行うテストクラス
+   * {@link FormatDateValidator#isValid(String, ConstraintValidatorContext)}の空検証を行うテストクラス
    *
    * @param value 空扱いの値
    */
@@ -83,7 +83,7 @@ public class FormatDateValidatorTest {
   }
 
   /**
-   * {@link FormatDateValidator#isValid(String, jakarta.validation.ConstraintValidatorContext)}
+   * {@link FormatDateValidator#isValid(String, ConstraintValidatorContext)}
    * のパターン検証を行うテストクラス
    *
    * @param source 入力パターン
