@@ -16,12 +16,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.DataBinder;
+import org.springframework.web.context.request.WebRequest;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jp.co.molygray.controller.DepartmentController;
 import jp.co.molygray.enums.ErrorSummaryEnum;
@@ -61,7 +63,7 @@ public class ApiControllerAdviceTest {
   }
 
   /**
-   * {@link ApiControllerAdvice#handleBindException()}のテストメソッド
+   * {@link ApiControllerAdvice#handleBindException(BindException, HttpHeaders, HttpStatusCode, WebRequest)}のテストメソッド
    * <p>
    * エラーメッセージが1つの場合
    * </p>
@@ -94,7 +96,7 @@ public class ApiControllerAdviceTest {
   }
 
   /**
-   * {@link ApiControllerAdvice#handleBindException()}のテストメソッド
+   * {@link ApiControllerAdvice#handleBindException(BindException, HttpHeaders, HttpStatusCode, WebRequest)}のテストメソッド
    * <p>
    * エラーメッセージが複数の場合
    * </p>
@@ -134,7 +136,7 @@ public class ApiControllerAdviceTest {
   }
 
   /**
-   * {@link ApiControllerAdvice#handleUnexpectedException()}のテストメソッド
+   * {@link ApiControllerAdvice#handleUnexpectedException(Exception))}のテストメソッド
    *
    * @throws Exception 例外発生時
    */

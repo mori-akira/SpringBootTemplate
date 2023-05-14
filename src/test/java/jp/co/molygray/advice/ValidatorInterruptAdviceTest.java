@@ -7,6 +7,7 @@ import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import java.util.List;
+import org.aspectj.lang.ProceedingJoinPoint;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -64,7 +65,7 @@ public class ValidatorInterruptAdviceTest {
   }
 
   /**
-   * {@link ValidatorInterruptAdvice#interrupt(org.aspectj.lang.ProceedingJoinPoint)}のテストメソッド
+   * {@link ValidatorInterruptAdvice#interrupt(ProceedingJoinPoint)}のテストメソッド
    * <p>
    * 単項目エラーなし＆相関エラーなしの場合
    * </p>
@@ -85,7 +86,7 @@ public class ValidatorInterruptAdviceTest {
   }
 
   /**
-   * {@link ValidatorInterruptAdvice#interrupt(org.aspectj.lang.ProceedingJoinPoint)}のテストメソッド
+   * {@link ValidatorInterruptAdvice#interrupt(ProceedingJoinPoint)}のテストメソッド
    * <p>
    * 単項目エラーありの場合
    * </p>
@@ -108,7 +109,7 @@ public class ValidatorInterruptAdviceTest {
   }
 
   /**
-   * {@link ValidatorInterruptAdvice#interrupt(org.aspectj.lang.ProceedingJoinPoint)}のテストメソッド
+   * {@link ValidatorInterruptAdvice#interrupt(ProceedingJoinPoint)}のテストメソッド
    * <p>
    * 単項目エラーなし＆相関エラーありの場合
    * </p>
