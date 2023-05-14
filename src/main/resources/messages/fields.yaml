@@ -23,6 +23,7 @@ departmentFullName: 部署正式名
 
 # 社員
 employee: 社員
+employeeId: 社員ID
 employeeNumber: 社員番号
 sei: 姓
 mei: 名

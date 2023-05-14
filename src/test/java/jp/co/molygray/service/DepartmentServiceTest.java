@@ -57,7 +57,7 @@ public class DepartmentServiceTest {
   /** {@link DepartmentService}のモック・インスタンス */
   @InjectMocks
   private DepartmentService departmentService;
-  /** Mockitoのテストクラス・インスタンス */
+  /** Mockitoインスタンス */
   private AutoCloseable closeable;
   /** {@link UUID}のモック・インスタンス */
   private MockedStatic<UUID> uuidMock;

@@ -47,15 +47,13 @@ public class EmployeeModel {
     /** 詳細1 */
     private String detail1;
     /** 詳細2 */
-    private Integer detail2;
+    private String detail2;
   }
 
   /** 社員ID */
-  private Long emploeeId;
+  private Long employeeId;
   /** 排他フラグ */
   private String exclusiveFlg;
-  /** 部署ID */
-  private Long departmentId;
   /** 社員番号 */
   private String employeeNumber;
   /** 姓 */
@@ -72,6 +70,8 @@ public class EmployeeModel {
   private OffsetDateTime birthDate;
   /** 入社日 */
   private OffsetDateTime hireDate;
+  /** 部署 */
+  private DepartmentModel department;
   /** 社員住所 */
   private EmployeeAddressModel employeeAddress;
   /** 社員所持資格 */

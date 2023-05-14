@@ -49,7 +49,7 @@ public class DtoCommonFieldSetterTest {
   /** {@link DtoCommonFieldSetter}のモック・インスタンス */
   @InjectMocks
   private DtoCommonFieldSetter dtoCommonFieldSetter;
-  /** Mockitoのテストクラス・インスタンス */
+  /** Mockitoインスタンス */
   private AutoCloseable closeable;
   /** {@link UUID}のモック・インスタンス */
   private MockedStatic<UUID> uuidMock;

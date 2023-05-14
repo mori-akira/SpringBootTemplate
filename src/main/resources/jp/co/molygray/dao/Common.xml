@@ -4,6 +4,40 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="jp.co.molygray.dao.Common">
+    <!-- 各モデルとの結果マッピング定義 -->
+    <!-- 部署モデル -->
+    <resultMap id="department_model_result_map"
+        type="jp.co.molygray.model.DepartmentModel"
+        autoMapping="true">
+        <id property="departmentId"
+            column="department_id" />
+    </resultMap>
+    <!-- 社員モデル -->
+    <resultMap id="employee_model_result_map"
+        type="jp.co.molygray.model.EmployeeModel"
+        autoMapping="true">
+        <id property="employeeId"
+            column="employee_id" />
+        <association property="department"
+            resultMap="department_model_result_map" />
+        <association property="employeeAddress"
+            javaType="jp.co.molygray.model.EmployeeModel$EmployeeAddressModel"
+            autoMapping="true">
+            <id property="employeeAddressId"
+                column="employee_address_id" />
+        </association>
+        <collection property="qualificationList"
+            resultMap="qualification_model_result_map" />
+    </resultMap>
+    <!-- 資格モデル -->
+    <resultMap id="qualification_model_result_map"
+        type="jp.co.molygray.model.QualificationModel"
+        autoMapping="true">
+        <id property="qualificationId"
+            column="qualification_id" />
+    </resultMap>
+
+    <!-- 共通カラムブロック定義 -->
     <sql id="common_column_block_insert">
         , delete_flg
         , exclusive_flg

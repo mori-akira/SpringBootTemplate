@@ -26,7 +26,7 @@ public enum GenderEnum {
    * 区分値から列挙型を取得するメソッド
    *
    * @param value 区分値
-   * @return 性別の列挙型
+   * @return 性別の列挙型 (対応する性別がない場合、null)
    */
   public static GenderEnum of(Integer value) {
     return Arrays.stream(GenderEnum.values())

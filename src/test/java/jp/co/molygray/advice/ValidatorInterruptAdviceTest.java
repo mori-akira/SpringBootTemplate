@@ -38,7 +38,7 @@ public class ValidatorInterruptAdviceTest {
   /** {@link RegisterValidator}のモック・インスタンス */
   @Mock
   private RegisterValidator registerValidator;
-  /** MockitoのMock管理インスタンス */
+  /** Mockitoインスタンス */
   private AutoCloseable closeable;
 
   /**

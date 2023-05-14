@@ -70,7 +70,7 @@ public class DepartmentControllerTest {
   /** MockMVCインスタンス */
   @Autowired
   private MockMvc mockMvc;
-  /** MockitoのMock管理インスタンス */
+  /** Mockitoインスタンス */
   private AutoCloseable closeable;
   /** オブジェクト・マッパー */
   @Autowired

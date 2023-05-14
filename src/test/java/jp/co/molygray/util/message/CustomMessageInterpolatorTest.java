@@ -38,7 +38,7 @@ public class CustomMessageInterpolatorTest {
   /** {@link CustomMessageInterpolator}のモック・インスタンス */
   @InjectMocks
   private CustomMessageInterpolator customMessageInterpolator;
-  /** Mockitoのテストクラス・インスタンス */
+  /** Mockitoインスタンス */
   private AutoCloseable closeable;
   /** テスト用のメッセージを定義 */
   private static final Map<String, String> MESSAGE_MAPPER = new HashMap<>() {

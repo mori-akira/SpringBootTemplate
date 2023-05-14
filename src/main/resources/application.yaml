@@ -23,6 +23,7 @@ management:
       exposure:
         include: beans,health,metrics
 mybatis:
+  type-handlers-package: jp.co.molygray.**.typeHandler
   configuration:
     auto-mapping-behavior: FULL
     default-statement-timeout: 60

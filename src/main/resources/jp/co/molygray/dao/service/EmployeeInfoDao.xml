@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="jp.co.molygray.dao.service.EmployeeInfoDao">
+    <select id="selectEmployeeInfo"
+        resultMap="jp.co.molygray.dao.Common.employee_model_result_map">
+        SELECT
+            employee.employee_id
+            , employee.exclusive_flg
+            , employee.employee_number
+            , employee.sei
+            , employee.mei
+            , employee.sei_kana
+            , employee.mei_kana
+            , employee.gender
+            , employee.birth_date
+            , employee.hire_date
+            , department.department_id
+            , department.exclusive_flg
+            , department.parent_department_id
+            , department.department_name
+            , department.department_full_name
+            , employee_address.employee_address_id
+            , employee_address.exclusive_flg
+            , employee_address.country
+            , employee_address.prefecture
+            , employee_address.city
+            , employee_address.ward
+            , employee_address.detail1
+            , employee_address.detail2
+            , qualification.qualification_id
+            , qualification.exclusive_flg
+            , qualification.qualification_name
+            , qualification.qualification_abbreviated_name
+            , qualification.valid_period_years
+            , qualification.provider
+        FROM
+            employee
+        INNER JOIN department
+            ON employee.department_id = department.department_id
+            AND department.delete_flg = FALSE
+        LEFT OUTER JOIN employee_address
+            ON employee.employee_id = employee_address.employee_id
+            AND employee_address.delete_flg = FALSE
+        LEFT OUTER JOIN employee_qualification_map
+            ON employee.employee_id = employee_qualification_map.employee_id
+            AND employee_qualification_map.delete_flg = FALSE
+        LEFT OUTER JOIN qualification
+            ON employee_qualification_map.qualification_id = qualification.qualification_id
+            AND qualification.delete_flg = FALSE
+        WHERE
+            0 = 0
+            <if test="employeeId != null">
+                AND employee.employee_id = #{employeeId}
+            </if>
+            <if test="employeeNumber != null">
+                AND employee.employee_number = #{employeeNumber}
+            </if>
+            AND employee.delete_flg = FALSE
+    </select>
+</mapper>

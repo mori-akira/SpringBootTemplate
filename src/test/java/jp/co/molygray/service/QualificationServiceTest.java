@@ -55,7 +55,7 @@ public class QualificationServiceTest {
   /** {@link qualificationService}のモック・インスタンス */
   @InjectMocks
   private QualificationService qualificationService;
-  /** Mockitoのテストクラス・インスタンス */
+  /** Mockitoインスタンス */
   private AutoCloseable closeable;
   /** {@link UUID}のモック・インスタンス */
   private MockedStatic<UUID> uuidMock;

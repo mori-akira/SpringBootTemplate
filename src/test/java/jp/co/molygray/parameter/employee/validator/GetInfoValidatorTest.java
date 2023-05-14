@@ -1,4 +1,4 @@
-package jp.co.molygray.parameter.department.validator;
+package jp.co.molygray.parameter.employee.validator;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -16,23 +16,24 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.ObjectError;
-import jp.co.molygray.parameter.department.RegisterParameter;
+import jp.co.molygray.parameter.department.validator.RegisterValidator;
+import jp.co.molygray.parameter.employee.GetInfoParameter;
 import jp.co.molygray.util.message.MultiMessageSource;
 
 /**
- * {@link RegisterValidator}のテストクラス
+ * {@link GetInfoValidator}のテストクラス
  *
  * @author Moriaki Kogure
  * @version 0.0.1
  */
-public class RegisterValidatorTest {
+public class GetInfoValidatorTest {
 
   /** {@link MultiMessageSource}のモック・インスタンス */
   @Mock
   private MultiMessageSource messageSource;
   /** {@link RegisterValidator}のモック・インスタンス */
   @InjectMocks
-  private RegisterValidator registerValidator;
+  private GetInfoValidator getInfoValidator;
   /** Mockitoインスタンス */
   private AutoCloseable closeable;
 
@@ -56,7 +57,7 @@ public class RegisterValidatorTest {
   }
 
   /**
-   * {@link RegisterValidator#validate()}のテストメソッド
+   * {@link GetInfoValidator#validate()}のテストメソッド
    * <p>
    * OKの場合をテスト
    * </p>
@@ -66,18 +67,39 @@ public class RegisterValidatorTest {
     when(messageSource.getMessage(any(Class.class), any(String.class), any(Object[].class)))
         .thenReturn("err");
     BeanPropertyBindingResult errors = new BeanPropertyBindingResult(null, "hoge");
-    RegisterParameter param = RegisterParameter.builder()
-        .departmentName("hoge")
-        .departmentFullName("hogehoge")
+    // 社員ID・社員番号を指定する場合
+    GetInfoParameter param = GetInfoParameter.builder()
+        .employeeId("fuga")
+        .employeeNumber("piyo")
         .build();
-    registerValidator.validate(param, errors);
+    getInfoValidator.validate(param, errors);
+    assertFalse(errors.hasErrors());
+    verify(messageSource, never())
+        .getMessage(any(Class.class), any(String.class), any(Object[].class));
+
+    // 社員IDを指定しない場合
+    param = GetInfoParameter.builder()
+        .employeeId(null)
+        .employeeNumber("piyo")
+        .build();
+    getInfoValidator.validate(param, errors);
+    assertFalse(errors.hasErrors());
+    verify(messageSource, never())
+        .getMessage(any(Class.class), any(String.class), any(Object[].class));
+
+    // 社員番号を指定しない場合
+    param = GetInfoParameter.builder()
+        .employeeId("fuga")
+        .employeeNumber(null)
+        .build();
+    getInfoValidator.validate(param, errors);
     assertFalse(errors.hasErrors());
     verify(messageSource, never())
         .getMessage(any(Class.class), any(String.class), any(Object[].class));
   }
 
   /**
-   * {@link RegisterValidator#validate()}のテストメソッド
+   * {@link GetInfoValidator#validate()}のテストメソッド
    * <p>
    * NGの場合をテスト
    * </p>
@@ -87,14 +109,14 @@ public class RegisterValidatorTest {
     when(messageSource.getMessage(any(Class.class), any(String.class), any(Object[].class)))
       .thenReturn("err");
     BeanPropertyBindingResult errors = new BeanPropertyBindingResult(null, "hoge");
-    RegisterParameter param = RegisterParameter.builder()
-        .departmentName("hoge")
-        .departmentFullName("hogehog")
+    GetInfoParameter param = GetInfoParameter.builder()
+        .employeeId(null)
+        .employeeNumber(null)
         .build();
-    registerValidator.validate(param, errors);
+    getInfoValidator.validate(param, errors);
     assertEquals(List.of(new ObjectError("hoge",
-        new String[] {"departmentFullNameNotEndsWithDepartmentName.hoge",
-            "departmentFullNameNotEndsWithDepartmentName"}, null, null)),
+        new String[] {"requireEmployeeIdOrEmployeeNumber.hoge",
+            "requireEmployeeIdOrEmployeeNumber"}, null, null)),
         errors.getAllErrors());
     verify(messageSource).getMessage(any(Class.class), any(String.class),
         any(DefaultMessageSourceResolvable.class), any(DefaultMessageSourceResolvable.class));

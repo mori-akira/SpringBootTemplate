@@ -1,4 +1,4 @@
-package jp.co.molygray.dao;
+package jp.co.molygray.dao.entity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -14,26 +14,25 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import jp.co.molygray.dao.entity.EmployeeAddressDao;
 import jp.co.molygray.dto.DtoBase;
-import jp.co.molygray.dto.EmployeeAddressDto;
+import jp.co.molygray.dto.EmployeeQualificationMapDto;
 import jp.co.molygray.enums.ErrorSummaryEnum;
 import jp.co.molygray.exception.BusinessErrorException;
 import jp.co.molygray.response.common.ErrorResponse.ErrorDetail;
 
 /**
- * {@link EmployeeAddressDao}のテストクラス
+ * {@link EmployeeQualificationMapDao}のテストクラス
  *
  * @author Moriaki Kogure
  * @version 0.0.1
  */
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
-public class EmployeeAddressDaoTest {
+public class EmployeeQualificationMapDaoTest {
 
-  /** 社員住所Dao */
+  /** 社員所持資格Dao */
   @Autowired
-  private EmployeeAddressDao employeeAddressDao;
+  private EmployeeQualificationMapDao employeeQualificationMapDao;
 
   /**
    * {@link EmployeeAddressDao#select()}のテストメソッド
@@ -41,29 +40,25 @@ public class EmployeeAddressDaoTest {
   @Test
   @Order(1)
   public void selectTest() {
-    Optional<EmployeeAddressDto> expected = Optional.of(EmployeeAddressDto.builder()
-        .employeeAddressId(1l)
-        .employeeId(1l)
-        .country("日本")
-        .prefecture("神奈川県")
-        .city("川崎市")
-        .ward("宮前区")
-        .detail1("宮崎1-1-1")
-        .detail2("XXXマンション　105号室")
-        .deleteFlg(false)
-        .exclusiveFlg("xxx")
-        .insertDatetime(
-            ZonedDateTime.of(2023, 3, 1, 12, 0, 0, 0, ZoneId.systemDefault())
-                .toOffsetDateTime())
-        .insertUser(0l)
-        .insertFunction("manual")
-        .updateDatetime(
-            ZonedDateTime.of(2023, 3, 1, 12, 0, 0, 0, ZoneId.systemDefault())
-                .toOffsetDateTime())
-        .updateUser(0l)
-        .updateFunction("manual")
-        .build());
-    Optional<EmployeeAddressDto> actual = employeeAddressDao.select(1l);
+    Optional<EmployeeQualificationMapDto> expected =
+        Optional.of(EmployeeQualificationMapDto.builder()
+            .employeeQualificationMapId(1l)
+            .employeeId(1l)
+            .qualificationId(1l)
+            .deleteFlg(false)
+            .exclusiveFlg("xxx")
+            .insertDatetime(
+                ZonedDateTime.of(2023, 3, 1, 12, 0, 0, 0, ZoneId.systemDefault())
+                    .toOffsetDateTime())
+            .insertUser(0l)
+            .insertFunction("manual")
+            .updateDatetime(
+                ZonedDateTime.of(2023, 3, 1, 12, 0, 0, 0, ZoneId.systemDefault())
+                    .toOffsetDateTime())
+            .updateUser(0l)
+            .updateFunction("manual")
+            .build());
+    Optional<EmployeeQualificationMapDto> actual = employeeQualificationMapDao.select(1l);
     assertEquals(expected, actual);
   }
 
@@ -87,79 +82,64 @@ public class EmployeeAddressDaoTest {
         .updateUser(0l)
         .updateFunction("manual")
         .build();
-    List<EmployeeAddressDto> expected = List.of(
-        EmployeeAddressDto.builder()
-            .employeeAddressId(1l)
+    List<EmployeeQualificationMapDto> expected = List.of(
+        EmployeeQualificationMapDto.builder()
+            .employeeQualificationMapId(1l)
             .employeeId(1l)
-            .country("日本")
-            .prefecture("神奈川県")
-            .city("川崎市")
-            .ward("宮前区")
-            .detail1("宮崎1-1-1")
-            .detail2("XXXマンション　105号室")
+            .qualificationId(1l)
             .build(),
-        EmployeeAddressDto.builder()
-            .employeeAddressId(2l)
+        EmployeeQualificationMapDto.builder()
+            .employeeQualificationMapId(2l)
+            .employeeId(1l)
+            .qualificationId(2l)
+            .build(),
+        EmployeeQualificationMapDto.builder()
+            .employeeQualificationMapId(3l)
+            .employeeId(1l)
+            .qualificationId(4l)
+            .build(),
+        EmployeeQualificationMapDto.builder()
+            .employeeQualificationMapId(4l)
+            .employeeId(1l)
+            .qualificationId(5l)
+            .build(),
+        EmployeeQualificationMapDto.builder()
+            .employeeQualificationMapId(5l)
+            .employeeId(1l)
+            .qualificationId(6l)
+            .build(),
+        EmployeeQualificationMapDto.builder()
+            .employeeQualificationMapId(6l)
+            .employeeId(1l)
+            .qualificationId(7l)
+            .build(),
+        EmployeeQualificationMapDto.builder()
+            .employeeQualificationMapId(7l)
+            .employeeId(1l)
+            .qualificationId(8l)
+            .build(),
+        EmployeeQualificationMapDto.builder()
+            .employeeQualificationMapId(8l)
+            .employeeId(1l)
+            .qualificationId(9l)
+            .build(),
+        EmployeeQualificationMapDto.builder()
+            .employeeQualificationMapId(9l)
+            .employeeId(1l)
+            .qualificationId(10l)
+            .build(),
+        EmployeeQualificationMapDto.builder()
+            .employeeQualificationMapId(10l)
             .employeeId(2l)
-            .country("日本")
-            .prefecture("埼玉県")
-            .city("春日部市")
-            .ward(null)
-            .detail1("春日部町1-1-1")
-            .detail2(null)
+            .qualificationId(1l)
             .build(),
-        EmployeeAddressDto.builder()
-            .employeeAddressId(3l)
-            .employeeId(3l)
-            .country("日本")
-            .prefecture("東京都")
-            .city(null)
-            .ward("大田区")
-            .detail1("北糀谷1-1-1")
-            .detail2("XXXアパート　203号室")
-            .build(),
-        EmployeeAddressDto.builder()
-            .employeeAddressId(4l)
-            .employeeId(4l)
-            .country("日本")
-            .prefecture("東京都")
-            .city(null)
-            .ward("荒川区")
-            .detail1("南千住7-7-7")
-            .detail2("XXXハイツ　301号室")
-            .build(),
-        EmployeeAddressDto.builder()
-            .employeeAddressId(5l)
-            .employeeId(5l)
-            .country("日本")
-            .prefecture("東京都")
-            .city(null)
-            .ward("足立区")
-            .detail1("西新井5-5-5")
-            .detail2("コンバハイツXXX　202号室")
-            .build(),
-        EmployeeAddressDto.builder()
-            .employeeAddressId(6l)
-            .employeeId(6l)
-            .country("日本")
-            .prefecture("神奈川県")
-            .city("横浜市")
-            .ward("神奈川区")
-            .detail1("松本町3-3-3")
-            .detail2("コンバースビル　101号室")
-            .build(),
-        EmployeeAddressDto.builder()
-            .employeeAddressId(7l)
-            .employeeId(7l)
-            .country("日本")
-            .prefecture("千葉県")
-            .city("市川市")
-            .ward(null)
-            .detail1("原木2-2")
-            .detail2(null)
+        EmployeeQualificationMapDto.builder()
+            .employeeQualificationMapId(11l)
+            .employeeId(2l)
+            .qualificationId(2l)
             .build());
     expected.forEach(e -> BeanUtils.copyProperties(base, e));
-    List<EmployeeAddressDto> actual = employeeAddressDao.selectList();
+    List<EmployeeQualificationMapDto> actual = employeeQualificationMapDao.selectList();
     assertEquals(expected, actual);
   }
 
@@ -170,15 +150,10 @@ public class EmployeeAddressDaoTest {
   @Order(3)
   public void insertTest() {
     // Nullable項目設定
-    EmployeeAddressDto expected = EmployeeAddressDto.builder()
-        .employeeAddressId(8l)
-        .employeeId(8l)
-        .country("hoge")
-        .prefecture("fuga")
-        .city("piyo")
-        .ward("hogehoge")
-        .detail1("fugafuga")
-        .detail2("piyopiyo")
+    EmployeeQualificationMapDto expected = EmployeeQualificationMapDto.builder()
+        .employeeQualificationMapId(12l)
+        .employeeId(3l)
+        .qualificationId(1l)
         .deleteFlg(false)
         .newExclusiveFlg("abc")
         .insertDatetime(
@@ -194,26 +169,22 @@ public class EmployeeAddressDaoTest {
         .deleteUser(2l)
         .deleteFunction("zzz")
         .build();
-    EmployeeAddressDto actual = new EmployeeAddressDto();
+    EmployeeQualificationMapDto actual = new EmployeeQualificationMapDto();
     BeanUtils.copyProperties(expected, actual);
-    actual.setEmployeeAddressId(null);
-    assertEquals(1, employeeAddressDao.insert(actual));
+    actual.setEmployeeQualificationMapId(null);
+    assertEquals(1, employeeQualificationMapDao.insert(actual));
     assertEquals(expected, actual);
     expected.setExclusiveFlg("abc");
     expected.setNewExclusiveFlg(null);
-    actual = employeeAddressDao.select(actual.getEmployeeAddressId()).orElse(null);
+    actual =
+        employeeQualificationMapDao.select(actual.getEmployeeQualificationMapId()).orElse(null);
     assertEquals(expected, actual);
 
     // Nullable項目未設定
-    expected = EmployeeAddressDto.builder()
-        .employeeAddressId(9l)
-        .employeeId(9l)
-        .country("hoge2")
-        .prefecture("fuga2")
-        .city("piyo2")
-        .ward("hogehoge2")
-        .detail1("fugafuga2")
-        .detail2("piyopiyo2")
+    expected = EmployeeQualificationMapDto.builder()
+        .employeeQualificationMapId(13l)
+        .employeeId(3l)
+        .qualificationId(2l)
         .deleteFlg(false)
         .newExclusiveFlg("def")
         .insertDatetime(
@@ -228,14 +199,15 @@ public class EmployeeAddressDaoTest {
         .deleteUser(null)
         .deleteFunction(null)
         .build();
-    actual = new EmployeeAddressDto();
+    actual = new EmployeeQualificationMapDto();
     BeanUtils.copyProperties(expected, actual);
-    actual.setEmployeeAddressId(null);
-    assertEquals(1, employeeAddressDao.insert(actual));
+    actual.setEmployeeQualificationMapId(null);
+    assertEquals(1, employeeQualificationMapDao.insert(actual));
     assertEquals(expected, actual);
     expected.setExclusiveFlg("def");
     expected.setNewExclusiveFlg(null);
-    actual = employeeAddressDao.select(actual.getEmployeeAddressId()).orElse(null);
+    actual =
+        employeeQualificationMapDao.select(actual.getEmployeeQualificationMapId()).orElse(null);
     assertEquals(expected, actual);
   }
 
@@ -246,15 +218,10 @@ public class EmployeeAddressDaoTest {
   @Order(4)
   public void updateTest() {
     // Nullable項目設定
-    EmployeeAddressDto dto = EmployeeAddressDto.builder()
-        .employeeAddressId(1l)
-        .employeeId(1l)
-        .country("hoge")
-        .prefecture("fuga")
-        .city("piyo")
-        .ward("hogehoge")
-        .detail1("fugafuga")
-        .detail2("piyopiyo")
+    EmployeeQualificationMapDto dto = EmployeeQualificationMapDto.builder()
+        .employeeQualificationMapId(1l)
+        .employeeId(3l)
+        .qualificationId(1l)
         .deleteFlg(false)
         .exclusiveFlg("xxx")
         .newExclusiveFlg("abc")
@@ -271,22 +238,17 @@ public class EmployeeAddressDaoTest {
         .deleteUser(2l)
         .deleteFunction("zzz")
         .build();
-    assertEquals(1, employeeAddressDao.update(dto));
-    EmployeeAddressDto expected = employeeAddressDao.select(1l).orElse(null);
+    assertEquals(1, employeeQualificationMapDao.update(dto));
+    EmployeeQualificationMapDto expected = employeeQualificationMapDao.select(1l).orElse(null);
     dto.setExclusiveFlg("abc");
     dto.setNewExclusiveFlg(null);
     assertEquals(expected, dto);
 
     // Nullable項目未設定
-    dto = EmployeeAddressDto.builder()
-        .employeeAddressId(2l)
-        .employeeId(2l)
-        .country("hoge2")
-        .prefecture("fuga2")
-        .city("piyo2")
-        .ward("hogehoge2")
-        .detail1("fugafuga2")
-        .detail2("piyopiyo2")
+    dto = EmployeeQualificationMapDto.builder()
+        .employeeQualificationMapId(2l)
+        .employeeId(3l)
+        .qualificationId(2l)
         .deleteFlg(false)
         .exclusiveFlg("xxx")
         .newExclusiveFlg("def")
@@ -302,8 +264,8 @@ public class EmployeeAddressDaoTest {
         .deleteUser(null)
         .deleteFunction(null)
         .build();
-    assertEquals(1, employeeAddressDao.update(dto));
-    expected = employeeAddressDao.select(2l).orElse(null);
+    assertEquals(1, employeeQualificationMapDao.update(dto));
+    expected = employeeQualificationMapDao.select(2l).orElse(null);
     dto.setExclusiveFlg("def");
     dto.setNewExclusiveFlg(null);
     assertEquals(expected, dto);
@@ -315,15 +277,10 @@ public class EmployeeAddressDaoTest {
   @Test
   @Order(5)
   public void updateTestExclusiveCheck() {
-    EmployeeAddressDto dto = EmployeeAddressDto.builder()
-        .employeeAddressId(3l)
+    EmployeeQualificationMapDto dto = EmployeeQualificationMapDto.builder()
+        .employeeQualificationMapId(3l)
         .employeeId(3l)
-        .country("hoge")
-        .prefecture("fuga")
-        .city("piyo")
-        .ward("hogehoge")
-        .detail1("fugafuga")
-        .detail2("piyopiyo")
+        .qualificationId(3l)
         .deleteFlg(false)
         .exclusiveFlg("yyy")
         .newExclusiveFlg("abc")
@@ -341,9 +298,10 @@ public class EmployeeAddressDaoTest {
         .deleteFunction("zzz")
         .build();
     BusinessErrorException ex =
-        assertThrowsExactly(BusinessErrorException.class, () -> employeeAddressDao.update(dto));
+        assertThrowsExactly(BusinessErrorException.class,
+            () -> employeeQualificationMapDao.update(dto));
     assertEquals(ErrorSummaryEnum.BUISINESS_ERROR, ex.getErrorSummary());
-    assertEquals(List.of(new ErrorDetail("exclusiveError", "社員住所が更新されています。", null)),
+    assertEquals(List.of(new ErrorDetail("exclusiveError", "社員所持資格が更新されています。", null)),
         ex.getErrorDetailList());
   }
 
@@ -353,8 +311,8 @@ public class EmployeeAddressDaoTest {
   @Test
   @Order(6)
   public void deleteTest() {
-    assertEquals(1, employeeAddressDao.delete(3l, "xxx"));
-    assertNull(employeeAddressDao.select(3l).orElse(null));
+    assertEquals(1, employeeQualificationMapDao.delete(3l, "xxx"));
+    assertNull(employeeQualificationMapDao.select(3l).orElse(null));
   }
 
   /**
@@ -364,9 +322,9 @@ public class EmployeeAddressDaoTest {
   @Order(8)
   public void deleteTestExclusiveCheck() {
     BusinessErrorException ex = assertThrowsExactly(BusinessErrorException.class,
-        () -> employeeAddressDao.delete(4l, "xxxx"));
+        () -> employeeQualificationMapDao.delete(4l, "xxxx"));
     assertEquals(ErrorSummaryEnum.BUISINESS_ERROR, ex.getErrorSummary());
-    assertEquals(List.of(new ErrorDetail("exclusiveError", "社員住所が更新されています。", null)),
+    assertEquals(List.of(new ErrorDetail("exclusiveError", "社員所持資格が更新されています。", null)),
         ex.getErrorDetailList());
   }
 }

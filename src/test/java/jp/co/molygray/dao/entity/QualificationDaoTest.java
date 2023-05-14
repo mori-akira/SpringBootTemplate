@@ -1,4 +1,4 @@
-package jp.co.molygray.dao;
+package jp.co.molygray.dao.entity;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -14,7 +14,6 @@ import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import jp.co.molygray.dao.entity.QualificationDao;
 import jp.co.molygray.dto.DtoBase;
 import jp.co.molygray.dto.QualificationDto;
 import jp.co.molygray.enums.ErrorSummaryEnum;
