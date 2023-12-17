@@ -3,4 +3,7 @@ bin/*
 build/*
 log/
 .VSCodeCounter/*
-
+/.gradle/
+.classpath
+.settings/*
+.classpath
